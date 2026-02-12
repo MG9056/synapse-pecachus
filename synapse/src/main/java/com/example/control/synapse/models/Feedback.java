@@ -14,7 +14,7 @@ public class Feedback {
     @ManyToOne
     private User user;
     @ManyToOne
-    private Event eventId
+    private Event eventId;
     private String content;
     private double rating;
     public Feedback() {}
