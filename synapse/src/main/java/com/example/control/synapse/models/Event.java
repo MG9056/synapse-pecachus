@@ -1,5 +1,5 @@
 package com.example.control.synapse.models;
-
+import java.time.LocalDateTime;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,10 +12,10 @@ public class Event {
     @ManyToOne
     private Stadium stadiumId;
     private String name;
-    private DateTime dateTime;
+    private LocalDateTime dateTime;
     private String description;
     public Event() {}
-    public Event(Stadium stadiumId, String name, DateTime dateTime, String description) {
+    public Event(Stadium stadiumId, String name, LocalDateTime dateTime, String description) {
         this.stadiumId = stadiumId;
         this.name = name;
         this.dateTime = dateTime;
@@ -39,10 +39,10 @@ public class Event {
     public void setName(String name) {
         this.name = name;
     }
-    public DateTime getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
-    public void setDateTime(DateTime dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
     public String getDescription() {
