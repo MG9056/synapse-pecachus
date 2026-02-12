@@ -1,4 +1,4 @@
-package com.example.control.synapse.Repositories;
+package com.example.control.synapse.repository;
 
 public class UserRepository {
 

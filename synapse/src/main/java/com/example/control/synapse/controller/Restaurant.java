@@ -1,5 +1,5 @@
 package com.example.control.synapse.controller;
 
-public class UserController {
-
+public class Restaurant {
+    
 }
