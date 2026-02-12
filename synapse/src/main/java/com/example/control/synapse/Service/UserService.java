@@ -1,4 +1,4 @@
-package com.example.control.synapse.Service;
+package com.example.control.synapse.service;
 
 public class UserService {
 

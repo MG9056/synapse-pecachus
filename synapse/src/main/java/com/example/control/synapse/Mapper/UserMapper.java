@@ -1,4 +1,4 @@
-package com.example.control.synapse.Mapper;
+package com.example.control.synapse.mapper;
 
 public class UserMapper {
 
