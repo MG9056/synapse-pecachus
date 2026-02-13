@@ -16,6 +16,9 @@ import com.example.control.synapse.repository.EventSeatRepository;
 import com.example.control.synapse.repository.UserRepository;
 import com.example.control.synapse.repository.EventRepository;
 
+import java.util.List;
+
+
 import java.util.Map;
 
 public class BookingService {
@@ -53,8 +56,13 @@ public class BookingService {
         return "Seat reserved for 5 minutes. Confirm booking to finalize!";
     }
 
-     public String confirmBooking(Long seatId, Long userId, Long eventId) {
-        EventSeat eventSeat = eventSeatRepository.findById(seatId)
+     public String confirmBooking(List<Long> seatIdlist, Long userId, Long eventId) {
+
+        int size= seatIdlist.size();
+
+       for(int i=0; i<size; i++)
+{
+        EventSeat eventSeat = eventSeatRepository.findById(seatIdlist.get(i))
                 .orElseThrow(() -> new RuntimeException("Seat not found"));
 
         if (eventSeat.getAvailability()) {
@@ -62,10 +70,11 @@ public class BookingService {
         }
 
         // timer cancel ak logic
-        ScheduledFuture<?> timer = reservationTimers.remove(seatId);
+        ScheduledFuture<?> timer = reservationTimers.remove(seatIdlist.get(i));
         if (timer != null) {
             timer.cancel(false); // cacnels release seat ka execution
         }
+    }
 
       
        
@@ -76,18 +85,21 @@ public class BookingService {
         .orElseThrow(() -> new RuntimeException("Event not found"));
 
         
-        
-
-
         Booking booking = new Booking();
         booking.setEventId(event);
         booking.setUserId(user);
         booking.setBookingTime(LocalDateTime.now());
         bookingRepository.save(booking);
 
-        // Optionally link booking to seat
-        eventSeat.setBookingId(booking);
-        eventSeatRepository.save(eventSeat);
+        // saving same booking IDs in all seats
+
+        for(int i=0; i<size; i++)
+       { EventSeat bookedSeat= eventSeatRepository.findById(seatIdlist.get(i))
+        .orElseThrow(() -> new RuntimeException("Seat not found"));
+        
+        bookedSeat.setBookingId(booking);
+        eventSeatRepository.save(bookedSeat);
+       }
 
         return "Booking confirmed!";
     }
