@@ -1,4 +1,4 @@
-package com.example.control.synapse.Dto;
+package com.example.control.synapse.dto.request;
 
 public class UserSignupRequest {
 

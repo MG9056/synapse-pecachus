@@ -3,7 +3,7 @@ package com.example.control.synapse.controllers;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.control.synapse.dto.UserSignupRequest;
+import com.example.control.synapse.dto.request.UserSignupRequest;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.services.UserService;
 
