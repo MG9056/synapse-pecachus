@@ -19,14 +19,14 @@ public class BookingController {
     // Reserve a seat for 5 minutes
     @PostMapping("/reserve")
     public String reserveSeat(@RequestBody BookingRequest request) {
-        return bookingService.reserveSeat(request.getSeatId());
+        return bookingService.reserveSeat(request.getSeatIdList());
     }
 
     // Confirm a booking
     @PostMapping("/confirm")
     public String confirmBooking(@RequestBody BookingRequest request) {
         return bookingService.confirmBooking(
-            request.getSeatId(), 
+            request.getSeatIdList(), 
             request.getUserId(), 
             request.getEventId()
         );

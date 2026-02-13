@@ -1,18 +1,14 @@
 package com.example.control.synapse.dto.request;
 
+import java.util.List;
+
 public class BookingRequest {
 
-    private Long seatId;
+    
     private Long userId;
     private Long eventId;
+    private List<Long> seatIdList;
 
-    public Long getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(Long seatId) {
-        this.seatId = seatId;
-    }
 
     public Long getUserId() {
         return userId;
@@ -28,5 +24,14 @@ public class BookingRequest {
 
     public void setEventId(Long eventId) {
         this.eventId = eventId;
+    }
+
+    public List<Long> getSeatIdList(){
+        return seatIdList;
+    }
+
+    public void setSeatIdList(List<Long> seatIdList)
+    {
+        this.seatIdList=seatIdList;
     }
 }

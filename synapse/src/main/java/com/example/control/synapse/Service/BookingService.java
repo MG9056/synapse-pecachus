@@ -39,8 +39,13 @@ public class BookingService {
         this.eventRepository=eventRepo;
     }
 
-        public String reserveSeat(Long seatId) {
-        EventSeat eventSeat = eventSeatRepository.findById(seatId)
+        public String reserveSeat(List<Long> seatIdlist) {
+
+            int size=seatIdlist.size();
+
+            for(int j=0; j<size; j++)
+{Long seatId=seatIdlist.get(j);
+        EventSeat eventSeat = eventSeatRepository.findById(seatIdlist.get(j))
                 .orElseThrow(() -> new RuntimeException("Seat not found"));
 
         if (eventSeat.getAvailability()==false) {
@@ -52,9 +57,12 @@ public class BookingService {
 
         ScheduledFuture<?> timer = scheduler.schedule(() -> releaseSeat(seatId), 5, TimeUnit.MINUTES);
         reservationTimers.put(seatId, timer);
-
-        return "Seat reserved for 5 minutes. Confirm booking to finalize!";
     }
+
+        return "Seats reserved for 5 minutes. Confirm booking to finalize!";
+    }
+
+
 
      public String confirmBooking(List<Long> seatIdlist, Long userId, Long eventId) {
 
