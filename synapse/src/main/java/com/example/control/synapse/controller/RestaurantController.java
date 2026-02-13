@@ -12,7 +12,7 @@ import com.example.control.synapse.service.RestaurantService;
 
 
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping("/restaurant")
 public class RestaurantController {
     public final RestaurantRepository restaurantRepository;
     private final FoodRepository foodRepository;

@@ -1,4 +1,6 @@
 package com.example.control.synapse.models;
+
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,18 +17,17 @@ public class Food {
     private Restaurant restaurantId;
     private float price;
     private float rating;
-    @ManyToOne
-    private Order orderId;
+    
 
 
     public Food(){}
 
-    public Food( String name, Restaurant restaurant, float price, float rating, Order order)
+    public Food( String name, Restaurant restaurant, float price, float rating)
     { this.name=name;
         this.restaurantId= restaurant;
         this.price= price;
         this.rating=rating;
-        this.orderId=order;
+        
 
     }
 
@@ -70,14 +71,8 @@ public class Food {
         this.rating = rating;
     }
 
-    public Order getOrderId() {
-        return orderId;
-    }
 
-    public void setOrderId(Order order) {
-        this.orderId = order;
-    }
-
+  
     
 
 
