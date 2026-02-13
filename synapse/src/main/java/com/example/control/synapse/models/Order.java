@@ -40,16 +40,16 @@ public class Order {
      public void setPrice(double price) {
          this.price = price;
      }
-     public Seat getSeat() {
+     public Seat getSeatId() {
          return seatId;
      }
-     public void setSeat(Seat seat) {
+     public void setSeatId(Seat seat) {
          this.seatId = seat;
      }
-     public User getUser() {
+     public User getUserId() {
          return userId;
      }
-     public void setUser(User user) {
+     public void setUserId(User user) {
          this.userId = user;
      }
 

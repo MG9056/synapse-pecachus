@@ -46,11 +46,11 @@ public class Food {
         this.name = name;
     }
 
-    public Restaurant getRestaurant() {
+    public Restaurant getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
+    public void setRestaurantId(Restaurant restaurant) {
         this.restaurantId = restaurant;
     }
 
@@ -70,11 +70,11 @@ public class Food {
         this.rating = rating;
     }
 
-    public Order getOrder() {
+    public Order getOrderId() {
         return orderId;
     }
 
-    public void setOrder(Order order) {
+    public void setOrderId(Order order) {
         this.orderId = order;
     }
 

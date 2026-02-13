@@ -1,5 +1,7 @@
 package com.example.control.synapse.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,18 +15,19 @@ public class Booking {
 
      private Long id;
      @ManyToOne
-     private User user;
+     private User userId;
 
      @ManyToOne
-     private Event event;
-     private Boolean status;
+     private Event eventId;
+     private LocalDateTime bookingTime;
 
      public Booking(){}
 
-     public Booking(User user, Event event, Boolean status)
-     {this.user=user;
-        this.event=event;
-        this.status=status;
+     public Booking(User user, Event event, LocalDateTime datetime)
+     {this.userId=user;
+        this.eventId=event;
+        this.bookingTime=datetime;
+
 
 
 
@@ -40,28 +43,28 @@ public class Booking {
          this.id = id;
      }
 
-     public User getUser() {
-         return user;
+     public User getUserId() {
+         return userId;
      }
 
-     public void setUser(User user) {
-         this.user = user;
+     public void setUserId(User user) {
+         this.userId = user;
      }
 
-     public Event getEvent() {
-         return event;
+     public Event getEventId() {
+         return eventId;
      }
 
-     public void setEvent(Event event) {
-         this.event = event;
+     public void setEventId(Event event) {
+         this.eventId = event;
      }
 
-     public Boolean getStatus() {
-         return status;
+     public LocalDateTime getBookingTime() {
+         return bookingTime;
      }
 
-     public void setStatus(Boolean status) {
-         this.status = status;
+     public void setBookingTime(LocalDateTime datetime) {
+         this.bookingTime = datetime;
      }
 
      
