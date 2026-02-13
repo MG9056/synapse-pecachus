@@ -6,6 +6,6 @@ import com.example.control.synapse.service.RestaurantService;
 
 
 
-public class Restaurant {
+public class RestaurantController {
     
 }
