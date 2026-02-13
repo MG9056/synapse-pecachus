@@ -1,6 +1,11 @@
 package com.example.control.synapse.controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.repository.MerchandiseRepository;
+import com.example.control.synapse.repository.RestaurantRepository;
+import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.service.StadiumService;
 
 @RestController
