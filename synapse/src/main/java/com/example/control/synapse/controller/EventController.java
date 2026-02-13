@@ -21,7 +21,7 @@ public class EventController {
 
     @GetMapping
     public EventPageResponseDto getAllEvents(Pageable pageable,@RequestParam(required = false) String category,
-            @RequestParam(required = false) String city,@RequestParam(required = false) Integer minPricInteger,
+            @RequestParam(required = false) String city,@RequestParam(required = false) Integer minPrice,
             @RequestParam(required = false) Integer maxPrice ) {
 
     }

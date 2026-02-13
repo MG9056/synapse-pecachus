@@ -25,11 +25,12 @@ public class User {
     private String gender;
     
     public User() {}
-    public User(String name, String email, String password, String gender) {
+    public User(String name, String email, String password,String role, String gender) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.gender = gender;
+        this.role=role;
     }
     public Long getId() {
         return id;

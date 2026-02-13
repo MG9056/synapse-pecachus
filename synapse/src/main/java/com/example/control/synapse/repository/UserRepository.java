@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.control.synapse.models.User;
 
-
 public interface UserRepository extends JpaRepository<User,Long> {
-      Optional<User>findById(Long userId);
-
+    Boolean existsByEmail(String email);
+    Optional<User> findByEmail(String email);
     
 } 

@@ -1,38 +1,21 @@
-package com.example.control.synapse.dto.request;
+package com.example.control.synapse.dto.response;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-
-public class UserSignupDto {
-    @NotBlank
+public class UserResponseDto {
     private String name;
-    @Email
-    @NotBlank
     private String email;
-    @NotBlank
     private String password;
-    @NotBlank
-    private String gender;
-    @NotBlank
     private String role;
+    private String gender;
+    public UserResponseDto() {}
     
-
-    public UserSignupDto() {}
-    
-    public UserSignupDto(String name, String email, String password, String gender, String role) {
+    public UserResponseDto(String name, String email, String password, String role, String gender) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.gender = gender;
         this.role = role;
+        this.gender = gender;
     }
 
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
     public String getName() {
         return name;
     }
@@ -51,13 +34,16 @@ public class UserSignupDto {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
+    }
     public String getGender() {
         return gender;
     }
     public void setGender(String gender) {
         this.gender = gender;
     }
-
-    
 }
-

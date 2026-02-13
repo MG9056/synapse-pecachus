@@ -20,7 +20,6 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService=userService;
     }
-    //ba
     @PostMapping
     public Map<String,String> signup(@RequestBody UserSignupDto request) {
         return userService.signUp(request.getName(),

@@ -4,5 +4,4 @@ import com.example.control.synapse.models.Stadium;
 
 public interface StadiumRepository extends JpaRepository<Stadium,Long>{
 
-    List<Stadium> findByIdId(Long id);
  }
