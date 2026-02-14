@@ -3,6 +3,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import com.example.control.synapse.dto.request.StadiumRequest;
+import com.example.control.synapse.dto.request.StadiumUpdateDto;
 import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Stadium;
@@ -10,6 +11,8 @@ import com.example.control.synapse.repository.MerchandiseRepository;
 import com.example.control.synapse.repository.RestaurantRepository;
 import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.service.StadiumService;
+
+
 
 
 @RestController
@@ -69,6 +72,17 @@ public class StadiumController {
 
         );
     }
+
+    @PatchMapping("/{id}/update")
+    public String updateStadium(@PathVariable Long id,
+        @RequestBody StadiumUpdateDto stadiumUpdateDto )
+        {
+            
+            return ;
+
+
+        }
+    
 
 
 

@@ -29,6 +29,30 @@ public class StadiumService {
         return "Restaurant uploaded!";
 
 
+        
+
+
     }
+
+    public String updateStadium(Long stadiumId, String city, String state, String country, int capacity )
+    { Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+
+     stadium.setCity(city);
+     stadium.setState(state);
+     stadium.setCountry(country);
+     stadium.setCapacity(capacity);
+
+
+     stadiumRepository.save(stadium);
+
+
+
+
+        return "Stadium updated successfully!";
+
+
+    }
+
+    
     
 }

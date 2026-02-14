@@ -6,6 +6,15 @@ public class RestaurantRequest {
     private double rating;
     private Long stadiumId;
 
+    public RestaurantRequest(){}
+    
+    public RestaurantRequest(String name, Double rating, Long stadiumId)
+    {
+        this.name=name;
+        this.rating=rating;
+        this.stadiumId=stadiumId;
+    }
+
     public String getName() {
         return name;
     }

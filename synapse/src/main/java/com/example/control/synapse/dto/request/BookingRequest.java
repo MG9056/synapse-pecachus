@@ -9,6 +9,14 @@ public class BookingRequest {
     private Long eventId;
     private List<Long> seatIdList;
 
+    public BookingRequest(){}
+    public BookingRequest(Long userId, Long eventId, List<Long>seatIdlist)
+    {
+        this.userId=userId;
+        this.eventId=eventId;
+        this.seatIdList=seatIdlist;
+    }
+
 
     public Long getUserId() {
         return userId;

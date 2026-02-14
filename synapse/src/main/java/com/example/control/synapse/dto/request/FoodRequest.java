@@ -6,6 +6,19 @@ public class FoodRequest
     private Long restaurantId;
     private float price;
     private float rating;
+
+
+    public FoodRequest(){}
+
+    public FoodRequest(String name, Long restaurantId, float price, float rating)
+    {
+        this.name=name;
+        this.restaurantId=restaurantId;
+        this.price=price;
+        this.rating=rating;
+    }
+
+
     public String getName() {
         return name;
     }
