@@ -6,17 +6,19 @@ import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.models.Food;
 import com.example.control.synapse.models.Restaurant;
-
+import com.example.control.synapse.repository.FoodRepository;
 import com.example.control.synapse.repository.RestaurantRepository;
 
 @Service
 public class FoodService {
 
     private final RestaurantRepository restaurantRepository;
+    private final FoodRepository foodRepository;
 
-    public FoodService(RestaurantRepository restaurantRepository)
+    public FoodService(RestaurantRepository restaurantRepository, FoodRepository foodRepository)
     {
         this.restaurantRepository=restaurantRepository;
+        this.foodRepository=foodRepository;
     }
     
    public String uploadFood(String name, Long restaurantId, float price, float rating )
@@ -32,6 +34,7 @@ public class FoodService {
 
     food.setPrice(price);
     food.setRating(rating);
+    foodRepository.save(food);
     
 
 

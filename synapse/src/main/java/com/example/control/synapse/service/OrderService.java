@@ -53,6 +53,7 @@ public class OrderService {
         order.setPrice(price);
         order.setUserId(user);
         order.setSeatId(seat);
+        orderRepository.save(order);
         
 
         for(int i=0; i<size; i++)
@@ -61,6 +62,7 @@ public class OrderService {
 
         bookedFood.setOrderId(order);
         eventFoodRepository.save(bookedFood);
+        
 
 
 
