@@ -14,13 +14,19 @@ public class Event {
     private String name;
     private LocalDateTime dateTime;
     private String description;
+    private Double minPrice;
+    private String category;
     public Event() {}
-    public Event(Stadium stadiumId, String name, LocalDateTime dateTime, String description) {
+    public Event(Stadium stadiumId, String name, LocalDateTime dateTime, String description,Double minPrice,String category) {
         this.stadiumId = stadiumId;
         this.name = name;
         this.dateTime = dateTime;
         this.description = description;
+        this.minPrice=minPrice;
+        this.category=category;
+    
     }
+    
     public Long getId() {
         return id;
     }
@@ -50,6 +56,18 @@ public class Event {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public double getMinPrice() {
+        return minPrice;
+    }
+    public void setMinPrice(Double minPrice) {
+        this.minPrice = minPrice;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
     }
     
 }
