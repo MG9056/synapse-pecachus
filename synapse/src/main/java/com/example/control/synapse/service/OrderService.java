@@ -1,6 +1,7 @@
 package com.example.control.synapse.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.models.Seat;
 import com.example.control.synapse.models.Order;
+import com.example.control.synapse.dto.response.OrderResponseDto;
 import com.example.control.synapse.models.EventFood;
 
 import com.example.control.synapse.models.User;
@@ -53,6 +55,7 @@ public class OrderService {
         order.setPrice(price);
         order.setUserId(user);
         order.setSeatId(seat);
+        orderRepository.save(order);
         
 
         for(int i=0; i<size; i++)
@@ -61,6 +64,7 @@ public class OrderService {
 
         bookedFood.setOrderId(order);
         eventFoodRepository.save(bookedFood);
+        
 
 
 
@@ -79,6 +83,30 @@ public class OrderService {
 
 
     }
+
+    public List<OrderResponseDto> getOrderByRestaurantId(Long userId)
+    {List<Order> orders= orderRepository.findByUserId((userId));
+
+        List<OrderResponseDto> dtoList= new ArrayList<>();
+
+        for(Order order:orders)
+        {OrderResponseDto orderResponseDto= new OrderResponseDto();
+        orderResponseDto.setPrice(order.getPrice());
+        orderResponseDto.setSeatId(order.getSeatId());
+        orderResponseDto.setUserId(order.getUserId());
+
+        dtoList.add(orderResponseDto);
+
+
+
+        }
+
+        return dtoList;
+
+
+    }
+
+
 
 
     

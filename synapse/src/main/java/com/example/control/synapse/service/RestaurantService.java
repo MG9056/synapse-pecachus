@@ -1,15 +1,22 @@
 package com.example.control.synapse.service;
 
+import org.springframework.stereotype.Service;
+
+import com.example.control.synapse.dto.response.RestaurantResponseDto;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.repository.RestaurantRepository;
 import com.example.control.synapse.repository.StadiumRepository;
 
+@Service
 public class RestaurantService {
 
     public StadiumRepository stadiumRepository;
+    public RestaurantRepository restaurantRepository;
 
-    public RestaurantService(StadiumRepository stadiumRepository)
+    public RestaurantService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository)
     {this.stadiumRepository=stadiumRepository;
+    this.restaurantRepository=restaurantRepository;
 
     }
 
@@ -24,6 +31,7 @@ public class RestaurantService {
         .orElseThrow(() -> new RuntimeException("Stadium not found"));
 
         restaurant.setStadiumId(stadium);
+        restaurantRepository.save(restaurant);
 
     
 
@@ -31,6 +39,43 @@ public class RestaurantService {
 return "Restaurant uploaded!";
 
 
+    }
+
+    public RestaurantResponseDto getRestaurantById(Long id)
+    {RestaurantResponseDto restaurantResponseDto= new RestaurantResponseDto();
+
+    Restaurant restaurant= restaurantRepository.findById(id).orElseThrow();
+
+    restaurantResponseDto.setName(restaurant.getName());
+    restaurantResponseDto.setName(restaurant.getName());
+    restaurantResponseDto.setStadiumId(restaurant.getStadiumId());
+
+    return restaurantResponseDto;
+
+    
+    
+
+
+    }
+
+
+    public String updateRestaurant(Long restaurantId, String name, double rating, Long stadiumId)
+    { Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
+
+        restaurant.setName(name);
+        restaurant.setRating(rating);
+
+        Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+        restaurant.setStadiumId(stadium);
+
+        restaurantRepository.save(restaurant);
+
+
+
+
+
+
+        return "Restaurant updated!";
     }
     
 }

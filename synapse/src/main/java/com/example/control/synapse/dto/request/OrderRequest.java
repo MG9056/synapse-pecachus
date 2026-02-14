@@ -6,6 +6,18 @@ public class OrderRequest {
         private Long userId;
         private float price;
         private Long seatId;
+
+
+        public OrderRequest(){}
+
+        public OrderRequest(List<Long>foodIdlist, Long userId, float price, Long seatId)
+        {
+            this.foodIdlist=foodIdlist;
+            this.userId=userId;
+            this.price=price;
+            this.seatId=seatId;
+        }
+
         public List<Long> getFoodIdlist() {
             return foodIdlist;
         }

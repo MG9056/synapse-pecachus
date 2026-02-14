@@ -1,18 +1,28 @@
 package com.example.control.synapse.dto.request;
 
-public class RestaurantRequest {
 
-    private String name ;
+public class RestaurantUpdateDto {
+
+    private Long restaurantId;
+    private String name;
     private double rating;
     private Long stadiumId;
 
-    public RestaurantRequest(){}
-    
-    public RestaurantRequest(String name, Double rating, Long stadiumId)
-    {
-        this.name=name;
-        this.rating=rating;
+    public RestaurantUpdateDto(){}
+
+    public RestaurantUpdateDto(String name, double rating, Long stadiumId)
+    {   this.name=name;
+        this.rating= rating;
         this.stadiumId=stadiumId;
+        
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId=restaurantId;
     }
 
     public String getName() {
@@ -20,7 +30,7 @@ public class RestaurantRequest {
     }
 
     public void setName(String name) {
-        this.name= name;
+        this.name = name;
     }
 
     public double getRating() {
@@ -38,4 +48,8 @@ public class RestaurantRequest {
     public void setStadiumId(Long stadiumId) {
         this.stadiumId = stadiumId;
     }
+
+    
+
+    
 }

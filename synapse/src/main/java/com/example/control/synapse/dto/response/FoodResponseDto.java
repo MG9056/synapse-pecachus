@@ -1,28 +1,23 @@
-package com.example.control.synapse.models;
+package com.example.control.synapse.dto.response;
 
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.example.control.synapse.models.Restaurant;
 
 
-public class Food {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FoodResponseDto {
+    
 
     private Long id;
     private String name;
-    @ManyToOne
     private Restaurant restaurantId;
     private float price;
     private float rating;
     
 
 
-    public Food(){}
+    public FoodResponseDto(){}
 
-    public Food( String name, Restaurant restaurant, float price, float rating)
+    public FoodResponseDto( String name, Restaurant restaurant, float price, float rating)
     { this.name=name;
         this.restaurantId= restaurant;
         this.price= price;

@@ -1,50 +1,73 @@
 package com.example.control.synapse.dto.request;
 
-public class FoodRequest
-{
+public class FoodUpdateDto {
+   
+
+    private Long foodId;
     private String name;
     private Long restaurantId;
     private float price;
     private float rating;
+    
 
 
-    public FoodRequest(){}
+    public FoodUpdateDto(){}
 
-    public FoodRequest(String name, Long restaurantId, float price, float rating)
-    {
-        this.name=name;
-        this.restaurantId=restaurantId;
-        this.price=price;
+    public FoodUpdateDto(String name, Long restaurantId, float price, float rating)
+    { this.name=name;
+        this.restaurantId= restaurantId;
+        this.price= price;
         this.rating=rating;
+        
+
     }
 
+    public Long getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(Long foodId) {
+        this.foodId = foodId;
+    }
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public Long getRestaurantId() {
         return restaurantId;
     }
+
     public void setRestaurantId(Long restaurantId) {
         this.restaurantId = restaurantId;
     }
+
     public float getPrice() {
         return price;
     }
+
     public void setPrice(float price) {
         this.price = price;
     }
+
     public float getRating() {
         return rating;
     }
+
     public void setRating(float rating) {
         this.rating = rating;
     }
 
+
+  
     
 
 
+
+
+    
 }
