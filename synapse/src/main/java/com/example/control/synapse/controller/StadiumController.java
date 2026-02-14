@@ -4,12 +4,17 @@ import java.util.List;
 
 import com.example.control.synapse.dto.request.StadiumRequest;
 import com.example.control.synapse.dto.request.StadiumUpdateDto;
+import com.example.control.synapse.dto.response.MerchandiseResponseDto;
+import com.example.control.synapse.dto.response.RestaurantResponseDto;
+import com.example.control.synapse.dto.response.StadiumResponseDto;
 import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.repository.MerchandiseRepository;
 import com.example.control.synapse.repository.RestaurantRepository;
 import com.example.control.synapse.repository.StadiumRepository;
+import com.example.control.synapse.service.MerchandiseService;
+import com.example.control.synapse.service.RestaurantService;
 import com.example.control.synapse.service.StadiumService;
 
 
@@ -23,42 +28,46 @@ public class StadiumController {
     private final StadiumRepository stadiumRepository;
     private final MerchandiseRepository merchandiseRepository;
     private final StadiumService stadiumService;
+    private final RestaurantService restaurantService;
+    private final MerchandiseService merchandiseService;
     
 
     public StadiumController(RestaurantRepository restaurantRepository, StadiumRepository stadiumRepository,
-            MerchandiseRepository merchandiseRepository, StadiumService stadiumService) {
+            MerchandiseRepository merchandiseRepository, StadiumService stadiumService, RestaurantService restaurantService, MerchandiseService merchandiseService) {
         this.restaurantRepository = restaurantRepository;
         this.stadiumRepository = stadiumRepository;
         this.merchandiseRepository = merchandiseRepository;
         this.stadiumService=stadiumService;
+        this.restaurantService=restaurantService;
+        this.merchandiseService= merchandiseService;
     }
 
     @GetMapping
-    public List<Stadium> getAllStadiums()
+    public List<StadiumResponseDto> getAllStadiums()
     {
-        return stadiumRepository.findAll();
+        return stadiumService.getAllStadiums();
 
     }
 
     @GetMapping("/{id}")
-    public Stadium getStadiumById(@PathVariable Long id)
+    public StadiumResponseDto getStadiumById(@PathVariable Long id)
 
     {
-        return stadiumRepository.findById(id).orElseThrow(() -> new RuntimeException("Stadium not found with id " + id));
+        return stadiumService.getStadiumById(id);
 
 
     }
 
     @GetMapping("/{id}/restaurants")
-    public List<Restaurant> getRestaurantsByStadiumId(@PathVariable Long id)
+    public List<RestaurantResponseDto> getRestaurantsByStadiumId(@PathVariable Long stadiumId)
     {
-        return restaurantRepository.findByStadiumId(id);
+        return restaurantService.getRestaurantByStadiumId(stadiumId);
     }
 
     @GetMapping("/id/merchandise")
-    public List<Merchandise> getMerchandiseByStadiumId(@PathVariable Long id)
+    public List<MerchandiseResponseDto> getMerchandiseByStadiumId(@PathVariable Long id)
     {
-        return merchandiseRepository.findByStadiumId(id);
+        return merchandiseService.getMerchandiseByStadiumId(id);
     }
 
     @PostMapping("/upload")

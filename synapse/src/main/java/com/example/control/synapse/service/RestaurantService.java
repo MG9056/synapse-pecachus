@@ -1,5 +1,8 @@
 package com.example.control.synapse.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
@@ -54,6 +57,34 @@ return "Restaurant uploaded!";
 
     
     
+
+
+    }
+
+    public List<RestaurantResponseDto> getRestaurantByStadiumId(Long stadiumId)
+    {List<RestaurantResponseDto> dtoList= new ArrayList<>();
+
+        List<Restaurant> restaurants= restaurantRepository.findByStadiumId(stadiumId);
+
+        for(Restaurant restaurant: restaurants)
+        {RestaurantResponseDto restaurantResponseDto= new RestaurantResponseDto();
+
+            restaurantResponseDto.setName(restaurant.getName());
+    restaurantResponseDto.setName(restaurant.getName());
+    restaurantResponseDto.setStadiumId(restaurant.getStadiumId());
+
+    dtoList.add(restaurantResponseDto);
+
+
+
+
+
+
+
+
+        }
+        return dtoList;
+
 
 
     }

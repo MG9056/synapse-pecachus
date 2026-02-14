@@ -1,6 +1,10 @@
 package com.example.control.synapse.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
+import com.example.control.synapse.dto.response.StadiumResponseDto;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.repository.RestaurantRepository;
@@ -40,6 +44,51 @@ public class StadiumService {
 
     }
 
+    public StadiumResponseDto getStadiumById(Long stadiumId)
+    {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+
+        StadiumResponseDto stadiumResponseDto= new StadiumResponseDto();
+
+        stadiumResponseDto.setCity(stadium.getCity());
+     stadiumResponseDto.setState(stadium.getState());
+     stadiumResponseDto.setCountry(stadium.getCountry());
+     stadiumResponseDto.setCapacity(stadium.getCapacity());
+
+     return stadiumResponseDto;
+
+
+        
+    }
+
+    public List<StadiumResponseDto> getAllStadiums()
+    {List<Stadium> stadiums= stadiumRepository.findAll();
+
+        List<StadiumResponseDto> dtoList= new ArrayList<>();
+
+        for(Stadium stadium: stadiums)
+        {StadiumResponseDto stadiumResponseDto= new StadiumResponseDto();
+
+            stadiumResponseDto.setCity(stadium.getCity());
+     stadiumResponseDto.setState(stadium.getState());
+     stadiumResponseDto.setCountry(stadium.getCountry());
+     stadiumResponseDto.setCapacity(stadium.getCapacity());
+
+     dtoList.add(stadiumResponseDto);
+
+
+
+
+
+
+        }
+
+        return dtoList;
+
+
+
+        
+    }
+
     public String updateStadium(Long stadiumId, String city, String state, String country, int capacity )
     { Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
 
@@ -58,6 +107,8 @@ public class StadiumService {
 
 
     }
+
+     
 
     
     

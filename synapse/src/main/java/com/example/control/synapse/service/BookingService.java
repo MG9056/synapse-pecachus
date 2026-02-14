@@ -129,7 +129,7 @@ public class BookingService {
         scheduler.shutdown();
     }
 
-    private List<BookingResponseDto> getBookingByUserId(Long userId)
+    public List<BookingResponseDto> getBookingByUserId(Long userId)
     {
         List<Booking> bookings = bookingRepository.findByUserId(userId);
         List<BookingResponseDto> dtoList= new ArrayList<>();
