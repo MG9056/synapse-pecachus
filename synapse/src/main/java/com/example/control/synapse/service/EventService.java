@@ -1,8 +1,49 @@
 package com.example.control.synapse.service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import com.example.control.synapse.dto.response.EventPageResponseDto;
+import com.example.control.synapse.dto.response.EventResponseDto;
+import com.example.control.synapse.mapper.EventMapper;
+import com.example.control.synapse.models.Event;
+import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.repository.EventRepository;
+import com.example.control.synapse.repository.StadiumRepository;
+import com.example.control.synapse.specification.EventSpecification;
 
 @Service
 public class EventService {
+    private final EventRepository eventRepository;
+    private final StadiumRepository stadiumRepository;
+    public EventService(EventRepository eventRepository,StadiumRepository stadiumRepository) {
+        this.eventRepository=eventRepository;
+        this.stadiumRepository=stadiumRepository;
+    }
+    public EventPageResponseDto getAllEvents(Pageable pageable,String category,String city,Double minPrice,Double maxPrice) {
+        Specification<Event> spec = EventSpecification.getEventsByFilters(category, city, minPrice, maxPrice);
+        Page<Event> eventPage = eventRepository.findAll(spec, pageable);
+        return EventMapper.toPageResponseDto(eventPage);
+    }
+    public Map<String,String> createEvent(String name, LocalDateTime dateTime, String category, Long stadiumId, String description,
+            Double minPrice) {
+        Stadium stadium = stadiumRepository.findById(stadiumId)
+                .orElseThrow(() -> new RuntimeException("Stadium not found"));
+        Event event = new Event(stadium,name,dateTime,description,minPrice,category);
+        eventRepository.save(event);
+        Map<String,String> response = new HashMap<>();
+        response.put("message", "Event created successfully");
+        return response;
+    }
+    public EventResponseDto getEvent(Long id) {
+        Event event = eventRepository.findById(id).orElseThrow(()-> new RuntimeException("No such event found"));
+        return EventMapper.toDto(event);
+    }
 
 }

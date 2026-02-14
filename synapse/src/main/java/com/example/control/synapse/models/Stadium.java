@@ -19,17 +19,19 @@ public class Stadium {
     private String state;
     private String country;
     private int capacity;
+    private String name;
 
     public Stadium(){}
 
-    public Stadium(String city, String state, String country, int capacity)
+    public Stadium(String name,String city, String state, String country, int capacity)
     {
         this.city= city;
         this.state=state;
         this.country=country;
         this.capacity=capacity;
+        this.name=name;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -68,6 +70,14 @@ public class Stadium {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     

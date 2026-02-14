@@ -10,17 +10,14 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Stadium stadiumId;
-    @ManyToOne
-    private User user;
+    private User userId;
     @ManyToOne
     private Event eventId;
     private String content;
-    private double rating;
+    private Double rating;
     public Feedback() {}
-    public Feedback(Stadium stadiumId, User user, Event eventId, String content, double rating) {
-        this.stadiumId = stadiumId;
-        this.user = user;
+    public Feedback(User userId, Event eventId, String content, Double rating) {
+        this.userId = userId;
         this.eventId = eventId;
         this.content = content;
         this.rating = rating;
@@ -31,17 +28,11 @@ public class Feedback {
     public void setId(Long id) {
         this.id = id;
     }
-    public Stadium getStadiumId() {
-        return stadiumId;
-    }
-    public void setStadiumId(Stadium stadiumId) {
-        this.stadiumId = stadiumId;
-    }
     public User getUser() {
-        return user;
+        return userId;
     }
     public void setUser(User user) {
-        this.user = user;
+        this.userId = user;
     }
     public Event getEventId() {
         return eventId;
@@ -55,10 +46,10 @@ public class Feedback {
     public void setContent(String content) {
         this.content = content;
     }
-    public double getRating() {
+    public Double getRating() {
         return rating;
     }
-    public void setRating(double rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
     
