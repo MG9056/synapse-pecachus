@@ -1,29 +1,39 @@
 package com.example.control.synapse.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.RestaurantRepository;
 import com.example.control.synapse.repository.StadiumRepository;
+import com.example.control.synapse.repository.UserRepository;
 
 @Service
 public class RestaurantService {
 
     public StadiumRepository stadiumRepository;
     public RestaurantRepository restaurantRepository;
+    public UserRepository userRepository;
+    public PasswordEncoder passwordEncoder;
 
-    public RestaurantService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository)
+    public RestaurantService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository, UserRepository userRepository, PasswordEncoder passwordEncoder)
     {this.stadiumRepository=stadiumRepository;
     this.restaurantRepository=restaurantRepository;
+    this.userRepository= userRepository;
+    this.passwordEncoder= passwordEncoder;
+
 
     }
 
-    public String uploadRestaurant(String name, double rating, Long stadiumId)
+    public Map<String,String> uploadRestaurant(String name, double rating, Long stadiumId)
     {Restaurant restaurant= new Restaurant();
 
     
@@ -38,8 +48,9 @@ public class RestaurantService {
 
     
 
-
-return "Restaurant uploaded!";
+ Map<String,String> response = new HashMap<>();
+        response.put("message", "Restaurant uploaded successfully!");
+        return response;
 
 
     }
@@ -90,7 +101,7 @@ return "Restaurant uploaded!";
     }
 
 
-    public String updateRestaurant(Long restaurantId, String name, double rating, Long stadiumId)
+    public Map<String,String> updateRestaurant(Long restaurantId, String name, double rating, Long stadiumId)
     { Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
 
         restaurant.setName(name);
@@ -101,12 +112,31 @@ return "Restaurant uploaded!";
 
         restaurantRepository.save(restaurant);
 
+         Map<String,String> response = new HashMap<>();
+        response.put("message", "Restaurant updated successfully!");
+        return response;
 
 
 
 
 
-        return "Restaurant updated!";
+
+        
+    }
+
+
+    public Map<String,String> deleteRestaurant(Long userId,String password, Long restaurantId) {
+        Map<String,String> response = new HashMap<>();
+        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
+        Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow(()-> new RuntimeException("No such stadium with exists with id"+restaurantId));
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            restaurantRepository.delete(restaurant);
+            response.put("message","Restaurant successfully deleted with Restaurant Id"+restaurant.getId());
+            
+        } else {
+            response.put("message","Password did not match");
+        }
+        return response;
     }
     
 }

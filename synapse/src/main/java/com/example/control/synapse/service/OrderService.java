@@ -2,8 +2,9 @@ package com.example.control.synapse.service;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class OrderService {
 
     }
 
-    public String bookOrder(List<Long>foodIdlist, Long userId,float price, Long seatId)
+    public Map<String,String> bookOrder(List<Long>foodIdlist, Long userId,float price, Long seatId)
     {int size= foodIdlist.size();
 
          User user = (User) userRepository.findById(userId)
@@ -77,9 +78,11 @@ public class OrderService {
 
         }
 
+  Map<String,String> response = new HashMap<>();
+        response.put("message", "Order booked!");
+        return response;
 
-
-        return "Order Booked!";
+        
 
 
     }

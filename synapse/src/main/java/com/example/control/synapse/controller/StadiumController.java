@@ -1,6 +1,8 @@
 package com.example.control.synapse.controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 import com.example.control.synapse.dto.request.StadiumRequest;
 import com.example.control.synapse.dto.request.StadiumUpdateDto;
@@ -98,6 +100,12 @@ public class StadiumController {
 
 
         }
+    
+        @DeleteMapping("{id}/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Map<String,String> deleteStadium(@RequestBody String password,@PathVariable Long id, @RequestBody Long stadiumId) {
+        return stadiumService.deleteStadium(id,password,stadiumId);
+    }
     
 
 

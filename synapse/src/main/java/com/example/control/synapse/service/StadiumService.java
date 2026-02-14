@@ -1,24 +1,34 @@
 package com.example.control.synapse.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
 import com.example.control.synapse.dto.response.StadiumResponseDto;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.RestaurantRepository;
 import com.example.control.synapse.repository.StadiumRepository;
+import com.example.control.synapse.repository.UserRepository;
 
 public class StadiumService {
 
     private final StadiumRepository stadiumRepository;
     private final RestaurantRepository restaurantRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public StadiumService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository)
+    public StadiumService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository, UserRepository userRepository, PasswordEncoder passwordEncoder)
     {
         this.stadiumRepository=stadiumRepository;
         this.restaurantRepository= restaurantRepository;
+        this.userRepository= userRepository;
+        this.passwordEncoder= passwordEncoder;
     }
 
     
@@ -26,7 +36,7 @@ public class StadiumService {
 
 
 
-    public String uploadStadium(String city, String state, String country, int capacity)
+    public Map<String,String> uploadStadium(String city, String state, String country, int capacity)
     {
         Stadium stadium= new Stadium();
         stadium.setCity(city);
@@ -36,7 +46,9 @@ public class StadiumService {
 
         stadiumRepository.save(stadium);
 
-        return "Restaurant uploaded!";
+        Map<String,String> response = new HashMap<>();
+        response.put("message", "Stadium uploaded successfully!");
+        return response;
 
 
         
@@ -89,7 +101,7 @@ public class StadiumService {
         
     }
 
-    public String updateStadium(Long stadiumId, String city, String state, String country, int capacity )
+    public Map<String,String> updateStadium(Long stadiumId, String city, String state, String country, int capacity )
     { Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
 
      stadium.setCity(city);
@@ -97,15 +109,34 @@ public class StadiumService {
      stadium.setCountry(country);
      stadium.setCapacity(capacity);
 
+    
+
 
      stadiumRepository.save(stadium);
 
 
 
 
-        return "Stadium updated successfully!";
+         Map<String,String> response = new HashMap<>();
+        response.put("message", "Stadium updated successfully!");
+        return response;
 
 
+    }
+
+
+    public Map<String,String> deleteStadium(Long userId,String password, Long stadiumId) {
+        Map<String,String> response = new HashMap<>();
+        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
+        Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow(()-> new RuntimeException("No such stadium with exists with id"+stadiumId));
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            stadiumRepository.delete(stadium);
+            response.put("message","Stadium successfully deleted with Stadium Id"+stadium.getId());
+            
+        } else {
+            response.put("message","Password did not match");
+        }
+        return response;
     }
 
      

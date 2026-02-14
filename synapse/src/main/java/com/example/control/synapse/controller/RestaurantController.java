@@ -3,10 +3,12 @@ package com.example.control.synapse.controller;
 import com.example.control.synapse.dto.response.FoodResponseDto;
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.control.synapse.dto.request.RestaurantRequest;
 import com.example.control.synapse.dto.request.RestaurantUpdateDto;
@@ -78,6 +80,12 @@ public class RestaurantController {
     );
 
 
+    }
+
+     @DeleteMapping("{id}/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Map<String,String> deleteStadium(@RequestBody String password,@PathVariable Long id, @RequestBody Long restaurantId) {
+        return restaurantService.deleteRestaurant(id,password,restaurantId);
     }
 
 
