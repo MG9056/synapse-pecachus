@@ -19,6 +19,7 @@ import com.example.control.synapse.repository.UserRepository;
 import com.example.control.synapse.repository.EventRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -42,7 +43,7 @@ public class BookingService {
         this.eventRepository=eventRepo;
     }
 
-        public String reserveSeat(List<Long> seatIdlist) {
+        public Map<String,String> reserveSeat(List<Long> seatIdlist) {
 
             int size=seatIdlist.size();
 
@@ -52,7 +53,9 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("Seat not found"));
 
         if (eventSeat.getAvailability()==false) {
-            return "Seat is already reserved or booked!";
+              Map<String,String> response = new HashMap<>();
+        response.put("message", "Seat is already booked or reserved!");
+        return response;
         }
 
         eventSeat.setAvailability(false);
@@ -62,12 +65,16 @@ public class BookingService {
         reservationTimers.put(seatId, timer);
     }
 
-        return "Seats reserved for 5 minutes. Confirm booking to finalize!";
+      Map<String,String> response = new HashMap<>();
+        response.put("message", "Seats reserved for 5 minutes. Confirm booking to finalize!");
+        return response;
+
+        
     }
 
 
 
-     public String confirmBooking(List<Long> seatIdlist, Long userId, Long eventId) {
+     public Map<String,String> confirmBooking(List<Long> seatIdlist, Long userId, Long eventId) {
 
         int size= seatIdlist.size();
 
@@ -77,7 +84,9 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("Seat not found"));
 
         if (eventSeat.getAvailability()) {
-            return "Seat reservation expired or was never reserved!";
+              Map<String,String> response = new HashMap<>();
+        response.put("message", "Seat reservation expired or not found!");
+        return response;
         }
 
         // timer cancel ka logic
@@ -112,16 +121,29 @@ public class BookingService {
         eventSeatRepository.save(bookedSeat);
        }
 
-        return "Booking confirmed!";
+          Map<String,String> response = new HashMap<>();
+        response.put("message", "Booking confirmed!");
+        return response;
     }
 
-     private void releaseSeat(Long seatId) {
+     private Map<String,String> releaseSeat(Long seatId) {
         EventSeat eventSeat = eventSeatRepository.findById(seatId).orElse(null);
         if (eventSeat != null && !eventSeat.getAvailability()) {
             eventSeat.setAvailability(true);
             eventSeatRepository.save(eventSeat);
             reservationTimers.remove(seatId);
-            System.out.println("Seat " + seatId + " released after 5 minutes");
+            
+             Map<String,String> response = new HashMap<>();
+        response.put("message", "Seat released after 5 minutes of waiting");
+        return response;
+        }
+
+        else {
+              Map<String,String> response = new HashMap<>();
+        response.put("message", "Seat need not be released");
+        return response;
+
+            
         }
     }
 
