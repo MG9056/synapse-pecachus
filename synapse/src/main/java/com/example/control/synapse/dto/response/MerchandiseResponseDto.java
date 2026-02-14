@@ -2,10 +2,6 @@ package com.example.control.synapse.dto.response;
 
 import com.example.control.synapse.models.Stadium;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 public class MerchandiseResponseDto {
    
@@ -18,12 +14,13 @@ public class MerchandiseResponseDto {
     private Stadium stadiumId;
 
     public MerchandiseResponseDto() {}
-    public MerchandiseResponseDto(String name, String description, double price, double rating, Stadium stadiumId) {
+    public MerchandiseResponseDto(Long id,String name, String description, double price, double rating, Stadium stadiumId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
         this.stadiumId = stadiumId;
+        this.id=id;
     }
     public String getName() {
         return name;

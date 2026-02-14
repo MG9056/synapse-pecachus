@@ -22,34 +22,27 @@ public class MerchandiseService {
 
 
 
-public List<MerchandiseResponseDto> getMerchandiseByStadiumId(Long stadiumId )
-{List<Merchandise> merchandises= merchandiseRepository.findByStadiumId(stadiumId);
-    List<MerchandiseResponseDto> dtoList= new ArrayList<>();
+    public List<MerchandiseResponseDto> getMerchandiseByStadiumId(Long stadiumId )
+    {List<Merchandise> merchandises= merchandiseRepository.findByStadiumId(stadiumId);
+        List<MerchandiseResponseDto> dtoList= new ArrayList<>();
 
-    for(Merchandise merchandise: merchandises)
-    {MerchandiseResponseDto merchandiseResponseDto= new MerchandiseResponseDto();
+        for(Merchandise merchandise: merchandises)
+        {MerchandiseResponseDto merchandiseResponseDto= new MerchandiseResponseDto();
 
-        
+            
 
-        merchandiseResponseDto.setName(merchandise.getName());
-        merchandiseResponseDto.setDescription(merchandise.getDescription());
-        merchandiseResponseDto.setPrice(merchandise.getPrice());
-        merchandiseResponseDto.setRating(merchandise.getRating());
-        merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
+            merchandiseResponseDto.setName(merchandise.getName());
+            merchandiseResponseDto.setDescription(merchandise.getDescription());
+            merchandiseResponseDto.setPrice(merchandise.getPrice());
+            merchandiseResponseDto.setRating(merchandise.getRating());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
 
-    dtoList.add(merchandiseResponseDto);
+        dtoList.add(merchandiseResponseDto);
 
 
 
+        }
+
+        return dtoList;
     }
-
-    return dtoList;
-
-
-
-
-
-    
-}
-
 }
