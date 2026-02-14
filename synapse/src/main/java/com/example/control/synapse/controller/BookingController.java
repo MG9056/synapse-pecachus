@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.control.synapse.service.BookingService;
 import com.example.control.synapse.dto.request.BookingRequest;
+import com.example.control.synapse.dto.response.BookingResponseDto;
 import com.example.control.synapse.models.Booking;
 import com.example.control.synapse.repository.BookingRepository;
 
@@ -15,6 +16,7 @@ public class BookingController {
 
     private final BookingService bookingService;
     private final BookingRepository bookingRepository;
+    
 
     
     public BookingController(BookingService bookingService, BookingRepository bookingRepository) {
@@ -39,8 +41,8 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Booking> getBookingByUserId(@PathVariable Long userId)
-    {return bookingRepository.findByUserId(userId);
+    public List<BookingResponseDto> getBookingByUserId(@PathVariable Long userId)
+    {return bookingService.getBookingByUserId(userId);
         
     }
 

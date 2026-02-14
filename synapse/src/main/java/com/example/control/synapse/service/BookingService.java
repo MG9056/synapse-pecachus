@@ -7,6 +7,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.example.control.synapse.dto.response.BookingResponseDto;
+import com.example.control.synapse.dto.response.OrderResponseDto;
 import com.example.control.synapse.models.Booking;
 import com.example.control.synapse.models.EventSeat;
 import com.example.control.synapse.models.User;
@@ -16,6 +18,7 @@ import com.example.control.synapse.repository.EventSeatRepository;
 import com.example.control.synapse.repository.UserRepository;
 import com.example.control.synapse.repository.EventRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -77,7 +80,7 @@ public class BookingService {
             return "Seat reservation expired or was never reserved!";
         }
 
-        // timer cancel ak logic
+        // timer cancel ka logic
         ScheduledFuture<?> timer = reservationTimers.remove(seatIdlist.get(i));
         if (timer != null) {
             timer.cancel(false); // cacnels release seat ka execution
@@ -125,5 +128,33 @@ public class BookingService {
       public void shutdownScheduler() {
         scheduler.shutdown();
     }
+
+    private List<BookingResponseDto> getBookingByUserId(Long userId)
+    {
+        List<Booking> bookings = bookingRepository.findByUserId(userId);
+        List<BookingResponseDto> dtoList= new ArrayList<>();
+
+
+        for(Booking booking: bookings)
+        {
+            BookingResponseDto bookingResponseDto= new BookingResponseDto();
+            bookingResponseDto.setUserId(booking.getUserId());
+            bookingResponseDto.setEventId(booking.getEventId());
+            bookingResponseDto.setBookingTime(booking.getBookingTime());
+
+
+
+
+        dtoList.add(bookingResponseDto);
+        }
+
+
+
+        return dtoList;
+
+
+    }
+
+
     
 }

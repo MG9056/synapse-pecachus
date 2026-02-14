@@ -1,17 +1,23 @@
 package com.example.control.synapse.service;
 
+import com.example.control.synapse.dto.response.RestaurantResponseDto;
+import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.repository.RestaurantRepository;
 import com.example.control.synapse.repository.StadiumRepository;
 
 public class StadiumService {
 
     private final StadiumRepository stadiumRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public StadiumService(StadiumRepository stadiumRepository)
+    public StadiumService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository)
     {
         this.stadiumRepository=stadiumRepository;
+        this.restaurantRepository= restaurantRepository;
     }
 
+    
 
 
 

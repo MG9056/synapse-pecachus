@@ -78,7 +78,14 @@ public class StadiumController {
         @RequestBody StadiumUpdateDto stadiumUpdateDto )
         {
             
-            return ;
+            return stadiumService.updateStadium(
+             stadiumUpdateDto.getStadiumId(),
+             stadiumUpdateDto.getCity(),
+             stadiumUpdateDto.getState(),
+             stadiumUpdateDto.getCountry(),
+             stadiumUpdateDto.getCapacity()
+
+            );
 
 
         }

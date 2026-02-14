@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.control.synapse.dto.request.OrderRequest;
+import com.example.control.synapse.dto.response.FoodResponseDto;
+import com.example.control.synapse.dto.response.OrderResponseDto;
 import com.example.control.synapse.models.Booking;
 import com.example.control.synapse.models.Order;
 import com.example.control.synapse.repository.BookingRepository;
@@ -44,8 +46,8 @@ public class OrderController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Order> getOrderByUserId(@PathVariable Long userId)
-    {return orderRepository.findByUserId(userId);
+    public List<OrderResponseDto> getOrderByRestaurantId(@PathVariable Long id)
+    { return orderService.getOrderByRestaurantId(id);
         
     }
 
