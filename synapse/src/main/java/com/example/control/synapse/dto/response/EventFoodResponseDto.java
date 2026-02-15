@@ -1,11 +1,11 @@
-package com.example.control.synapse.models;
+package com.example.control.synapse.dto.response;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.example.control.synapse.models.Order;
+import com.example.control.synapse.models.Restaurant;
 
-public class EventFood{
+
+
+public class EventFoodResponseDto{
 
 private Long id;
 private String name;
@@ -16,8 +16,8 @@ private float rating;
 private Order orderId;
 
 
-public EventFood(){}
-public EventFood(String name, Restaurant restaurantId, float price, float rating, Order orderId)
+public EventFoodResponseDto(){}
+public EventFoodResponseDto(String name, Restaurant restaurantId, float price, float rating, Order orderId)
 {this.price=price;
 this.restaurantId= restaurantId;
 this.price=price;

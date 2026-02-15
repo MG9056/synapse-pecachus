@@ -35,14 +35,10 @@ public class OrderController {
     }
 
     @PostMapping("/placeOrder")
-<<<<<<< HEAD
-    public Map<String,String> bookOrder(@RequestBody OrderRequest request)
-=======
     public  Map<String,String> bookOrder(@RequestBody OrderRequest request)
->>>>>>> 571528aed8dfd8d61658a96b04c87bf62084202e
     {
 
-        return orderService.bookOrder(
+        return orderService.bookFoodOrder(
             request.getFoodIdlist(),
             request.getUserId(),
             request.getPrice(),

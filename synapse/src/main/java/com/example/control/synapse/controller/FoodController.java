@@ -1,5 +1,6 @@
 package com.example.control.synapse.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,12 @@ public class FoodController {
         return foodService.getFoodById(id);
     }    
 
+    // @GetMapping("/restaurant/{restaurantId}")
+    // public List<FoodResponseDto> getFoodByRestaurantId(@PathVariable Long restaurantId)
+    // {
+    //     return foodService.getFoodByRestaurantId(restaurantId);
+
+    // }
 
 
     @PostMapping("/upload")

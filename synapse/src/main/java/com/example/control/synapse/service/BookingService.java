@@ -209,6 +209,32 @@ public class BookingService {
 
     }
 
+    public List<BookingResponseDto> getBookingByEventId(Long eventId)
+    {
+        List<Booking> bookings = bookingRepository.findByEventId(eventId);
+        List<BookingResponseDto> dtoList= new ArrayList<>();
+
+
+        for(Booking booking: bookings)
+        {
+            BookingResponseDto bookingResponseDto= new BookingResponseDto();
+            bookingResponseDto.setUserId(booking.getUserId());
+            bookingResponseDto.setEventId(booking.getEventId());
+            bookingResponseDto.setBookingTime(booking.getBookingTime());
+
+
+
+
+        dtoList.add(bookingResponseDto);
+        }
+
+
+
+        return dtoList;
+
+
+    }
+
 
     
 }

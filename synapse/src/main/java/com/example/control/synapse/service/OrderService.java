@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.models.Seat;
 import com.example.control.synapse.models.Order;
+import com.example.control.synapse.models.Food;
 import com.example.control.synapse.dto.response.OrderResponseDto;
 import com.example.control.synapse.models.EventFood;
 
@@ -39,7 +40,7 @@ public class OrderService {
 
     }
 
-    public Map<String,String> bookOrder(List<Long>foodIdlist, Long userId,float price, Long seatId)
+    public Map<String,String> bookFoodOrder(List<Long>foodIdlist, Long userId,float price, Long seatId)
     {int size= foodIdlist.size();
 
          User user = (User) userRepository.findById(userId)
@@ -60,11 +61,18 @@ public class OrderService {
         
 
         for(int i=0; i<size; i++)
-        {EventFood bookedFood= eventFoodRepository.findById(foodIdlist.get(i))
+        {Food bookedFood= foodRepository.findById(foodIdlist.get(i))
             .orElseThrow(() -> new RuntimeException("Food not found"));
 
-        bookedFood.setOrderId(order);
-        eventFoodRepository.save(bookedFood);
+            EventFood eventFood= new EventFood();
+
+            eventFood.setName(bookedFood.getName());
+            eventFood.setRestaurantId(bookedFood.getRestaurantId());
+            eventFood.setPrice(bookedFood.getPrice());
+            eventFood.setRating(bookedFood.getRating());
+
+            eventFood.setOrderId(order);
+            eventFoodRepository.save(eventFood);
         
 
 
