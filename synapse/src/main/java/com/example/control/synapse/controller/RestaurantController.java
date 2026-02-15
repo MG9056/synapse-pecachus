@@ -56,7 +56,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/upload")
-    public String uploadRestaurant(@RequestBody RestaurantRequest restaurantRequest)
+    public  Map<String,String> uploadRestaurant(@RequestBody RestaurantRequest restaurantRequest)
     { return restaurantService.uploadRestaurant(
         restaurantRequest.getName(),
         restaurantRequest.getRating(),
@@ -67,7 +67,7 @@ public class RestaurantController {
     }
 
     @PatchMapping("/{id}/update")
-    public String updateRestaurant(@PathVariable Long id, @RequestBody RestaurantUpdateDto restaurantUpdateDto)
+    public  Map<String,String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantUpdateDto restaurantUpdateDto)
     {  return restaurantService.updateRestaurant(
         restaurantUpdateDto.getRestaurantId(),
         restaurantUpdateDto.getName(),

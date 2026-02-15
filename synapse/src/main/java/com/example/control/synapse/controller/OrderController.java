@@ -13,6 +13,7 @@ import com.example.control.synapse.repository.OrderRepository;
 import com.example.control.synapse.service.OrderService;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class OrderController {
     }
 
     @PostMapping("/placeOrder")
-    public String bookOrder(@RequestBody OrderRequest request)
+    public  Map<String,String> bookOrder(@RequestBody OrderRequest request)
     {
 
         return orderService.bookOrder(

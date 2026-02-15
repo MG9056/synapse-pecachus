@@ -1,6 +1,7 @@
 package com.example.control.synapse.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +27,13 @@ public class BookingController {
 
     // Reserve a seat for 5 minutes
     @PostMapping("/reserve")
-    public String reserveSeat(@RequestBody BookingRequest request) {
+    public Map<String,String> reserveSeat(@RequestBody BookingRequest request) {
         return bookingService.reserveSeat(request.getSeatIdList());
     }
 
     // Confirm a booking
     @PostMapping("/confirm")
-    public String confirmBooking(@RequestBody BookingRequest request) {
+    public  Map<String,String> confirmBooking(@RequestBody BookingRequest request) {
         return bookingService.confirmBooking(
             request.getSeatIdList(), 
             request.getUserId(), 
