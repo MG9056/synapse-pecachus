@@ -15,7 +15,7 @@ public class FeedbackMapper {
         return FeedbackResponseDto.builder()
                 .id(feedback.getId())
                 .userId(feedback.getUser() != null ? feedback.getUser().getId() : null)
-                .userName(feedback.getUser() != null ? feedback.getUser().getName() : null)
+                .userName(feedback.getUser() != null ? feedback.getUser().getUsername() : null)
                 .eventId(feedback.getEventId() != null ? feedback.getEventId().getId() : null)
                 .eventName(feedback.getEventId() != null ? feedback.getEventId().getName() : null)
                 .content(feedback.getContent())

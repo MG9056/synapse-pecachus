@@ -1,49 +1,28 @@
 package com.example.control.synapse.dto.response;
 
-public class UserResponseDto {
-    private String name;
-    private String email;
-    private String password;
-    private String role;
-    private String gender;
-    public UserResponseDto() {}
-    
-    public UserResponseDto(String name, String email, String password, String role, String gender) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.gender = gender;
-    }
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
-    public String getGender() {
-        return gender;
-    }
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserResponseDto {
+    
+    private Long id;
+    private String username;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private List<String> roles;
+    private Boolean enabled;
+    private Boolean locked;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
