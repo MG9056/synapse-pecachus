@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.example.control.synapse.dto.response.BookingResponseDto;
 import com.example.control.synapse.dto.response.OrderResponseDto;
+import com.example.control.synapse.dto.websocket.SeatUpdateMessage;
 import com.example.control.synapse.models.Booking;
 import com.example.control.synapse.models.EventSeat;
 import com.example.control.synapse.models.User;
@@ -17,6 +18,8 @@ import com.example.control.synapse.repository.BookingRepository;
 import com.example.control.synapse.repository.EventSeatRepository;
 import com.example.control.synapse.repository.UserRepository;
 import com.example.control.synapse.repository.EventRepository;
+
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,17 +34,40 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+     private final SimpMessagingTemplate messagingTemplate;
 
 
        private final Map<Long, ScheduledFuture<?>> reservationTimers = new ConcurrentHashMap<>();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
-     public BookingService(EventSeatRepository seatRepo, BookingRepository bookingRepo, UserRepository userRepo, EventRepository eventRepo) {
+     public BookingService(EventSeatRepository seatRepo, BookingRepository bookingRepo, UserRepository userRepo, EventRepository eventRepo, SimpMessagingTemplate messagingTemplate) {
         this.eventSeatRepository = seatRepo;
         this.bookingRepository = bookingRepo;
         this.userRepository=userRepo;
         this.eventRepository=eventRepo;
+        this.messagingTemplate= messagingTemplate;
     }
+
+    //Method for websocket, broadcastSeatUpdate is called in all 3->reserve,confirm,release and a msg of the class messageTemplate whatever is seat at the provided API
+
+ private void broadcastSeatUpdate(EventSeat seat, String status) {
+
+        SeatUpdateMessage msg = new SeatUpdateMessage(
+            seat.getId(),                         // eventSeatId
+            seat.getEventId().getId(),            // eventId
+            // seat.getSeatId().getId(),             // physical seatId
+            seat.getAvailability(),               // availability
+            status,
+            seat.getPrice()
+    );
+
+        messagingTemplate.convertAndSend(
+                "/topic/event/" + seat.getEventId().getId(),
+                msg
+        );
+    }
+
+
 
         public Map<String,String> reserveSeat(List<Long> seatIdlist) {
 
@@ -60,6 +86,8 @@ public class BookingService {
 
         eventSeat.setAvailability(false);
         eventSeatRepository.save(eventSeat);
+
+         broadcastSeatUpdate(eventSeat, "RESERVED");
 
         ScheduledFuture<?> timer = scheduler.schedule(() -> releaseSeat(seatId), 5, TimeUnit.MINUTES);
         reservationTimers.put(seatId, timer);
@@ -119,6 +147,8 @@ public class BookingService {
         
         bookedSeat.setBookingId(booking);
         eventSeatRepository.save(bookedSeat);
+
+         broadcastSeatUpdate(bookedSeat, "BOOKED");
        }
 
           Map<String,String> response = new HashMap<>();
@@ -132,6 +162,8 @@ public class BookingService {
             eventSeat.setAvailability(true);
             eventSeatRepository.save(eventSeat);
             reservationTimers.remove(seatId);
+
+             broadcastSeatUpdate(eventSeat, "AVAILABLE");
             
              Map<String,String> response = new HashMap<>();
         response.put("message", "Seat released after 5 minutes of waiting");
