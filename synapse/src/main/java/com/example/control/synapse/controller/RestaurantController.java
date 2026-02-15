@@ -50,13 +50,24 @@ public class RestaurantController {
     }    
 
     @GetMapping("{id}/menu")
-    public List<FoodResponseDto> getFoodByRestaurantId(@PathVariable Long id)
-    { return foodService.getFoodByRestaurantId(id);
+    public List<FoodResponseDto> getFoodByRestaurantId(@PathVariable Long restaurantId)
+    { return foodService.getFoodByRestaurantId(restaurantId);
         
     }
 
+    @GetMapping("stadiun/{stadiumId}")
+    public List<RestaurantResponseDto> getRestaurantByRestaurantId(@PathVariable Long stadiumId)
+    {
+        return restaurantService.getRestaurantByStadiumId(stadiumId);
+
+    }
+
     @PostMapping("/upload")
+<<<<<<< HEAD
     public  Map<String,String> uploadRestaurant(@RequestBody RestaurantRequest restaurantRequest)
+=======
+    public Map<String,String> uploadRestaurant(@RequestBody RestaurantRequest restaurantRequest)
+>>>>>>> 62c22f7c089fad940c11e1e6f18fdfe76db29937
     { return restaurantService.uploadRestaurant(
         restaurantRequest.getName(),
         restaurantRequest.getRating(),
@@ -67,7 +78,11 @@ public class RestaurantController {
     }
 
     @PatchMapping("/{id}/update")
+<<<<<<< HEAD
     public  Map<String,String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantUpdateDto restaurantUpdateDto)
+=======
+    public Map<String,String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantUpdateDto restaurantUpdateDto)
+>>>>>>> 62c22f7c089fad940c11e1e6f18fdfe76db29937
     {  return restaurantService.updateRestaurant(
         restaurantUpdateDto.getRestaurantId(),
         restaurantUpdateDto.getName(),

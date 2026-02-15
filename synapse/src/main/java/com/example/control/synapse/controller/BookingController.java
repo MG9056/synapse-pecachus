@@ -47,4 +47,12 @@ public class BookingController {
         
     }
 
+    @GetMapping("/event/{eventId}")
+    public List<BookingResponseDto> getBookingByEventId(@PathVariable Long eventId)
+    {return bookingService.getBookingByEventId(eventId);
+        
+    }
+
+
+
 }

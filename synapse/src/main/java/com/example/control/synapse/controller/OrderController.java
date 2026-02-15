@@ -38,7 +38,7 @@ public class OrderController {
     public  Map<String,String> bookOrder(@RequestBody OrderRequest request)
     {
 
-        return orderService.bookOrder(
+        return orderService.bookFoodOrder(
             request.getFoodIdlist(),
             request.getUserId(),
             request.getPrice(),
