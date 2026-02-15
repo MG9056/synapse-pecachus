@@ -73,7 +73,7 @@ public class StadiumController {
     }
 
     @PostMapping("/upload")
-    public String uploadStadium(@RequestBody StadiumRequest stadiumRequest)
+    public Map<String,String> uploadStadium(@RequestBody StadiumRequest stadiumRequest)
     {
         return stadiumService.uploadStadium(
             stadiumRequest.getCity(),
@@ -85,7 +85,7 @@ public class StadiumController {
     }
 
     @PatchMapping("/{id}/update")
-    public String updateStadium(@PathVariable Long id,
+    public Map<String,String> updateStadium(@PathVariable Long id,
         @RequestBody StadiumUpdateDto stadiumUpdateDto )
         {
             

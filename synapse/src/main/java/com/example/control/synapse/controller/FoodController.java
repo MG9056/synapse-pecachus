@@ -46,7 +46,7 @@ public class FoodController {
 
 
     @PostMapping("/upload")
-    public String uploadFood(@RequestBody FoodRequest foodRequest)
+    public Map<String,String> uploadFood(@RequestBody FoodRequest foodRequest)
     {return foodService.uploadFood(
         foodRequest.getName(),
         foodRequest.getRestaurantId(),
@@ -60,7 +60,7 @@ public class FoodController {
     }
 
     @PatchMapping("/{id}/update")
-    public String updateFood(@PathVariable Long id, @RequestBody FoodUpdateDto foodUpdateDto)
+    public Map<String,String> updateFood(@PathVariable Long id, @RequestBody FoodUpdateDto foodUpdateDto)
     {
 
 
