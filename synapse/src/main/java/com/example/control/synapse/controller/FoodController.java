@@ -72,7 +72,7 @@ public class FoodController {
 
 
         return foodService.updateFood(
-            foodUpdateDto.getFoodId(),
+            id,
             foodUpdateDto.getName(),
             foodUpdateDto.getRestaurantId(),
             foodUpdateDto.getPrice(),

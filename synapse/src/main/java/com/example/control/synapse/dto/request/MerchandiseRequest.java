@@ -1,29 +1,26 @@
-package com.example.control.synapse.dto.response;
+package com.example.control.synapse.dto.request;
 
 import com.example.control.synapse.models.Stadium;
 
 
-public class MerchandiseResponseDto {
+
+public class MerchandiseRequest {
    
     
     private String name;
     private String description;
     private double price;
     private double rating;
-   
+    
     private Stadium stadiumId;
-
-    public MerchandiseResponseDto() {}
-    public MerchandiseResponseDto(String name, String description, double price, double rating, Stadium stadiumId) {
+    public MerchandiseRequest() {}
+    public MerchandiseRequest(String name, String description, double price, double rating, Stadium stadiumId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
         this.stadiumId = stadiumId;
-        
     }
-
-
     public String getName() {
         return name;
     }
