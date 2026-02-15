@@ -33,7 +33,7 @@ public class BookingController {
 
     // Confirm a booking
     @PostMapping("/confirm")
-    public Map<String,String> confirmBooking(@RequestBody BookingRequest request) {
+    public  Map<String,String> confirmBooking(@RequestBody BookingRequest request) {
         return bookingService.confirmBooking(
             request.getSeatIdList(), 
             request.getUserId(), 
