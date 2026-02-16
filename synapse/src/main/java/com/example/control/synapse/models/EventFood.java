@@ -13,11 +13,11 @@ private Restaurant restaurantId;
 
 private float price;
 private float rating;
-private Order orderId;
+private FoodOrder orderId;
 
 
 public EventFood(){}
-public EventFood(String name, Restaurant restaurantId, float price, float rating, Order orderId)
+public EventFood(String name, Restaurant restaurantId, float price, float rating, FoodOrder orderId)
 {this.price=price;
 this.restaurantId= restaurantId;
 this.price=price;
@@ -48,10 +48,10 @@ public float getRating() {
 public void setRating(float rating) {
     this.rating = rating;
 }
-public Order getOrderId() {
+public FoodOrder getOrderId() {
     return orderId;
 }
-public void setOrderId(Order orderId) {
+public void setOrderId(FoodOrder orderId) {
     this.orderId = orderId;
 }
 

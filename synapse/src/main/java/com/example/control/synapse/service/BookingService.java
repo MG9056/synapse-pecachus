@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.example.control.synapse.dto.response.BookingResponseDto;
-import com.example.control.synapse.dto.response.OrderResponseDto;
+import com.example.control.synapse.dto.response.FoodOrderResponseDto;
 import com.example.control.synapse.dto.websocket.SeatUpdateMessage;
 import com.example.control.synapse.models.Booking;
 import com.example.control.synapse.models.EventSeat;

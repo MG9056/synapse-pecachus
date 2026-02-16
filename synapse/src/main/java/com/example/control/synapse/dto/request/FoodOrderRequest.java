@@ -1,21 +1,25 @@
 package com.example.control.synapse.dto.request;
 import java.util.List;
 
-public class OrderRequest {
+public class FoodOrderRequest {
         private List<Long> foodIdlist;
         private Long userId;
         private float price;
         private Long seatId;
+        private Long restaurantId;
 
 
-        public OrderRequest(){}
+        
 
-        public OrderRequest(List<Long>foodIdlist, Long userId, float price, Long seatId)
+        public FoodOrderRequest(){}
+
+        public FoodOrderRequest(List<Long>foodIdlist, Long userId, float price, Long seatId, Long restaurantId)
         {
             this.foodIdlist=foodIdlist;
             this.userId=userId;
             this.price=price;
             this.seatId=seatId;
+            this.restaurantId=restaurantId;
         }
 
         public List<Long> getFoodIdlist() {
@@ -41,6 +45,14 @@ public class OrderRequest {
         }
         public void setSeatId(Long seatId) {
             this.seatId = seatId;
+        }
+
+        public Long getRestaurantId() {
+            return restaurantId;
+        }
+
+        public void setRestaurantId(Long restaurantId) {
+            this.restaurantId = restaurantId;
         }
 
         

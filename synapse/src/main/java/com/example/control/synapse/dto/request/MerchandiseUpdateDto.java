@@ -1,38 +1,26 @@
-package com.example.control.synapse.models;
+package com.example.control.synapse.dto.request;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.example.control.synapse.models.Stadium;
 
-public class Merchandise {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+
+public class MerchandiseUpdateDto {
+   
     
     private String name;
     private String description;
     private double price;
     private double rating;
-    @ManyToOne
+    
     private Stadium stadiumId;
-    public Merchandise() {}
-    public Merchandise(String name, String description, double price, double rating, Stadium stadiumId) {
+    public MerchandiseUpdateDto() {}
+    public MerchandiseUpdateDto(String name, String description, double price, double rating, Stadium stadiumId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
         this.stadiumId = stadiumId;
     }
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    
     public String getName() {
         return name;
     }

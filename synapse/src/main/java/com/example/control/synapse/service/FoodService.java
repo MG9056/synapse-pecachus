@@ -67,6 +67,8 @@ public class FoodService {
     food.setPrice(price);
     food.setRating(rating);
 
+    foodRepository.save(food);
+
 
 
 
@@ -121,7 +123,7 @@ public class FoodService {
     public Map<String,String> deleteFood(Long userId,String password, Long foodId) {
         Map<String,String> response = new HashMap<>();
         User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
-        Food food= foodRepository.findById(foodId).orElseThrow(()-> new RuntimeException("No such stadium with exists with id"+foodId));
+        Food food= foodRepository.findById(foodId).orElseThrow(()-> new RuntimeException("No such merchandise with exists with id"+foodId));
         if (passwordEncoder.matches(password, user.getPassword())) {
             foodRepository.delete(food);
             response.put("message","Food successfully deleted with Food Id"+food.getId());

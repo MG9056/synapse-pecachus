@@ -1,6 +1,6 @@
 package com.example.control.synapse.dto.request;
 
-import com.example.control.synapse.models.Order;
+import com.example.control.synapse.models.FoodOrder;
 
 
 public class EventFoodRequest{
@@ -8,10 +8,10 @@ public class EventFoodRequest{
 private Long id;
 
 private float price;
-private Order orderId;
+private FoodOrder orderId;
 
 public EventFoodRequest(){}
-public EventFoodRequest(float price, Order orderId)
+public EventFoodRequest(float price, FoodOrder orderId)
 {this.price=price;
 this.orderId=orderId;
 
@@ -29,10 +29,10 @@ public float getPrice() {
 public void setPrice(float price) {
     this.price = price;
 }
-public Order getOrderId() {
+public FoodOrder getOrderId() {
     return orderId;
 }
-public void setOrderId(Order orderId) {
+public void setOrderId(FoodOrder orderId) {
     this.orderId = orderId;
 }
 

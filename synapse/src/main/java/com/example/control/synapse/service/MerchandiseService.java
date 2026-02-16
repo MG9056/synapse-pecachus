@@ -5,23 +5,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.dto.request.MerchandiseRequest;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
 import com.example.control.synapse.dto.response.StadiumResponseDto;
+import com.example.control.synapse.models.Food;
 import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.MerchandiseRepository;
+import com.example.control.synapse.repository.UserRepository;
 
 @Service
 public class MerchandiseService {
 
     private final MerchandiseRepository merchandiseRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public MerchandiseService(MerchandiseRepository merchandiseRepository)
+    public MerchandiseService(MerchandiseRepository merchandiseRepository, UserRepository userRepository, PasswordEncoder passwordEncoder)
     {
         this.merchandiseRepository= merchandiseRepository;
+        this.userRepository= userRepository;
+        this.passwordEncoder= passwordEncoder;
     }
 
     public MerchandiseResponseDto getMerchandiseById(Long id)
@@ -108,6 +116,8 @@ public class MerchandiseService {
         merchandise.setRating(rating);
         merchandise.setStadiumId(stadiumId);
 
+        merchandiseRepository.save(merchandise);
+
         Map<String,String> response = new HashMap<>();
         response.put("message", "Merchandise uploaded successfully!");
         return response;
@@ -115,5 +125,43 @@ public class MerchandiseService {
 
 
         
+    }
+
+
+    public Map<String, String> updateMerchandise(Long merchandiseId, String name, String description, double price, double rating, Stadium stadiumId)
+    {Merchandise merchandise= merchandiseRepository.findById(merchandiseId).orElseThrow();
+
+     merchandise.setName(name);
+     merchandise.setName(description);
+     merchandise.setPrice(price);
+     merchandise.setRating(rating);
+     merchandise.setStadiumId(stadiumId);
+
+     merchandiseRepository.save(merchandise);
+
+     Map<String,String> response = new HashMap<>();
+        response.put("message", "Merchandise updated successfully!");
+        return response;
+
+     
+
+
+
+
+    }
+
+
+    public Map<String,String> deleteMerchandise(Long userId,String password, Long merchandiseId) {
+        Map<String,String> response = new HashMap<>();
+        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
+        Merchandise merchandise= merchandiseRepository.findById(merchandiseId).orElseThrow(()-> new RuntimeException("No such merchandise with exists with id"+merchandiseId));
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            merchandiseRepository.delete(merchandise);
+            response.put("message","Merchandise successfully deleted with Merchandise Id"+merchandise.getId());
+            
+        } else {
+            response.put("message","Password did not match");
+        }
+        return response;
     }
 }

@@ -1,6 +1,8 @@
 
 package com.example.control.synapse.dto.response;
+import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Seat;
+import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.models.User;
 
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 
-public class OrderResponseDto {
+public class MerchandiseOrderResponseDto {
 
   
 
@@ -17,14 +19,17 @@ public class OrderResponseDto {
      private double price;
      private Seat seatId;
      private User userId;
+     private Stadium stadiumId;
 
 
-     public OrderResponseDto(){}
-     public OrderResponseDto(double price, Seat seat, User user)
+     
+     public MerchandiseOrderResponseDto(){}
+     public MerchandiseOrderResponseDto(double price, Seat seat, User user, Stadium stadiumId)
      {
         this.userId=user;
         this.price=price;
         this.seatId=seat;
+        this.stadiumId= stadiumId;
      }
      public Long getId() {
          return id;
@@ -49,6 +54,13 @@ public class OrderResponseDto {
      }
      public void setUserId(User user) {
          this.userId = user;
+     }
+
+     public Stadium getStadiumId() {
+        return stadiumId;
+    }
+     public void setStadiumId(Stadium stadiumId) {
+         this.stadiumId = stadiumId;
      }
 
      

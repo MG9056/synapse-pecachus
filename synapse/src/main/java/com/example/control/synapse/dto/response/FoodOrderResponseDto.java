@@ -1,32 +1,34 @@
 
-package com.example.control.synapse.models;
+package com.example.control.synapse.dto.response;
+import com.example.control.synapse.models.Restaurant;
+import com.example.control.synapse.models.Seat;
+import com.example.control.synapse.models.User;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 
-public class Order {
+public class FoodOrderResponseDto {
 
-    @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
+  
 
      private Long id;
-
      private double price;
-     @ManyToOne
      private Seat seatId;
-    
-     @ManyToOne
      private User userId;
+     private Restaurant restaurantId;
 
 
-     public Order(){}
-     public Order(double price, Seat seat, User user)
+     
+     public FoodOrderResponseDto(){}
+     public FoodOrderResponseDto(double price, Seat seat, User user, Restaurant restaurant)
      {
         this.userId=user;
         this.price=price;
         this.seatId=seat;
+        this.restaurantId= restaurant;
      }
      public Long getId() {
          return id;
@@ -51,6 +53,13 @@ public class Order {
      }
      public void setUserId(User user) {
          this.userId = user;
+     }
+
+     public Restaurant getRestaurantId() {
+        return restaurantId;
+    }
+     public void setRestaurantId(Restaurant restaurantId) {
+         this.restaurantId = restaurantId;
      }
 
      

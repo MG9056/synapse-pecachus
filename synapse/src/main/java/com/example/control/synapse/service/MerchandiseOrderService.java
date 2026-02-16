@@ -1,0 +1,159 @@
+package com.example.control.synapse.service;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+
+import com.example.control.synapse.models.Seat;
+import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.models.FoodOrder;
+import com.example.control.synapse.models.Merchandise;
+import com.example.control.synapse.models.MerchandiseOrder;
+import com.example.control.synapse.models.Restaurant;
+import com.example.control.synapse.models.Food;
+import com.example.control.synapse.dto.response.FoodOrderResponseDto;
+import com.example.control.synapse.models.EventFood;
+import com.example.control.synapse.models.EventMerchandise;
+import com.example.control.synapse.models.User;
+import com.example.control.synapse.repository.*;
+
+@Service
+public class MerchandiseOrderService {
+
+    private final SeatRepository seatRepository;
+    private final EventFoodRepository eventFoodRepository;
+    private final MerchandiseOrderRepository merchandiseOrderRepository;
+    private final UserRepository userRepository;
+    private final MerchandiseRepository merchandiseRepository;
+    private final StadiumRepository stadiumRepository;
+    
+
+
+    public MerchandiseOrderService(EventFoodRepository eventFoodRepository, MerchandiseOrderRepository merchandiseOrderRepository, UserRepository userRepository, MerchandiseRepository merchandiseRepository, SeatRepository seatRepository, StadiumRepository stadiumRepository)
+    {this.eventFoodRepository=eventFoodRepository;
+        this.merchandiseOrderRepository=merchandiseOrderRepository;
+        this.userRepository=userRepository;
+        this.merchandiseRepository= merchandiseRepository;
+        this.seatRepository = seatRepository;
+        this.stadiumRepository= stadiumRepository;
+        
+
+
+    }
+
+    public Map<String,String> bookMerchandiseOrder(List<Long>merchandiseIdlist, Long userId,float price, Long seatId, Long stadiumId)
+    {int size= merchandiseIdlist.size();
+
+         User user = (User) userRepository.findById(userId)
+         .orElseThrow(() -> new RuntimeException("User not found"));
+        
+
+        Seat seat= seatRepository.findById(seatId)
+        .orElseThrow(() -> new RuntimeException("Seat not found"));
+
+        Stadium stadium= stadiumRepository.findById(stadiumId)
+        .orElseThrow(() -> new RuntimeException("Stadium not found"));
+
+
+
+
+        MerchandiseOrder merchandiseOrder = new MerchandiseOrder();
+        merchandiseOrder.setPrice(price);
+        merchandiseOrder.setUserId(user);
+        merchandiseOrder.setSeatId(seat);
+        merchandiseOrder.setStadiumId(stadium);
+        merchandiseOrderRepository.save(merchandiseOrder);
+        
+
+        for(int i=0; i<size; i++)
+        {Merchandise bookedMerchandise= merchandiseRepository.findById(merchandiseIdlist.get(i))
+            .orElseThrow(() -> new RuntimeException("Food not found"));
+
+            EventMerchandise eventMerchandise= new EventMerchandise();
+
+            eventFood.setName(bookedMerchandise.getName());
+            eventFood.setRestaurantId(bookedMerchandise.getRestaurantId());
+            eventFood.setPrice(bookedFood.getPrice());
+            eventFood.setRating(bookedFood.getRating());
+
+            eventFood.setOrderId(foodOrder);
+            eventFoodRepository.save(eventFood);
+        
+
+
+
+
+
+
+
+
+
+
+        }
+
+  Map<String,String> response = new HashMap<>();
+        response.put("message", "Food Order booked!");
+        return response;
+
+        
+
+
+    }
+
+
+
+
+    public List<FoodOrderResponseDto> getOrderByUserId(Long userId)
+    {List<FoodOrder> orders= foodOrderRepository.findByUserId((userId));
+
+        List<FoodOrderResponseDto> dtoList= new ArrayList<>();
+
+        for(FoodOrder order:orders)
+        {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
+        orderResponseDto.setPrice(order.getPrice());
+        orderResponseDto.setSeatId(order.getSeatId());
+        orderResponseDto.setUserId(order.getUserId());
+
+        dtoList.add(orderResponseDto);
+
+
+
+        }
+
+        return dtoList;
+
+
+    }
+
+    public List<FoodOrderResponseDto> getOrderByRestaurantId(Long restaurantId)
+    {List<FoodOrder> orders= foodOrderRepository.findByRestaurantId((restaurantId));
+
+        List<FoodOrderResponseDto> dtoList= new ArrayList<>();
+
+        for(FoodOrder order:orders)
+        {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
+        orderResponseDto.setPrice(order.getPrice());
+        orderResponseDto.setSeatId(order.getSeatId());
+        orderResponseDto.setUserId(order.getUserId());
+
+        dtoList.add(orderResponseDto);
+
+
+
+        }
+
+        return dtoList;
+
+
+    }
+
+
+
+
+    
+}
