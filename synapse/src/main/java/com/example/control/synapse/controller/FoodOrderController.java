@@ -58,9 +58,9 @@ public class FoodOrderController {
     }
 
     @GetMapping("/restaurant/{restuarantId}")
-    public List<FoodOrderResponseDto> getOrderByRestaurantId(@PathVariable Long id)
+    public List<FoodOrderResponseDto> getOrderByRestaurantId(@PathVariable Long restaurantid)
     {
-        return foodOrderService.getOrderByRestaurantId(id);
+        return foodOrderService.getOrderByRestaurantId(restaurantid);
     }
 
    

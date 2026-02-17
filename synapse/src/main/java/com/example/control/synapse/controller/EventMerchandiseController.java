@@ -24,13 +24,9 @@ public class EventMerchandiseController {
     @GetMapping
     public List<EventMerchandiseResponseDto> getAllEventMerchandise()
     {
-        return eventMerchandiseService.getAllEventFood();
+        return eventMerchandiseService.getAllEventMerchandise();
     }
     
-
-
-
-
 
     @GetMapping("/{id}")
     public EventMerchandiseResponseDto getEventMerchandiseById(@PathVariable Long id)
@@ -39,9 +35,9 @@ public class EventMerchandiseController {
     }
 
     @GetMapping("/order/{orderId}")
-    public List<EventMerchandiseResponseDto> getEventMerchandiseByOrderId(@PathVariable Long orderId)
+    public List<EventMerchandiseResponseDto> getEventMerchandiseByMerchandiseOrderId(@PathVariable Long orderId)
     {
-        return eventMerchandiseService.getEventMerchandiseByOrderId(orderId);
+        return eventMerchandiseService.getEventMerchandiseByMerchandiseOrderId(orderId);
     }
 
     @GetMapping("/stadium/{stadiumId}")

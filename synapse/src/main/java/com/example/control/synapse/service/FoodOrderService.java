@@ -115,6 +115,7 @@ public class FoodOrderService {
         orderResponseDto.setPrice(order.getPrice());
         orderResponseDto.setSeatId(order.getSeatId());
         orderResponseDto.setUserId(order.getUserId());
+        orderResponseDto.setRestaurantId(order.getRestaurantId());
 
         dtoList.add(orderResponseDto);
 
@@ -137,6 +138,7 @@ public class FoodOrderService {
         orderResponseDto.setPrice(order.getPrice());
         orderResponseDto.setSeatId(order.getSeatId());
         orderResponseDto.setUserId(order.getUserId());
+        orderResponseDto.setRestaurantId(order.getRestaurantId());
 
         dtoList.add(orderResponseDto);
 

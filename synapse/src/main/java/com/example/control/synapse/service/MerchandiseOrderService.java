@@ -17,6 +17,7 @@ import com.example.control.synapse.models.MerchandiseOrder;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Food;
 import com.example.control.synapse.dto.response.FoodOrderResponseDto;
+import com.example.control.synapse.dto.response.MerchandiseOrderResponseDto;
 import com.example.control.synapse.models.EventFood;
 import com.example.control.synapse.models.EventMerchandise;
 import com.example.control.synapse.models.User;
@@ -26,7 +27,7 @@ import com.example.control.synapse.repository.*;
 public class MerchandiseOrderService {
 
     private final SeatRepository seatRepository;
-    private final EventFoodRepository eventFoodRepository;
+    private final EventMerchandiseRepository eventMerchandiseRepository;
     private final MerchandiseOrderRepository merchandiseOrderRepository;
     private final UserRepository userRepository;
     private final MerchandiseRepository merchandiseRepository;
@@ -34,13 +35,14 @@ public class MerchandiseOrderService {
     
 
 
-    public MerchandiseOrderService(EventFoodRepository eventFoodRepository, MerchandiseOrderRepository merchandiseOrderRepository, UserRepository userRepository, MerchandiseRepository merchandiseRepository, SeatRepository seatRepository, StadiumRepository stadiumRepository)
-    {this.eventFoodRepository=eventFoodRepository;
+    public MerchandiseOrderService(EventMerchandiseRepository eventMerchandiseRepository, MerchandiseOrderRepository merchandiseOrderRepository, UserRepository userRepository, MerchandiseRepository merchandiseRepository, SeatRepository seatRepository, StadiumRepository stadiumRepository)
+    {this.eventMerchandiseRepository=eventMerchandiseRepository;
         this.merchandiseOrderRepository=merchandiseOrderRepository;
         this.userRepository=userRepository;
         this.merchandiseRepository= merchandiseRepository;
         this.seatRepository = seatRepository;
         this.stadiumRepository= stadiumRepository;
+    
         
 
 
@@ -72,17 +74,18 @@ public class MerchandiseOrderService {
 
         for(int i=0; i<size; i++)
         {Merchandise bookedMerchandise= merchandiseRepository.findById(merchandiseIdlist.get(i))
-            .orElseThrow(() -> new RuntimeException("Food not found"));
+            .orElseThrow(() -> new RuntimeException("Merchandise not found"));
 
             EventMerchandise eventMerchandise= new EventMerchandise();
 
-            eventFood.setName(bookedMerchandise.getName());
-            eventFood.setRestaurantId(bookedMerchandise.getRestaurantId());
-            eventFood.setPrice(bookedFood.getPrice());
-            eventFood.setRating(bookedFood.getRating());
+            eventMerchandise.setName(bookedMerchandise.getName());
+            eventMerchandise.setDescription(bookedMerchandise.getDescription());
+            eventMerchandise.setPrice(bookedMerchandise.getPrice());
+            eventMerchandise.setRating(bookedMerchandise.getRating());
 
-            eventFood.setOrderId(foodOrder);
-            eventFoodRepository.save(eventFood);
+
+            eventMerchandise.setMerchandiseOrderId(merchandiseOrder);
+            eventMerchandiseRepository.save(eventMerchandise);
         
 
 
@@ -97,7 +100,7 @@ public class MerchandiseOrderService {
         }
 
   Map<String,String> response = new HashMap<>();
-        response.put("message", "Food Order booked!");
+        response.put("message", "Merchandise Order booked!");
         return response;
 
         
@@ -108,16 +111,20 @@ public class MerchandiseOrderService {
 
 
 
-    public List<FoodOrderResponseDto> getOrderByUserId(Long userId)
-    {List<FoodOrder> orders= foodOrderRepository.findByUserId((userId));
+    public List<MerchandiseOrderResponseDto> getMerchandiseOrderByUserId(Long userId)
+    {List<MerchandiseOrder> orders= merchandiseOrderRepository.findByUserId((userId));
 
-        List<FoodOrderResponseDto> dtoList= new ArrayList<>();
+        List<MerchandiseOrderResponseDto> dtoList= new ArrayList<>();
 
-        for(FoodOrder order:orders)
-        {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
-        orderResponseDto.setPrice(order.getPrice());
-        orderResponseDto.setSeatId(order.getSeatId());
-        orderResponseDto.setUserId(order.getUserId());
+        for(MerchandiseOrder order:orders)
+        {MerchandiseOrderResponseDto orderResponseDto= new MerchandiseOrderResponseDto();
+
+            orderResponseDto.setPrice(order.getPrice());
+            orderResponseDto.setSeatId(order.getSeatId());
+            orderResponseDto.setUserId(order.getUserId());
+            orderResponseDto.setStadiumId(order.getStadiumId());
+        
+
 
         dtoList.add(orderResponseDto);
 
@@ -130,16 +137,20 @@ public class MerchandiseOrderService {
 
     }
 
-    public List<FoodOrderResponseDto> getOrderByRestaurantId(Long restaurantId)
-    {List<FoodOrder> orders= foodOrderRepository.findByRestaurantId((restaurantId));
+    public List<MerchandiseOrderResponseDto> getMerchandiseOrderByStadiumId(Long userId)
+    {List<MerchandiseOrder> orders= merchandiseOrderRepository.findByStadiumId((userId));
 
-        List<FoodOrderResponseDto> dtoList= new ArrayList<>();
+        List<MerchandiseOrderResponseDto> dtoList= new ArrayList<>();
 
-        for(FoodOrder order:orders)
-        {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
-        orderResponseDto.setPrice(order.getPrice());
-        orderResponseDto.setSeatId(order.getSeatId());
-        orderResponseDto.setUserId(order.getUserId());
+        for(MerchandiseOrder order:orders)
+        {MerchandiseOrderResponseDto orderResponseDto= new MerchandiseOrderResponseDto();
+
+            orderResponseDto.setPrice(order.getPrice());
+            orderResponseDto.setSeatId(order.getSeatId());
+            orderResponseDto.setUserId(order.getUserId());
+            orderResponseDto.setStadiumId(order.getStadiumId());
+        
+
 
         dtoList.add(orderResponseDto);
 

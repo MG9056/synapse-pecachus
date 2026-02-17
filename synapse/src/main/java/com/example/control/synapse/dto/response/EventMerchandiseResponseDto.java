@@ -1,5 +1,71 @@
 package com.example.control.synapse.dto.response;
 
+import com.example.control.synapse.models.MerchandiseOrder;
+import com.example.control.synapse.models.Stadium;
+
+
 public class EventMerchandiseResponseDto {
+   
     
+    private String name;
+    private String description;
+    private double price;
+    private double rating;
+   
+    private Stadium stadiumId;
+    private MerchandiseOrder merchandiseOrderId;
+
+   
+    public EventMerchandiseResponseDto() {}
+    public EventMerchandiseResponseDto(String name, String description, double price, double rating, Stadium stadiumId, MerchandiseOrder merchandiseOrderId) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.rating = rating;
+        this.stadiumId = stadiumId;
+        this.merchandiseOrderId= merchandiseOrderId;
+        
+    }
+
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public double getPrice() {
+        return price;
+    }
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    public double getRating() {
+        return rating;
+    }
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+    public Stadium getStadiumId() {
+        return stadiumId;
+    }
+    public void setStadiumId(Stadium stadium) {
+        this.stadiumId = stadium;
+    }
+
+     public MerchandiseOrder getMerchandiseOrderId() {
+        return merchandiseOrderId;
+    }
+    public void setMerchandiseOrderId(MerchandiseOrder merchandiseOrderId) {
+        this.merchandiseOrderId = merchandiseOrderId;
+    }
+    
+    
+
 }

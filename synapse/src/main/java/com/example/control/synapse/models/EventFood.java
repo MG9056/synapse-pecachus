@@ -7,12 +7,19 @@ import jakarta.persistence.ManyToOne;
 
 public class EventFood{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
 private Long id;
 private String name;
+
+@ManyToOne
 private Restaurant restaurantId;
 
 private float price;
 private float rating;
+
+@ManyToOne
 private FoodOrder orderId;
 
 
