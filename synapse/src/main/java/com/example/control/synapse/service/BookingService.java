@@ -39,7 +39,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
-     private final SimpMessagingTemplate messagingTemplate;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
        private final Map<Long, ScheduledFuture<?>> reservationTimers = new ConcurrentHashMap<>();
