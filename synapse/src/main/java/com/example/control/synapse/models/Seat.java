@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Seat {
@@ -18,6 +19,7 @@ public class Seat {
     private Boolean isWomen;
     private Boolean isAccessible;
     private String category;
+    @ManyToOne
     private Stadium stadiumId;
     public Seat() {}
     public Seat(String row, Integer seatNo, Boolean closeToWc, Boolean closeToFoodStall, Boolean closeToExit,
