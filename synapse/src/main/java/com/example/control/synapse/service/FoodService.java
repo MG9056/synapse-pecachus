@@ -43,7 +43,7 @@ public class FoodService {
         .orElseThrow(() -> new RuntimeException("Stadium not found"));
 
 
-    food.setRestaurantId(restaurant);
+    food.setRestaurant(restaurant);
 
     food.setPrice(price);
     food.setRating(rating);
@@ -63,7 +63,7 @@ public class FoodService {
     food.setName(name);
     
     Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
-    food.setRestaurantId(restaurant);
+    food.setRestaurant(restaurant);
     food.setPrice(price);
     food.setRating(rating);
 
@@ -91,7 +91,7 @@ public class FoodService {
 
          foodResponseDto.setId(food.getId());
         foodResponseDto.setName(food.getName());
-        foodResponseDto.setRestaurantId(food.getRestaurantId().getId());
+        foodResponseDto.setRestaurantId(food.getRestaurant().getId());
         foodResponseDto.setPrice(food.getPrice());
         foodResponseDto.setRating(food.getRating());
 
@@ -114,7 +114,7 @@ public class FoodService {
 
          foodResponseDto.setId(food.getId());
         foodResponseDto.setName(food.getName());
-        foodResponseDto.setRestaurantId(food.getRestaurantId().getId());
+        foodResponseDto.setRestaurantId(food.getRestaurant().getId());
         foodResponseDto.setPrice(food.getPrice());
         foodResponseDto.setRating(food.getRating());
 
@@ -134,7 +134,7 @@ public class FoodService {
 
     foodResponseDto.setId(food.getId());
     foodResponseDto.setName(food.getName());
-    foodResponseDto.setRestaurantId((food.getRestaurantId().getId()));
+    foodResponseDto.setRestaurantId((food.getRestaurant().getId()));
     foodResponseDto.setPrice(food.getPrice());
     foodResponseDto.setRating(food.getRating());
 

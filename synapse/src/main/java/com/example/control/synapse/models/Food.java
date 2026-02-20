@@ -47,11 +47,11 @@ public class Food {
         this.name = name;
     }
 
-    public Restaurant getRestaurantId() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
 
-    public void setRestaurantId(Restaurant restaurant) {
+    public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
 

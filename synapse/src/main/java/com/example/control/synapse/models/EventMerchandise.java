@@ -64,17 +64,17 @@ public class EventMerchandise {
     public void setRating(double rating) {
         this.rating = rating;
     }
-    public Stadium getStadiumId() {
+    public Stadium getStadium() {
         return stadium;
     }
-    public void setStadiumId(Stadium stadium) {
+    public void setStadium(Stadium stadium) {
         this.stadium = stadium;
     }
 
-    public MerchandiseOrder getMerchandiseOrderId() {
+    public MerchandiseOrder getMerchandiseOrder() {
         return merchandiseOrder;
     }
-    public void setMerchandiseOrderId(MerchandiseOrder merchandiseOrderId) {
+    public void setMerchandiseOrder(MerchandiseOrder merchandiseOrderId) {
         this.merchandiseOrder = merchandiseOrderId;
     }
     

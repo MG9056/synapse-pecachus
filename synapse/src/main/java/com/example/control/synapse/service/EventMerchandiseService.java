@@ -31,8 +31,8 @@ public class EventMerchandiseService {
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
 
         return eventMerchandiseResponseDto;
     
@@ -58,8 +58,8 @@ public class EventMerchandiseService {
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
 
         dtoList.add(eventMerchandiseResponseDto);
         }
@@ -87,8 +87,8 @@ public class EventMerchandiseService {
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
 
         dtoList.add(eventMerchandiseResponseDto);
         }
@@ -117,8 +117,8 @@ public class EventMerchandiseService {
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
 
         dtoList.add(eventMerchandiseResponseDto);
         }

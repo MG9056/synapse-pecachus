@@ -36,10 +36,10 @@ public class Feedback {
     public void setUser(User user) {
         this.user = user;
     }
-    public Event getEventId() {
+    public Event getEvent() {
         return event;
     }
-    public void setEventId(Event eventId) {
+    public void setEvent(Event eventId) {
         this.event= eventId;
     }
     public String getContent() {

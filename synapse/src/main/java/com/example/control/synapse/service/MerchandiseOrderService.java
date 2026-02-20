@@ -11,14 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.models.Seat;
 import com.example.control.synapse.models.Stadium;
-import com.example.control.synapse.models.FoodOrder;
+
 import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.models.MerchandiseOrder;
-import com.example.control.synapse.models.Restaurant;
-import com.example.control.synapse.models.Food;
-import com.example.control.synapse.dto.response.FoodOrderResponseDto;
+
 import com.example.control.synapse.dto.response.MerchandiseOrderResponseDto;
-import com.example.control.synapse.models.EventFood;
+
 import com.example.control.synapse.models.EventMerchandise;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.*;
@@ -84,7 +82,7 @@ public class MerchandiseOrderService {
             eventMerchandise.setRating(bookedMerchandise.getRating());
 
 
-            eventMerchandise.setMerchandiseOrderId(merchandiseOrder);
+            eventMerchandise.setMerchandiseOrder(merchandiseOrder);
             eventMerchandiseRepository.save(eventMerchandise);
         
 

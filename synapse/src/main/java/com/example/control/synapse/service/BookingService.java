@@ -59,7 +59,7 @@ public class BookingService {
 
         SeatUpdateMessage msg = new SeatUpdateMessage(
             seat.getId(),                         // eventSeatId
-            seat.getEventId().getId(),            // eventId
+            seat.getEvent().getId(),            // eventId
             // seat.getSeatId().getId(),             // physical seatId
             seat.getAvailability(),               // availability
             status,
@@ -67,7 +67,7 @@ public class BookingService {
     );
 
         messagingTemplate.convertAndSend(
-                "/topic/event/" + seat.getEventId().getId(),
+                "/topic/event/" + seat.getEvent().getId(),
                 msg
         );
     }
@@ -139,8 +139,8 @@ public class BookingService {
 
         
         Booking booking = new Booking();
-        booking.setEventId(event);
-        booking.setUserId(user);
+        booking.setEvent(event);
+        booking.setUser(user);
         booking.setBookingTime(LocalDateTime.now());
         bookingRepository.save(booking);
 
@@ -150,7 +150,7 @@ public class BookingService {
        { EventSeat bookedSeat= eventSeatRepository.findById(seatIdlist.get(i))
         .orElseThrow(() -> new RuntimeException("Seat not found"));
         
-        bookedSeat.setBookingId(booking);
+        bookedSeat.setBooking(booking);
         eventSeatRepository.save(bookedSeat);
 
          broadcastSeatUpdate(bookedSeat, "BOOKED");
@@ -191,8 +191,8 @@ public class BookingService {
     {Booking booking= bookingRepository.findById(id).orElseThrow();
         BookingResponseDto bookingResponseDto= new BookingResponseDto();
             bookingResponseDto.setId(booking.getId());
-            bookingResponseDto.setUserId(booking.getUserId().getId());
-            bookingResponseDto.setEventId(booking.getEventId().getId());
+            bookingResponseDto.setUserId(booking.getUser().getId());
+            bookingResponseDto.setEventId(booking.getEvent().getId());
             bookingResponseDto.setBookingTime(booking.getBookingTime());
 
             return bookingResponseDto;
@@ -211,8 +211,8 @@ public class BookingService {
         {
             BookingResponseDto bookingResponseDto= new BookingResponseDto();
             bookingResponseDto.setId(booking.getId());
-            bookingResponseDto.setUserId(booking.getUserId().getId());
-            bookingResponseDto.setEventId(booking.getEventId().getId());
+            bookingResponseDto.setUserId(booking.getUser().getId());
+            bookingResponseDto.setEventId(booking.getEvent().getId());
             bookingResponseDto.setBookingTime(booking.getBookingTime());
 
 
@@ -238,8 +238,8 @@ public class BookingService {
         {
             BookingResponseDto bookingResponseDto= new BookingResponseDto();
             bookingResponseDto.setId(booking.getId());
-            bookingResponseDto.setUserId(booking.getUserId().getId());
-            bookingResponseDto.setEventId(booking.getEventId().getId());
+            bookingResponseDto.setUserId(booking.getUser().getId());
+            bookingResponseDto.setEventId(booking.getEvent().getId());
             bookingResponseDto.setBookingTime(booking.getBookingTime());
 
 
@@ -265,8 +265,8 @@ public class BookingService {
         {
             BookingResponseDto bookingResponseDto= new BookingResponseDto();
             bookingResponseDto.setId(booking.getId());
-            bookingResponseDto.setUserId(booking.getUserId().getId());
-            bookingResponseDto.setEventId(booking.getEventId().getId());
+            bookingResponseDto.setUserId(booking.getUser().getId());
+            bookingResponseDto.setEventId(booking.getEvent().getId());
             bookingResponseDto.setBookingTime(booking.getBookingTime());
 
 

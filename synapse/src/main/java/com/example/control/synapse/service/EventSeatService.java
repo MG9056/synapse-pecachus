@@ -44,10 +44,10 @@ public class EventSeatService {
                 .orElseThrow(() -> new RuntimeException("Event not found with id: " + eventId));
         
         // Get all seats for the stadium
-        List<Seat> seats = seatRepository.findByStadiumId_Id(event.getStadiumId().getId());
+        List<Seat> seats = seatRepository.findByStadiumId_Id(event.getStadium().getId());
         
         if (seats.isEmpty()) {
-            throw new IllegalStateException("No seats found for stadium with id: " + event.getStadiumId().getId());
+            throw new IllegalStateException("No seats found for stadium with id: " + event.getStadium().getId());
         }
         
         List<EventSeat> eventSeats = new ArrayList<>();
@@ -62,8 +62,8 @@ public class EventSeatService {
             }
             
             EventSeat eventSeat = new EventSeat();
-            eventSeat.setSeatId(seat);
-            eventSeat.setEventId(event);
+            eventSeat.setSeat(seat);
+            eventSeat.setEvent(event);
             eventSeat.setAvailability(true);
             eventSeat.setPrice(price);
             
@@ -97,8 +97,8 @@ public class EventSeatService {
                 .orElseThrow(() -> new RuntimeException("Event not found with id: " + createDto.getEventId()));
         
         EventSeat eventSeat = new EventSeat();
-        eventSeat.setSeatId(seat);
-        eventSeat.setEventId(event);
+        eventSeat.setSeat(seat);
+        eventSeat.setEvent(event);
         eventSeat.setAvailability(createDto.getAvailability());
         eventSeat.setPrice(createDto.getPrice());
         
@@ -167,16 +167,16 @@ public class EventSeatService {
                 .orElseThrow(() -> new RuntimeException("Event seat not found with id: " + id));
         
         // Update fields
-        if (updateDto.getSeatId() != null && !updateDto.getSeatId().equals(eventSeat.getSeatId().getId())) {
+        if (updateDto.getSeatId() != null && !updateDto.getSeatId().equals(eventSeat.getSeat().getId())) {
             Seat seat = seatRepository.findById(updateDto.getSeatId())
                     .orElseThrow(() -> new RuntimeException("Seat not found with id: " + updateDto.getSeatId()));
-            eventSeat.setSeatId(seat);
+            eventSeat.setSeat(seat);
         }
         
-        if (updateDto.getEventId() != null && !updateDto.getEventId().equals(eventSeat.getEventId().getId())) {
+        if (updateDto.getEventId() != null && !updateDto.getEventId().equals(eventSeat.getEvent().getId())) {
             Event event = eventRepository.findById(updateDto.getEventId())
                     .orElseThrow(() -> new RuntimeException("Event not found with id: " + updateDto.getEventId()));
-            eventSeat.setEventId(event);
+            eventSeat.setEvent(event);
         }
         
         if (updateDto.getAvailability() != null) {
@@ -228,13 +228,13 @@ public class EventSeatService {
     private EventSeatResponseDto convertToResponseDto(EventSeat eventSeat) {
         return EventSeatResponseDto.builder()
                 .id(eventSeat.getId())
-                .seatId(eventSeat.getSeatId().getId())
-                .seatNumber(eventSeat.getSeatId().getSeatNo())
-                .seatCategory(eventSeat.getSeatId().getCategory())
-                .eventId(eventSeat.getEventId().getId())
-                .eventName(eventSeat.getEventId().getName())
+                .seatId(eventSeat.getSeat().getId())
+                .seatNumber(eventSeat.getSeat().getSeatNo())
+                .seatCategory(eventSeat.getSeat().getCategory())
+                .eventId(eventSeat.getEvent().getId())
+                .eventName(eventSeat.getEvent().getName())
                 .availability(eventSeat.getAvailability())
-                .bookingId(eventSeat.getBookingId() != null ? eventSeat.getBookingId().getId() : null)
+                .bookingId(eventSeat.getBooking() != null ? eventSeat.getBooking().getId() : null)
                 .price(eventSeat.getPrice())
                 .build();
     }

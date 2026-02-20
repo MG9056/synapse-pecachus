@@ -16,8 +16,8 @@ public class FeedbackMapper {
                 .id(feedback.getId())
                 .userId(feedback.getUser() != null ? feedback.getUser().getId() : null)
                 .userName(feedback.getUser() != null ? feedback.getUser().getUsername() : null)
-                .eventId(feedback.getEventId() != null ? feedback.getEventId().getId() : null)
-                .eventName(feedback.getEventId() != null ? feedback.getEventId().getName() : null)
+                .eventId(feedback.getEvent() != null ? feedback.getEvent().getId() : null)
+                .eventName(feedback.getEvent() != null ? feedback.getEvent().getName() : null)
                 .content(feedback.getContent())
                 .rating(feedback.getRating())
                 .build();

@@ -36,10 +36,10 @@ public class Event {
     public void setId(Long id) {
         this.id = id;
     }
-    public Stadium getStadiumId() {
+    public Stadium getStadium() {
         return stadium;
     }
-    public void setStadiumId(Stadium stadiumId) {
+    public void setStadium(Stadium stadiumId) {
         this.stadium = stadiumId;
     }
     public String getName() {

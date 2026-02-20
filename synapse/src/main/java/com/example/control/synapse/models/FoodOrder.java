@@ -45,23 +45,23 @@ public class FoodOrder {
     public void setPrice(double price) {
         this.price = price;
     }
-    public Seat getSeatId() {
+    public Seat getSeat() {
         return seat;
     }
-    public void setSeatId(Seat seat) {
+    public void setSeat(Seat seat) {
         this.seat = seat;
     }
-    public User getUserId() {
+    public User getUser() {
         return user;
     }
-    public void setUserId(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public Restaurant getRestaurantId() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
-    public void setRestaurantId(Restaurant restaurantId) {
+    public void setRestaurant(Restaurant restaurantId) {
 
         this.restaurant = restaurantId;
      }

@@ -58,10 +58,10 @@ public class Merchandise {
     public void setRating(double rating) {
         this.rating = rating;
     }
-    public Stadium getStadiumId() {
+    public Stadium getStadium() {
         return stadium;
     }
-    public void setStadiumId(Stadium stadium) {
+    public void setStadium(Stadium stadium) {
         this.stadium = stadium;
     }
     

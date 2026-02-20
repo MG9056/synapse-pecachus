@@ -33,10 +33,10 @@ public class EventSeat {
     public void setId(Long id) {
         this.id = id;
     }
-    public Seat getSeatId() {
+    public Seat getSeat() {
         return seat;
     }
-    public void setSeatId(Seat seatId) {
+    public void setSeat(Seat seatId) {
         this.seat = seatId;
     }
     public Boolean getAvailability() {
@@ -45,10 +45,10 @@ public class EventSeat {
     public void setAvailability(Boolean availability) {
         this.availability = availability;
     }
-    public Booking getBookingId() {
+    public Booking getBooking() {
         return booking;
     }
-    public void setBookingId(Booking bookingId) {
+    public void setBooking(Booking bookingId) {
         this.booking = bookingId;
     }
     public double getPrice() {
@@ -57,10 +57,10 @@ public class EventSeat {
     public void setPrice(double price) {
         this.price = price;
     }
-    public Event getEventId() {
+    public Event getEvent() {
         return event;
     }
-    public void setEventId(Event eventId) {
+    public void setEvent(Event eventId) {
         this.event = eventId;
     }
 
