@@ -19,23 +19,23 @@ public class Sos {
     private LocalDateTime timeStamp;
 
     @ManyToOne
-    private User userId;
+    private User user;
 
     @ManyToOne
-    private Event eventId;
+    private Event event;
 
    
 
     public Sos(){}
 
-    Sos(String alertType, String message, Boolean isActive, LocalDateTime timeStamp, User userId, Event eventId )
+    Sos(String alertType, String message, Boolean isActive, LocalDateTime timeStamp, User user, Event event )
     {
         this.alertType=alertType;
         this.message=message;
         this.isActive= isActive;
         this.timeStamp=timeStamp;
-        this.userId=userId;
-        this.eventId=eventId;
+        this.user=user;
+        this.event=event;
     }
 
     public Long getId() {
@@ -78,20 +78,20 @@ public class Sos {
         this.timeStamp = timeStamp;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = userId;
     }
 
-     public Event getEventId() {
-        return eventId;
+     public Event getEvent() {
+        return event;
     }
 
-    public void setEventId(Event eventId) {
-        this.eventId = eventId;
+    public void setEvent(Event event) {
+        this.event = event;
     }
     
 

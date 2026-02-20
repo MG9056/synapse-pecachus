@@ -20,10 +20,10 @@ public class Seat {
     private Boolean isAccessible;
     private String category;
     @ManyToOne
-    private Stadium stadiumId;
+    private Stadium stadium;
     public Seat() {}
     public Seat(String row, Integer seatNo, Boolean closeToWc, Boolean closeToFoodStall, Boolean closeToExit,
-            Boolean isWomen, Boolean isAccessible, String category,Stadium stadiumId) {
+            Boolean isWomen, Boolean isAccessible, String category,Stadium stadium) {
         this.row = row;
         this.seatNo = seatNo;
         this.closeToWc = closeToWc;
@@ -32,7 +32,7 @@ public class Seat {
         this.isWomen = isWomen;
         this.isAccessible = isAccessible;
         this.category = category;
-        this.stadiumId=stadiumId;
+        this.stadium=stadium;
     }
     public Long getId() {
         return id;
@@ -88,11 +88,11 @@ public class Seat {
     public void setCategory(String category) {
         this.category = category;
     }
-    public Stadium getStadiumId() {
-        return stadiumId;
+    public Stadium getStadium() {
+        return stadium;
     }
-    public void setStadiumId(Stadium stadiumId) {
-        this.stadiumId = stadiumId;
+    public void setStadium(Stadium stadium) {
+        this.stadium = stadium;
     }
     
     

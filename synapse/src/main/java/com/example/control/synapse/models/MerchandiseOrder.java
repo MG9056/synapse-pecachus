@@ -46,24 +46,24 @@ public class MerchandiseOrder {
     public void setPrice(double price) {
         this.price = price;
     }
-    public Seat getSeatId() {
+    public Seat getSeat() {
         return seat;
     }
-     public void setSeatId(Seat seat) {
+     public void setSeat(Seat seat) {
         this.seat = seat;
     }
-    public User getUserId() {
+    public User getUser() {
         return user;
     }
-    public void setUserId(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public Stadium getStadiumId() {
+    public Stadium getStadium() {
         return stadium;
     }
-    public void setStadiumId(Stadium stadiumId) {
-        this.stadium = stadiumId;
+    public void setStadium(Stadium stadium) {
+        this.stadium = stadium;
      }
 
      

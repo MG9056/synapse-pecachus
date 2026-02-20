@@ -16,14 +16,14 @@ public class Restaurant {
     private double rating;
 
     @ManyToOne
-    private Stadium stadiumId;
+    private Stadium stadium;
 
     public Restaurant(){}
 
-    public Restaurant(String name, double rating, Stadium stadiumId)
+    public Restaurant(String name, double rating, Stadium stadium)
     {this.name=name;
         this.rating= rating;
-        this.stadiumId=stadiumId;
+        this.stadium=stadium;
         
     }
 
@@ -51,12 +51,12 @@ public class Restaurant {
         this.rating = rating;
     }
 
-    public Stadium getStadiumId() {
-        return stadiumId;
+    public Stadium getStadium() {
+        return stadium;
     }
 
-    public void setStadiumId(Stadium stadiumId) {
-        this.stadiumId = stadiumId;
+    public void setStadiumId(Stadium stadium) {
+        this.stadium = stadium;
     }
 
     
