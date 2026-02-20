@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/FoodOrder")
+@RequestMapping("/MerchandiseOrder")
 public class MerchandiseOrderController {
 
     private final MerchandiseOrderService merchandiseOrderService;

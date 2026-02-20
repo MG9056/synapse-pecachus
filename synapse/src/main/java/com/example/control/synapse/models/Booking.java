@@ -16,17 +16,17 @@ public class Booking {
 
      private Long id;
      @ManyToOne
-     private User userId;
+     private User user;
 
      @ManyToOne
-     private Event eventId;
+     private Event event;
      private LocalDateTime bookingTime;
 
      public Booking(){}
 
      public Booking(User user, Event event, LocalDateTime datetime)
-     {this.userId=user;
-        this.eventId=event;
+     {this.user=user;
+        this.event=event;
         this.bookingTime=datetime;
 
 
@@ -45,19 +45,19 @@ public class Booking {
      }
 
      public User getUserId() {
-         return userId;
+         return user;
      }
 
      public void setUserId(User user) {
-         this.userId = user;
+         this.user = user;
      }
 
      public Event getEventId() {
-         return eventId;
+         return event;
      }
 
      public void setEventId(Event event) {
-         this.eventId = event;
+         this.event = event;
      }
 
      public LocalDateTime getBookingTime() {
