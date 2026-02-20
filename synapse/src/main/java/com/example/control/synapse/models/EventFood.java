@@ -39,10 +39,10 @@ public class EventFood{
     public void setName(String name) {
         this.name = name;
     }
-    public Restaurant getRestaurantId() {
+    public Restaurant getRestaurant() {
         return restaurant;
     }
-    public void setRestaurantId(Restaurant restaurantId) {
+    public void setRestaurant(Restaurant restaurantId) {
         this.restaurant = restaurantId;
     }
 
@@ -53,10 +53,10 @@ public class EventFood{
     public void setRating(float rating) {
         this.rating = rating;
     }
-    public FoodOrder getOrderId() {
+    public FoodOrder getOrder() {
         return order;
     }
-    public void setOrderId(FoodOrder orderId) {
+    public void setOrder(FoodOrder orderId) {
         this.order = orderId;
     }
 

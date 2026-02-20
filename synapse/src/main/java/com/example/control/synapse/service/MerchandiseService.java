@@ -8,10 +8,9 @@ import java.util.Map;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.control.synapse.dto.request.MerchandiseRequest;
+
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
-import com.example.control.synapse.dto.response.StadiumResponseDto;
-import com.example.control.synapse.models.Food;
+
 import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.models.User;
@@ -47,7 +46,7 @@ public class MerchandiseService {
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadium().getId());
 
         return merchandiseResponseDto;
 
@@ -71,7 +70,7 @@ public class MerchandiseService {
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadium().getId());
 
         dtoList.add(merchandiseResponseDto);
 
@@ -100,7 +99,7 @@ public class MerchandiseService {
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadium().getId());
 
         dtoList.add(merchandiseResponseDto);
 
@@ -121,7 +120,7 @@ public class MerchandiseService {
         merchandise.setRating(rating);
 
         Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
-        merchandise.setStadiumId(stadium);
+        merchandise.setStadium(stadium);
 
         merchandiseRepository.save(merchandise);
 
@@ -142,7 +141,7 @@ public class MerchandiseService {
      merchandise.setName(description);
      merchandise.setPrice(price);
      merchandise.setRating(rating);
-     merchandise.setStadiumId(stadiumId);
+     merchandise.setStadium(stadiumId);
 
      merchandiseRepository.save(merchandise);
 

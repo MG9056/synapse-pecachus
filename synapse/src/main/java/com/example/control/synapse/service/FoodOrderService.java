@@ -61,9 +61,9 @@ public class FoodOrderService {
 
         FoodOrder foodOrder = new FoodOrder();
         foodOrder.setPrice(price);
-        foodOrder.setUserId(user);
-        foodOrder.setSeatId(seat);
-        foodOrder.setRestaurantId(restaurant);
+        foodOrder.setUser(user);
+        foodOrder.setSeat(seat);
+        foodOrder.setRestaurant(restaurant);
         foodOrderRepository.save(foodOrder);
         
 
@@ -74,11 +74,11 @@ public class FoodOrderService {
             EventFood eventFood= new EventFood();
 
             eventFood.setName(bookedFood.getName());
-            eventFood.setRestaurantId(bookedFood.getRestaurantId());
+            eventFood.setRestaurant(bookedFood.getRestaurant());
             eventFood.setPrice(bookedFood.getPrice());
             eventFood.setRating(bookedFood.getRating());
 
-            eventFood.setOrderId(foodOrder);
+            eventFood.setOrder(foodOrder);
             eventFoodRepository.save(eventFood);
         
 
@@ -114,9 +114,9 @@ public class FoodOrderService {
         {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
         orderResponseDto.setId(order.getId());
         orderResponseDto.setPrice(order.getPrice());
-        orderResponseDto.setSeatId(order.getSeatId().getId());
-        orderResponseDto.setUserId(order.getUserId().getId());
-        orderResponseDto.setRestaurantId(order.getRestaurantId().getId());
+        orderResponseDto.setSeatId(order.getSeat().getId());
+        orderResponseDto.setUserId(order.getUser().getId());
+        orderResponseDto.setRestaurantId(order.getRestaurant().getId());
 
         dtoList.add(orderResponseDto);
 
@@ -138,9 +138,9 @@ public class FoodOrderService {
         {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
         orderResponseDto.setId(order.getId());
         orderResponseDto.setPrice(order.getPrice());
-        orderResponseDto.setSeatId(order.getSeatId().getId());
-        orderResponseDto.setUserId(order.getUserId().getId());
-        orderResponseDto.setRestaurantId(order.getRestaurantId().getId());
+        orderResponseDto.setSeatId(order.getSeat().getId());
+        orderResponseDto.setUserId(order.getUser().getId());
+        orderResponseDto.setRestaurantId(order.getRestaurant().getId());
 
         dtoList.add(orderResponseDto);
 
@@ -162,9 +162,9 @@ public class FoodOrderService {
         {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
         orderResponseDto.setId(order.getId());
         orderResponseDto.setPrice(order.getPrice());
-        orderResponseDto.setSeatId(order.getSeatId().getId());
-        orderResponseDto.setUserId(order.getUserId().getId());
-        orderResponseDto.setRestaurantId(order.getRestaurantId().getId());
+        orderResponseDto.setSeatId(order.getSeat().getId());
+        orderResponseDto.setUserId(order.getUser().getId());
+        orderResponseDto.setRestaurantId(order.getRestaurant().getId());
 
         dtoList.add(orderResponseDto);
 

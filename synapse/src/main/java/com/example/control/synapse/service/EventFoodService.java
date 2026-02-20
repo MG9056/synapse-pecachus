@@ -31,10 +31,10 @@ public class EventFoodService {
 
       eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurant().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrder().getId());
 
         return eventFoodResponseDto;
 
@@ -58,10 +58,10 @@ public class EventFoodService {
        
        eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurant().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrder().getId());
 
         dtoList.add(eventFoodResponseDto);
 
@@ -82,10 +82,10 @@ public class EventFoodService {
        EventFoodResponseDto eventFoodResponseDto= new EventFoodResponseDto();
          eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurant().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrder().getId());
 
         dtoList.add(eventFoodResponseDto);
 
@@ -105,10 +105,10 @@ public class EventFoodService {
        EventFoodResponseDto eventFoodResponseDto= new EventFoodResponseDto();
       eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurant().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrder().getId());
 
         dtoList.add(eventFoodResponseDto);
 

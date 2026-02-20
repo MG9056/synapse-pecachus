@@ -8,12 +8,12 @@ import java.util.Map;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.control.synapse.dto.response.RestaurantResponseDto;
+
 import com.example.control.synapse.dto.response.StadiumResponseDto;
-import com.example.control.synapse.models.Restaurant;
+
 import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.models.User;
-import com.example.control.synapse.repository.RestaurantRepository;
+
 import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.repository.UserRepository;
 
@@ -22,14 +22,13 @@ import com.example.control.synapse.repository.UserRepository;
 public class StadiumService {
 
     private final StadiumRepository stadiumRepository;
-    private final RestaurantRepository restaurantRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public StadiumService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository, UserRepository userRepository, PasswordEncoder passwordEncoder)
+    public StadiumService(StadiumRepository stadiumRepository, UserRepository userRepository, PasswordEncoder passwordEncoder)
     {
         this.stadiumRepository=stadiumRepository;
-        this.restaurantRepository= restaurantRepository;
+
         this.userRepository= userRepository;
         this.passwordEncoder= passwordEncoder;
     }
