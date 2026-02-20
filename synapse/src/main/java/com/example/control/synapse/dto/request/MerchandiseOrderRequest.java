@@ -1,7 +1,7 @@
 package com.example.control.synapse.dto.request;
 import java.util.List;
 
-import com.example.control.synapse.models.Stadium;
+
 
 public class MerchandiseOrderRequest {
         private List<Long> merchandiseIdlist;

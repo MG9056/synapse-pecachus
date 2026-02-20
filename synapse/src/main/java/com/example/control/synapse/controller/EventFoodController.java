@@ -1,17 +1,15 @@
 package com.example.control.synapse.controller;
 
 import java.util.List;
-import java.util.Map;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.control.synapse.dto.request.EventFoodRequest;
-import com.example.control.synapse.dto.request.FoodRequest;
+
 import com.example.control.synapse.dto.response.EventFoodResponseDto;
 import com.example.control.synapse.service.EventFoodService;
 

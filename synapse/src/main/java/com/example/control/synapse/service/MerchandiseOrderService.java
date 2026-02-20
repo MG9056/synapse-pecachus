@@ -119,10 +119,11 @@ public class MerchandiseOrderService {
         for(MerchandiseOrder order:orders)
         {MerchandiseOrderResponseDto orderResponseDto= new MerchandiseOrderResponseDto();
 
+             orderResponseDto.setId(order.getId());
             orderResponseDto.setPrice(order.getPrice());
-            orderResponseDto.setSeatId(order.getSeatId());
-            orderResponseDto.setUserId(order.getUserId());
-            orderResponseDto.setStadiumId(order.getStadiumId());
+            orderResponseDto.setSeatId(order.getSeatId().getId());
+            orderResponseDto.setUserId(order.getUserId().getId());
+            orderResponseDto.setStadiumId(order.getStadiumId().getId());
         
 
 
@@ -145,10 +146,12 @@ public class MerchandiseOrderService {
         for(MerchandiseOrder order:orders)
         {MerchandiseOrderResponseDto orderResponseDto= new MerchandiseOrderResponseDto();
 
+
+            orderResponseDto.setId(order.getId());
             orderResponseDto.setPrice(order.getPrice());
-            orderResponseDto.setSeatId(order.getSeatId());
-            orderResponseDto.setUserId(order.getUserId());
-            orderResponseDto.setStadiumId(order.getStadiumId());
+            orderResponseDto.setSeatId(order.getSeatId().getId());
+            orderResponseDto.setUserId(order.getUserId().getId());
+            orderResponseDto.setStadiumId(order.getStadiumId().getId());
         
 
 

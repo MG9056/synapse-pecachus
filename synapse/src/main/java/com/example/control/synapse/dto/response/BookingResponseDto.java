@@ -2,8 +2,7 @@ package com.example.control.synapse.dto.response;
 
 import java.time.LocalDateTime;
 
-import com.example.control.synapse.models.Event;
-import com.example.control.synapse.models.User;
+
 
 
 
@@ -14,15 +13,16 @@ public class BookingResponseDto {
 
      private Long id;
    
-     private User userId;
+     private Long userId;
 
-     private Event eventId;
+     private Long eventId;
      private LocalDateTime bookingTime;
 
      public BookingResponseDto(){}
 
-     public BookingResponseDto(User user, Event event, LocalDateTime datetime)
-     {this.userId=user;
+     public BookingResponseDto(Long id,Long user, Long event, LocalDateTime datetime)
+     {  this.id=id;
+        this.userId=user;
         this.eventId=event;
         this.bookingTime=datetime;
 
@@ -41,19 +41,19 @@ public class BookingResponseDto {
          this.id = id;
      }
 
-     public User getUserId() {
+     public Long getUserId() {
          return userId;
      }
 
-     public void setUserId(User user) {
+     public void setUserId(Long user) {
          this.userId = user;
      }
 
-     public Event getEventId() {
+     public Long getEventId() {
          return eventId;
      }
 
-     public void setEventId(Event event) {
+     public void setEventId(Long event) {
          this.eventId = event;
      }
 

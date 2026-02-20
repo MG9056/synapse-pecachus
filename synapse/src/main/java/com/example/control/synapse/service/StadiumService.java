@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
 import com.example.control.synapse.dto.response.StadiumResponseDto;
@@ -16,6 +17,8 @@ import com.example.control.synapse.repository.RestaurantRepository;
 import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.repository.UserRepository;
 
+
+@Service
 public class StadiumService {
 
     private final StadiumRepository stadiumRepository;
@@ -61,6 +64,7 @@ public class StadiumService {
 
         StadiumResponseDto stadiumResponseDto= new StadiumResponseDto();
 
+        stadiumResponseDto.setId(stadium.getId());
         stadiumResponseDto.setCity(stadium.getCity());
      stadiumResponseDto.setState(stadium.getState());
      stadiumResponseDto.setCountry(stadium.getCountry());
@@ -80,6 +84,7 @@ public class StadiumService {
         for(Stadium stadium: stadiums)
         {StadiumResponseDto stadiumResponseDto= new StadiumResponseDto();
 
+            stadiumResponseDto.setId(stadium.getId());
             stadiumResponseDto.setCity(stadium.getCity());
      stadiumResponseDto.setState(stadium.getState());
      stadiumResponseDto.setCountry(stadium.getCountry());

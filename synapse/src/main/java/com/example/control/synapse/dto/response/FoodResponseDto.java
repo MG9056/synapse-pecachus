@@ -1,7 +1,7 @@
 package com.example.control.synapse.dto.response;
 
 
-import com.example.control.synapse.models.Restaurant;
+
 
 
 public class FoodResponseDto {
@@ -9,7 +9,7 @@ public class FoodResponseDto {
 
     private Long id;
     private String name;
-    private Restaurant restaurantId;
+    private Long restaurantId;
     private float price;
     private float rating;
     
@@ -17,8 +17,9 @@ public class FoodResponseDto {
 
     public FoodResponseDto(){}
 
-    public FoodResponseDto( String name, Restaurant restaurant, float price, float rating)
-    { this.name=name;
+    public FoodResponseDto( Long id,String name, Long restaurant, float price, float rating)
+    {   this.id=id;
+        this.name=name;
         this.restaurantId= restaurant;
         this.price= price;
         this.rating=rating;
@@ -42,11 +43,11 @@ public class FoodResponseDto {
         this.name = name;
     }
 
-    public Restaurant getRestaurantId() {
+    public Long getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(Restaurant restaurant) {
+    public void setRestaurantId(Long restaurant) {
         this.restaurantId = restaurant;
     }
 

@@ -105,17 +105,18 @@ public class FoodOrderService {
 
 
 
-    public List<FoodOrderResponseDto> getOrderByUserId(Long userId)
+    public List<FoodOrderResponseDto> getFoodOrderByUserId(Long userId)
     {List<FoodOrder> orders= foodOrderRepository.findByUserId((userId));
 
         List<FoodOrderResponseDto> dtoList= new ArrayList<>();
 
         for(FoodOrder order:orders)
         {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
+        orderResponseDto.setId(order.getId());
         orderResponseDto.setPrice(order.getPrice());
-        orderResponseDto.setSeatId(order.getSeatId());
-        orderResponseDto.setUserId(order.getUserId());
-        orderResponseDto.setRestaurantId(order.getRestaurantId());
+        orderResponseDto.setSeatId(order.getSeatId().getId());
+        orderResponseDto.setUserId(order.getUserId().getId());
+        orderResponseDto.setRestaurantId(order.getRestaurantId().getId());
 
         dtoList.add(orderResponseDto);
 
@@ -128,17 +129,42 @@ public class FoodOrderService {
 
     }
 
-    public List<FoodOrderResponseDto> getOrderByRestaurantId(Long restaurantId)
+    public List<FoodOrderResponseDto> getAllFoodOrders()
+    {List<FoodOrder> orders= foodOrderRepository.findAll();
+
+        List<FoodOrderResponseDto> dtoList= new ArrayList<>();
+
+        for(FoodOrder order:orders)
+        {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
+        orderResponseDto.setId(order.getId());
+        orderResponseDto.setPrice(order.getPrice());
+        orderResponseDto.setSeatId(order.getSeatId().getId());
+        orderResponseDto.setUserId(order.getUserId().getId());
+        orderResponseDto.setRestaurantId(order.getRestaurantId().getId());
+
+        dtoList.add(orderResponseDto);
+
+
+
+        }
+
+        return dtoList;
+
+
+    }
+
+    public List<FoodOrderResponseDto> getFoodOrderByRestaurantId(Long restaurantId)
     {List<FoodOrder> orders= foodOrderRepository.findByRestaurantId((restaurantId));
 
         List<FoodOrderResponseDto> dtoList= new ArrayList<>();
 
         for(FoodOrder order:orders)
         {FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
+        orderResponseDto.setId(order.getId());
         orderResponseDto.setPrice(order.getPrice());
-        orderResponseDto.setSeatId(order.getSeatId());
-        orderResponseDto.setUserId(order.getUserId());
-        orderResponseDto.setRestaurantId(order.getRestaurantId());
+        orderResponseDto.setSeatId(order.getSeatId().getId());
+        orderResponseDto.setUserId(order.getUserId().getId());
+        orderResponseDto.setRestaurantId(order.getRestaurantId().getId());
 
         dtoList.add(orderResponseDto);
 

@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.example.control.synapse.dto.response.BookingResponseDto;
-import com.example.control.synapse.dto.response.FoodOrderResponseDto;
+
 import com.example.control.synapse.dto.websocket.SeatUpdateMessage;
 import com.example.control.synapse.models.Booking;
 import com.example.control.synapse.models.EventSeat;
@@ -17,9 +17,13 @@ import com.example.control.synapse.models.Event;
 import com.example.control.synapse.repository.BookingRepository;
 import com.example.control.synapse.repository.EventSeatRepository;
 import com.example.control.synapse.repository.UserRepository;
+
+import jakarta.annotation.PreDestroy;
+
 import com.example.control.synapse.repository.EventRepository;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +32,7 @@ import java.util.List;
 
 import java.util.Map;
 
+@Service
 public class BookingService {
 
     private final EventSeatRepository eventSeatRepository;
@@ -178,9 +183,22 @@ public class BookingService {
             
         }
     }
-
-      public void shutdownScheduler() {
+    @PreDestroy
+      private void shutdownScheduler() {
         scheduler.shutdown();
+    }
+    public BookingResponseDto getBookingById(Long id)
+    {Booking booking= bookingRepository.findById(id).orElseThrow();
+        BookingResponseDto bookingResponseDto= new BookingResponseDto();
+            bookingResponseDto.setId(booking.getId());
+            bookingResponseDto.setUserId(booking.getUserId().getId());
+            bookingResponseDto.setEventId(booking.getEventId().getId());
+            bookingResponseDto.setBookingTime(booking.getBookingTime());
+
+            return bookingResponseDto;
+
+        
+
     }
 
     public List<BookingResponseDto> getBookingByUserId(Long userId)
@@ -192,8 +210,36 @@ public class BookingService {
         for(Booking booking: bookings)
         {
             BookingResponseDto bookingResponseDto= new BookingResponseDto();
-            bookingResponseDto.setUserId(booking.getUserId());
-            bookingResponseDto.setEventId(booking.getEventId());
+            bookingResponseDto.setId(booking.getId());
+            bookingResponseDto.setUserId(booking.getUserId().getId());
+            bookingResponseDto.setEventId(booking.getEventId().getId());
+            bookingResponseDto.setBookingTime(booking.getBookingTime());
+
+
+
+
+        dtoList.add(bookingResponseDto);
+        }
+
+
+
+        return dtoList;
+
+
+    }
+
+    public List<BookingResponseDto> getAllBookings()
+    {
+        List<Booking> bookings = bookingRepository.findAll();
+        List<BookingResponseDto> dtoList= new ArrayList<>();
+
+
+        for(Booking booking: bookings)
+        {
+            BookingResponseDto bookingResponseDto= new BookingResponseDto();
+            bookingResponseDto.setId(booking.getId());
+            bookingResponseDto.setUserId(booking.getUserId().getId());
+            bookingResponseDto.setEventId(booking.getEventId().getId());
             bookingResponseDto.setBookingTime(booking.getBookingTime());
 
 
@@ -218,8 +264,9 @@ public class BookingService {
         for(Booking booking: bookings)
         {
             BookingResponseDto bookingResponseDto= new BookingResponseDto();
-            bookingResponseDto.setUserId(booking.getUserId());
-            bookingResponseDto.setEventId(booking.getEventId());
+            bookingResponseDto.setId(booking.getId());
+            bookingResponseDto.setUserId(booking.getUserId().getId());
+            bookingResponseDto.setEventId(booking.getEventId().getId());
             bookingResponseDto.setBookingTime(booking.getBookingTime());
 
 

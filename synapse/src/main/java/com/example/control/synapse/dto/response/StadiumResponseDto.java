@@ -1,9 +1,7 @@
 package com.example.control.synapse.dto.response;
 
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 
 
 
@@ -21,8 +19,8 @@ public class StadiumResponseDto {
 
     public StadiumResponseDto(){}
 
-    public StadiumResponseDto(String city, String state, String country, int capacity)
-    {
+    public StadiumResponseDto(Long id,String city, String state, String country, int capacity)
+    {   this.id=id;
         this.city= city;
         this.state=state;
         this.country=country;

@@ -1,6 +1,6 @@
 package com.example.control.synapse.dto.response;
 
-import com.example.control.synapse.models.Stadium;
+
 
 
 public class RestaurantResponseDto {
@@ -10,12 +10,13 @@ public class RestaurantResponseDto {
     private Long id;
     private String name;
     private double rating;
-    private Stadium stadiumId;
+    private Long stadiumId;
 
     public RestaurantResponseDto(){}
 
-    public RestaurantResponseDto(String name, double rating, Stadium stadiumId)
-    {this.name=name;
+    public RestaurantResponseDto(Long id,String name, double rating, Long stadiumId)
+    {   this.id=id;
+        this.name=name;
         this.rating= rating;
         this.stadiumId=stadiumId;
         
@@ -45,11 +46,11 @@ public class RestaurantResponseDto {
         this.rating = rating;
     }
 
-    public Stadium getStadiumId() {
+    public Long getStadiumId() {
         return stadiumId;
     }
 
-    public void setStadiumId(Stadium stadiumId) {
+    public void setStadiumId(Long stadiumId) {
         this.stadiumId = stadiumId;
     }
 

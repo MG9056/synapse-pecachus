@@ -59,10 +59,11 @@ public class RestaurantService {
     {RestaurantResponseDto restaurantResponseDto= new RestaurantResponseDto();
 
     Restaurant restaurant= restaurantRepository.findById(id).orElseThrow();
-
+    
+    restaurantResponseDto.setId(restaurant.getId());
     restaurantResponseDto.setName(restaurant.getName());
     restaurantResponseDto.setName(restaurant.getName());
-    restaurantResponseDto.setStadiumId(restaurant.getStadiumId());
+    restaurantResponseDto.setStadiumId(restaurant.getStadiumId().getId());
 
     return restaurantResponseDto;
 
@@ -80,9 +81,10 @@ public class RestaurantService {
         for(Restaurant restaurant: restaurants)
         {RestaurantResponseDto restaurantResponseDto= new RestaurantResponseDto();
 
+            restaurantResponseDto.setId(restaurant.getId());
             restaurantResponseDto.setName(restaurant.getName());
     restaurantResponseDto.setName(restaurant.getName());
-    restaurantResponseDto.setStadiumId(restaurant.getStadiumId());
+    restaurantResponseDto.setStadiumId(restaurant.getStadiumId().getId());
 
     dtoList.add(restaurantResponseDto);
 

@@ -9,12 +9,8 @@ import com.example.control.synapse.dto.request.StadiumUpdateDto;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
 import com.example.control.synapse.dto.response.StadiumResponseDto;
-import com.example.control.synapse.models.Merchandise;
-import com.example.control.synapse.models.Restaurant;
-import com.example.control.synapse.models.Stadium;
-import com.example.control.synapse.repository.MerchandiseRepository;
-import com.example.control.synapse.repository.RestaurantRepository;
-import com.example.control.synapse.repository.StadiumRepository;
+
+
 import com.example.control.synapse.service.MerchandiseService;
 import com.example.control.synapse.service.RestaurantService;
 import com.example.control.synapse.service.StadiumService;
@@ -26,19 +22,15 @@ import com.example.control.synapse.service.StadiumService;
 @RequestMapping("/stadiums")
 public class StadiumController {
 
-    private final RestaurantRepository restaurantRepository;
-    private final StadiumRepository stadiumRepository;
-    private final MerchandiseRepository merchandiseRepository;
+
     private final StadiumService stadiumService;
     private final RestaurantService restaurantService;
     private final MerchandiseService merchandiseService;
     
 
-    public StadiumController(RestaurantRepository restaurantRepository, StadiumRepository stadiumRepository,
-            MerchandiseRepository merchandiseRepository, StadiumService stadiumService, RestaurantService restaurantService, MerchandiseService merchandiseService) {
-        this.restaurantRepository = restaurantRepository;
-        this.stadiumRepository = stadiumRepository;
-        this.merchandiseRepository = merchandiseRepository;
+    public StadiumController(
+           StadiumService stadiumService, RestaurantService restaurantService, MerchandiseService merchandiseService) {
+       
         this.stadiumService=stadiumService;
         this.restaurantService=restaurantService;
         this.merchandiseService= merchandiseService;

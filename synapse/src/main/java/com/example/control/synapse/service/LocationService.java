@@ -18,9 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class LocationService {
 
-    // for Sos (added by shriharsh)
-
-    private final Set<Long> activeSOSUsers = ConcurrentHashMap.newKeySet();
+  
 
     // ConcurrentHashMap is used instead of a regular HashMap because multiple users
     // are sending location updates simultaneously from different threads
@@ -46,13 +44,7 @@ public class LocationService {
 
 
         // if locationData's user is in the sos list then broadcast their location immediately
-        if (activeSOSUsers.contains(data.getUserId())) {
-
-        messagingTemplate.convertAndSend(
-            "/topic/admin/sos/" + data.getUserId(),
-            data
-        );
-    }
+      
     }
 
     // @Scheduled means Spring automatically calls this method every 2000ms (2 seconds)
@@ -120,12 +112,6 @@ public class LocationService {
         return new ArrayList<>(grid.values());
     }
 
-    public void startSOSTracking(Long userId) {
-    activeSOSUsers.add(userId);
-}
 
-public void stopSOSTracking(Long userId) {
-    activeSOSUsers.remove(userId);
-}
 
 }

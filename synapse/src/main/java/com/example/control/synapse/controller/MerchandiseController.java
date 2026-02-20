@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.control.synapse.dto.request.FoodUpdateDto;
+
 import com.example.control.synapse.dto.request.MerchandiseRequest;
 import com.example.control.synapse.dto.request.MerchandiseUpdateDto;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
 import com.example.control.synapse.service.MerchandiseService;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 

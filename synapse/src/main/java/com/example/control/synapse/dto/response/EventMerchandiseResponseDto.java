@@ -1,23 +1,26 @@
 package com.example.control.synapse.dto.response;
 
-import com.example.control.synapse.models.MerchandiseOrder;
-import com.example.control.synapse.models.Stadium;
+
 
 
 public class EventMerchandiseResponseDto {
+
+    private Long id;
    
     
+   
     private String name;
     private String description;
     private double price;
     private double rating;
    
-    private Stadium stadiumId;
-    private MerchandiseOrder merchandiseOrderId;
+    private Long stadiumId;
+    private Long merchandiseOrderId;
 
    
     public EventMerchandiseResponseDto() {}
-    public EventMerchandiseResponseDto(String name, String description, double price, double rating, Stadium stadiumId, MerchandiseOrder merchandiseOrderId) {
+    public EventMerchandiseResponseDto(Long id, String name, String description, double price, double rating, Long stadiumId, Long merchandiseOrderId) {
+        this.id=id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -25,6 +28,13 @@ public class EventMerchandiseResponseDto {
         this.stadiumId = stadiumId;
         this.merchandiseOrderId= merchandiseOrderId;
         
+    }
+
+     public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
 
@@ -52,17 +62,17 @@ public class EventMerchandiseResponseDto {
     public void setRating(double rating) {
         this.rating = rating;
     }
-    public Stadium getStadiumId() {
+    public Long getStadiumId() {
         return stadiumId;
     }
-    public void setStadiumId(Stadium stadium) {
+    public void setStadiumId(Long stadium) {
         this.stadiumId = stadium;
     }
 
-     public MerchandiseOrder getMerchandiseOrderId() {
+     public Long getMerchandiseOrderId() {
         return merchandiseOrderId;
     }
-    public void setMerchandiseOrderId(MerchandiseOrder merchandiseOrderId) {
+    public void setMerchandiseOrderId(Long merchandiseOrderId) {
         this.merchandiseOrderId = merchandiseOrderId;
     }
     

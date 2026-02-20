@@ -42,11 +42,12 @@ public class MerchandiseService {
 
             
 
+            merchandiseResponseDto.setId(merchandise.getId());
             merchandiseResponseDto.setName(merchandise.getName());
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
 
         return merchandiseResponseDto;
 
@@ -65,12 +66,12 @@ public class MerchandiseService {
         {MerchandiseResponseDto merchandiseResponseDto= new MerchandiseResponseDto();
 
             
-
+            merchandiseResponseDto.setId(merchandise.getId());
             merchandiseResponseDto.setName(merchandise.getName());
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
 
         dtoList.add(merchandiseResponseDto);
 
@@ -93,12 +94,13 @@ public class MerchandiseService {
         {MerchandiseResponseDto merchandiseResponseDto= new MerchandiseResponseDto();
 
             
+            merchandiseResponseDto.setId(merchandise.getId());
 
             merchandiseResponseDto.setName(merchandise.getName());
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
 
         dtoList.add(merchandiseResponseDto);
 

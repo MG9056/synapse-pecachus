@@ -1,6 +1,6 @@
 package com.example.control.synapse.dto.request;
 
-import com.example.control.synapse.models.Stadium;
+
 
 
 

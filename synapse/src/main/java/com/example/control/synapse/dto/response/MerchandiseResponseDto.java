@@ -1,26 +1,36 @@
 package com.example.control.synapse.dto.response;
 
-import com.example.control.synapse.models.Stadium;
+
 
 
 public class MerchandiseResponseDto {
    
+    private Long id;
+    
     
     private String name;
     private String description;
     private double price;
     private double rating;
    
-    private Stadium stadiumId;
+    private Long stadiumId;
 
     public MerchandiseResponseDto() {}
-    public MerchandiseResponseDto(String name, String description, double price, double rating, Stadium stadiumId) {
+    public MerchandiseResponseDto(Long id,String name, String description, double price, double rating,Long stadiumId) {
+        this.id=id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
         this.stadiumId = stadiumId;
         
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
 
@@ -48,10 +58,10 @@ public class MerchandiseResponseDto {
     public void setRating(double rating) {
         this.rating = rating;
     }
-    public Stadium getStadiumId() {
+    public Long getStadiumId() {
         return stadiumId;
     }
-    public void setStadiumId(Stadium stadium) {
+    public void setStadiumId(Long stadium) {
         this.stadiumId = stadium;
     }
     
