@@ -45,8 +45,8 @@ public class SosService {
         User user= userRepository.findById(userId).orElseThrow();
         Event event= eventRepository.findById(eventId).orElseThrow();
 
-        sos.setUserId(user);
-        sos.setEventId(event);
+        sos.setUser(user);
+        sos.setEvent(event);
 
         sosRepository.save(sos);
 
@@ -90,8 +90,8 @@ public List<SosResponseDto> getAllSos()
         sosResponseDto.setMessage(sos.getMessage());
         sosResponseDto.setIsActive(sos.getIsActive());
         sosResponseDto.setTimeStamp(sos.getTimeStamp());
-        sosResponseDto.setUserId(sos.getUserId().getId());
-        sosResponseDto.setEventId(sos.getEventId().getId());
+        sosResponseDto.setUserId(sos.getUser().getId());
+        sosResponseDto.setEventId(sos.getEvent().getId());
 
         dtoList.add(sosResponseDto);
 
@@ -119,8 +119,8 @@ public List<SosResponseDto> getSosByUserId(Long userId)
         sosResponseDto.setMessage(sos.getMessage());
         sosResponseDto.setIsActive(sos.getIsActive());
         sosResponseDto.setTimeStamp(sos.getTimeStamp());
-        sosResponseDto.setUserId(sos.getUserId().getId());
-        sosResponseDto.setEventId(sos.getEventId().getId());
+        sosResponseDto.setUserId(sos.getUser().getId());
+        sosResponseDto.setEventId(sos.getEvent().getId());
 
         dtoList.add(sosResponseDto);
 
@@ -148,8 +148,8 @@ public List<SosResponseDto> getSosByEventId(Long eventId)
         sosResponseDto.setMessage(sos.getMessage());
         sosResponseDto.setIsActive(sos.getIsActive());
         sosResponseDto.setTimeStamp(sos.getTimeStamp());
-        sosResponseDto.setUserId(sos.getUserId().getId());
-        sosResponseDto.setEventId(sos.getEventId().getId());
+        sosResponseDto.setUserId(sos.getUser().getId());
+        sosResponseDto.setEventId(sos.getEvent().getId());
 
         dtoList.add(sosResponseDto);
 

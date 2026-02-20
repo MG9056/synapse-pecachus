@@ -63,7 +63,7 @@ public class RestaurantService {
     restaurantResponseDto.setId(restaurant.getId());
     restaurantResponseDto.setName(restaurant.getName());
     restaurantResponseDto.setName(restaurant.getName());
-    restaurantResponseDto.setStadiumId(restaurant.getStadiumId().getId());
+    restaurantResponseDto.setStadiumId(restaurant.getStadium().getId());
 
     return restaurantResponseDto;
 
@@ -84,7 +84,7 @@ public class RestaurantService {
             restaurantResponseDto.setId(restaurant.getId());
             restaurantResponseDto.setName(restaurant.getName());
     restaurantResponseDto.setName(restaurant.getName());
-    restaurantResponseDto.setStadiumId(restaurant.getStadiumId().getId());
+    restaurantResponseDto.setStadiumId(restaurant.getStadium().getId());
 
     dtoList.add(restaurantResponseDto);
 

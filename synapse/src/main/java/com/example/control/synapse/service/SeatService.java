@@ -61,8 +61,8 @@ public class SeatService {
                 .orElseThrow(() -> new RuntimeException("Seat not found with id: " + id));
         
         // Check if stadium exists if stadium ID is being changed
-        Stadium stadium = existingSeat.getStadiumId();
-        if (!existingSeat.getStadiumId().getId().equals(seatDTO.getStadiumId())) {
+        Stadium stadium = existingSeat.getStadium();
+        if (!existingSeat.getStadium().getId().equals(seatDTO.getStadiumId())) {
             stadium = stadiumRepository.findById(seatDTO.getStadiumId())
                     .orElseThrow(() -> new RuntimeException(
                             "Stadium not found with id: " + seatDTO.getStadiumId()));
@@ -77,7 +77,7 @@ public class SeatService {
         existingSeat.setIsWomen(seatDTO.getIsWomen());
         existingSeat.setIsAccessible(seatDTO.getIsAccessible());
         existingSeat.setCategory(seatDTO.getCategory());
-        existingSeat.setStadiumId(stadium);
+        existingSeat.setStadium(stadium);
         
         Seat updatedSeat = seatRepository.save(existingSeat);
         
@@ -189,7 +189,7 @@ public class SeatService {
         dto.setIsWomen(seat.getIsWomen());
         dto.setIsAccessible(seat.getIsAccessible());
         dto.setCategory(seat.getCategory());
-        dto.setStadiumId(seat.getStadiumId().getId());
+        dto.setStadiumId(seat.getStadium().getId());
         return dto;
     }
     
@@ -206,7 +206,7 @@ public class SeatService {
         seat.setIsWomen(dto.getIsWomen() != null ? dto.getIsWomen() : false);
         seat.setIsAccessible(dto.getIsAccessible() != null ? dto.getIsAccessible() : false);
         seat.setCategory(dto.getCategory());
-        seat.setStadiumId(stadium);
+        seat.setStadium(stadium);
         return seat;
     }
 }

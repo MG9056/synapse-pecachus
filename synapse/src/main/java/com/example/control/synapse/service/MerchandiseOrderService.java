@@ -64,9 +64,9 @@ public class MerchandiseOrderService {
 
         MerchandiseOrder merchandiseOrder = new MerchandiseOrder();
         merchandiseOrder.setPrice(price);
-        merchandiseOrder.setUserId(user);
-        merchandiseOrder.setSeatId(seat);
-        merchandiseOrder.setStadiumId(stadium);
+        merchandiseOrder.setUser(user);
+        merchandiseOrder.setSeat(seat);
+        merchandiseOrder.setStadium(stadium);
         merchandiseOrderRepository.save(merchandiseOrder);
         
 
@@ -119,9 +119,9 @@ public class MerchandiseOrderService {
 
              orderResponseDto.setId(order.getId());
             orderResponseDto.setPrice(order.getPrice());
-            orderResponseDto.setSeatId(order.getSeatId().getId());
-            orderResponseDto.setUserId(order.getUserId().getId());
-            orderResponseDto.setStadiumId(order.getStadiumId().getId());
+            orderResponseDto.setSeatId(order.getSeat().getId());
+            orderResponseDto.setUserId(order.getUser().getId());
+            orderResponseDto.setStadiumId(order.getStadium().getId());
         
 
 
@@ -147,9 +147,9 @@ public class MerchandiseOrderService {
 
             orderResponseDto.setId(order.getId());
             orderResponseDto.setPrice(order.getPrice());
-            orderResponseDto.setSeatId(order.getSeatId().getId());
-            orderResponseDto.setUserId(order.getUserId().getId());
-            orderResponseDto.setStadiumId(order.getStadiumId().getId());
+            orderResponseDto.setSeatId(order.getSeat().getId());
+            orderResponseDto.setUserId(order.getUser().getId());
+            orderResponseDto.setStadiumId(order.getStadium().getId());
         
 
 
