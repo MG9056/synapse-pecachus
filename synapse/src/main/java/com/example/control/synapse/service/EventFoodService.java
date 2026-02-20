@@ -2,15 +2,18 @@ package com.example.control.synapse.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+
+import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.dto.response.EventFoodResponseDto;
-import com.example.control.synapse.dto.response.FoodResponseDto;
+
 import com.example.control.synapse.models.EventFood;
-import com.example.control.synapse.models.Food;
-import com.example.control.synapse.models.Stadium;
+
 import com.example.control.synapse.repository.EventFoodRepository;
 
+
+@Service
 public class EventFoodService {
 
     private final EventFoodRepository eventFoodRepository;
@@ -26,11 +29,12 @@ public class EventFoodService {
      
         EventFoodResponseDto eventFoodResponseDto= new EventFoodResponseDto();
 
+      eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
 
         return eventFoodResponseDto;
 
@@ -51,12 +55,13 @@ public class EventFoodService {
     {
 
        EventFoodResponseDto eventFoodResponseDto= new EventFoodResponseDto();
-
+       
+       eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
 
         dtoList.add(eventFoodResponseDto);
 
@@ -75,12 +80,12 @@ public class EventFoodService {
     {
 
        EventFoodResponseDto eventFoodResponseDto= new EventFoodResponseDto();
-
+         eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
 
         dtoList.add(eventFoodResponseDto);
 
@@ -98,12 +103,12 @@ public class EventFoodService {
     {
 
        EventFoodResponseDto eventFoodResponseDto= new EventFoodResponseDto();
-
+      eventFoodResponseDto.setId(eventFood.getId());
         eventFoodResponseDto.setName(eventFood.getName());
-        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId());
+        eventFoodResponseDto.setRestaurantId(eventFood.getRestaurantId().getId());
         eventFoodResponseDto.setPrice(eventFood.getPrice());
         eventFoodResponseDto.setRating(eventFood.getRating());
-        eventFoodResponseDto.setOrderId(eventFood.getOrderId());
+        eventFoodResponseDto.setOrderId(eventFood.getOrderId().getId());
 
         dtoList.add(eventFoodResponseDto);
 

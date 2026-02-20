@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.*;
 import com.example.control.synapse.service.BookingService;
 import com.example.control.synapse.dto.request.BookingRequest;
 import com.example.control.synapse.dto.response.BookingResponseDto;
-import com.example.control.synapse.models.Booking;
-import com.example.control.synapse.repository.BookingRepository;
+
+
 
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
 
     private final BookingService bookingService;
-    private final BookingRepository bookingRepository;
+
     
 
     
-    public BookingController(BookingService bookingService, BookingRepository bookingRepository) {
+    public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
-        this.bookingRepository=bookingRepository;
+        
     }
 
     // Reserve a seat for 5 minutes
@@ -52,7 +52,8 @@ public class BookingController {
     {return bookingService.getBookingByEventId(eventId);
         
     }
-
+    
+    
 
 
 }

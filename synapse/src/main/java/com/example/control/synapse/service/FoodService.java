@@ -88,8 +88,33 @@ public class FoodService {
     {
 
         FoodResponseDto foodResponseDto= new FoodResponseDto();
+
+         foodResponseDto.setId(food.getId());
         foodResponseDto.setName(food.getName());
-        foodResponseDto.setRestaurantId(food.getRestaurantId());
+        foodResponseDto.setRestaurantId(food.getRestaurantId().getId());
+        foodResponseDto.setPrice(food.getPrice());
+        foodResponseDto.setRating(food.getRating());
+
+        dtoList.add(foodResponseDto);
+
+    }
+
+    return dtoList;
+
+   }
+
+   public List<FoodResponseDto>  getAllFoods()
+   {List<Food> foods= foodRepository.findAll();
+    List<FoodResponseDto> dtoList= new ArrayList<>();
+
+    for(Food food:foods)
+    {
+
+        FoodResponseDto foodResponseDto= new FoodResponseDto();
+
+         foodResponseDto.setId(food.getId());
+        foodResponseDto.setName(food.getName());
+        foodResponseDto.setRestaurantId(food.getRestaurantId().getId());
         foodResponseDto.setPrice(food.getPrice());
         foodResponseDto.setRating(food.getRating());
 
@@ -106,8 +131,10 @@ public class FoodService {
     
     FoodResponseDto foodResponseDto= new FoodResponseDto();
 
+
+    foodResponseDto.setId(food.getId());
     foodResponseDto.setName(food.getName());
-    foodResponseDto.setRestaurantId((food.getRestaurantId()));
+    foodResponseDto.setRestaurantId((food.getRestaurantId().getId()));
     foodResponseDto.setPrice(food.getPrice());
     foodResponseDto.setRating(food.getRating());
 

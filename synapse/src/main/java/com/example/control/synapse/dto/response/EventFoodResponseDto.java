@@ -1,7 +1,6 @@
 package com.example.control.synapse.dto.response;
 
-import com.example.control.synapse.models.FoodOrder;
-import com.example.control.synapse.models.Restaurant;
+
 
 
 
@@ -9,16 +8,17 @@ public class EventFoodResponseDto{
 
 private Long id;
 private String name;
-private Restaurant restaurantId;
+private Long restaurantId;
 
 private float price;
 private float rating;
-private FoodOrder orderId;
+private Long orderId;
 
 
 public EventFoodResponseDto(){}
-public EventFoodResponseDto(String name, Restaurant restaurantId, float price, float rating, FoodOrder orderId)
-{this.price=price;
+public EventFoodResponseDto(Long id,String name, Long restaurantId, float price, float rating, Long orderId)
+{  this.id=id;
+this.price=price;
 this.restaurantId= restaurantId;
 this.price=price;
 this.rating=rating;
@@ -34,10 +34,10 @@ public String getName() {
 public void setName(String name) {
     this.name = name;
 }
-public Restaurant getRestaurantId() {
+public Long getRestaurantId() {
     return restaurantId;
 }
-public void setRestaurantId(Restaurant restaurantId) {
+public void setRestaurantId(Long restaurantId) {
     this.restaurantId = restaurantId;
 }
 
@@ -48,10 +48,10 @@ public float getRating() {
 public void setRating(float rating) {
     this.rating = rating;
 }
-public FoodOrder getOrderId() {
+public Long getOrderId() {
     return orderId;
 }
-public void setOrderId(FoodOrder orderId) {
+public void setOrderId(Long orderId) {
     this.orderId = orderId;
 }
 

@@ -16,6 +16,7 @@ import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.MerchandiseRepository;
+import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.repository.UserRepository;
 
 @Service
@@ -24,12 +25,14 @@ public class MerchandiseService {
     private final MerchandiseRepository merchandiseRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final StadiumRepository stadiumRepository;
 
-    public MerchandiseService(MerchandiseRepository merchandiseRepository, UserRepository userRepository, PasswordEncoder passwordEncoder)
+    public MerchandiseService(MerchandiseRepository merchandiseRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, StadiumRepository stadiumRepository)
     {
         this.merchandiseRepository= merchandiseRepository;
         this.userRepository= userRepository;
         this.passwordEncoder= passwordEncoder;
+        this.stadiumRepository= stadiumRepository;
     }
 
     public MerchandiseResponseDto getMerchandiseById(Long id)
@@ -39,11 +42,12 @@ public class MerchandiseService {
 
             
 
+            merchandiseResponseDto.setId(merchandise.getId());
             merchandiseResponseDto.setName(merchandise.getName());
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
 
         return merchandiseResponseDto;
 
@@ -62,12 +66,12 @@ public class MerchandiseService {
         {MerchandiseResponseDto merchandiseResponseDto= new MerchandiseResponseDto();
 
             
-
+            merchandiseResponseDto.setId(merchandise.getId());
             merchandiseResponseDto.setName(merchandise.getName());
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
 
         dtoList.add(merchandiseResponseDto);
 
@@ -90,12 +94,13 @@ public class MerchandiseService {
         {MerchandiseResponseDto merchandiseResponseDto= new MerchandiseResponseDto();
 
             
+            merchandiseResponseDto.setId(merchandise.getId());
 
             merchandiseResponseDto.setName(merchandise.getName());
             merchandiseResponseDto.setDescription(merchandise.getDescription());
             merchandiseResponseDto.setPrice(merchandise.getPrice());
             merchandiseResponseDto.setRating(merchandise.getRating());
-            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId());
+            merchandiseResponseDto.setStadiumId(merchandise.getStadiumId().getId());
 
         dtoList.add(merchandiseResponseDto);
 
@@ -106,7 +111,7 @@ public class MerchandiseService {
         return dtoList;
     }
 
-    public Map<String,String> uploadMerchandise(String name, String description, double price, double rating, Stadium stadiumId)
+    public Map<String,String> uploadMerchandise(String name, String description, double price, double rating, Long stadiumId)
     {
         Merchandise merchandise= new Merchandise();
 
@@ -114,7 +119,9 @@ public class MerchandiseService {
         merchandise.setDescription(description);
         merchandise.setPrice(price);
         merchandise.setRating(rating);
-        merchandise.setStadiumId(stadiumId);
+
+        Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+        merchandise.setStadiumId(stadium);
 
         merchandiseRepository.save(merchandise);
 

@@ -1,6 +1,6 @@
 package com.example.control.synapse.controller;
 
-import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.control.synapse.dto.request.FoodRequest;
 import com.example.control.synapse.dto.request.FoodUpdateDto;
 import com.example.control.synapse.dto.response.FoodResponseDto;
-import com.example.control.synapse.dto.response.RestaurantResponseDto;
-import com.example.control.synapse.models.Food;
 
-import com.example.control.synapse.repository.FoodRepository;
+
+
 import com.example.control.synapse.service.FoodService;
 
 @RestController
@@ -28,12 +27,12 @@ import com.example.control.synapse.service.FoodService;
 public class FoodController {
 
     private final FoodService foodService;
-    private final FoodRepository foodRepository;
+   
 
-    public FoodController(FoodService foodService, FoodRepository foodRepository)
+    public FoodController(FoodService foodService)
     {
         this.foodService= foodService;
-        this.foodRepository=foodRepository;
+        
         
     }
      

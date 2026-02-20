@@ -3,17 +3,11 @@ package com.example.control.synapse.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.control.synapse.dto.request.FoodOrderRequest;
+
 import com.example.control.synapse.dto.request.MerchandiseOrderRequest;
-import com.example.control.synapse.dto.response.FoodOrderResponseDto;
-import com.example.control.synapse.dto.response.FoodResponseDto;
+
 import com.example.control.synapse.dto.response.MerchandiseOrderResponseDto;
-import com.example.control.synapse.models.Booking;
-import com.example.control.synapse.models.FoodOrder;
-import com.example.control.synapse.repository.BookingRepository;
-import com.example.control.synapse.repository.FoodOrderRepository;
-import com.example.control.synapse.repository.MerchandiseOrderRepository;
-import com.example.control.synapse.service.FoodOrderService;
+
 import com.example.control.synapse.service.MerchandiseOrderService;
 
 import java.util.List;
@@ -30,12 +24,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class MerchandiseOrderController {
 
     private final MerchandiseOrderService merchandiseOrderService;
-    private final MerchandiseOrderRepository merchandiseOrderRepository;
+ 
 
-    public MerchandiseOrderController(MerchandiseOrderService merchandiseOrderSerive, MerchandiseOrderRepository merchandiseOrderRepository)
+    public MerchandiseOrderController(MerchandiseOrderService merchandiseOrderSerive)
     {
         this.merchandiseOrderService=merchandiseOrderSerive;
-        this.merchandiseOrderRepository=merchandiseOrderRepository;
+        
     }
 
     @PostMapping("/placeMerchandiseOrder")

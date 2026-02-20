@@ -18,6 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class LocationService {
 
+  
+
     // ConcurrentHashMap is used instead of a regular HashMap because multiple users
     // are sending location updates simultaneously from different threads
     // ConcurrentHashMap is thread-safe so updates don't corrupt each other
@@ -39,6 +41,10 @@ public class LocationService {
     // If userId 1001 sends a location, it replaces their old location — no duplicates
     public void updateLocation(LocationData data) {
         userLocations.put(data.getUserId(), data);
+
+
+        // if locationData's user is in the sos list then broadcast their location immediately
+      
     }
 
     // @Scheduled means Spring automatically calls this method every 2000ms (2 seconds)
@@ -105,4 +111,7 @@ public class LocationService {
         // This is what gets serialized to JSON and sent to the admin
         return new ArrayList<>(grid.values());
     }
+
+
+
 }

@@ -1,15 +1,10 @@
-package com.example.control.synapse.models;
+package com.example.control.synapse.dto.response;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 
-public class Sos {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SosResponseDto {
+  
 
     private Long id;
 
@@ -18,18 +13,18 @@ public class Sos {
     private Boolean isActive;
     private LocalDateTime timeStamp;
 
-    @ManyToOne
-    private User userId;
+    
+    private Long userId;
 
-    @ManyToOne
-    private Event eventId;
+   
+    private Long eventId;
 
    
 
-    public Sos(){}
+    public SosResponseDto(){}
 
-    Sos(String alertType, String message, Boolean isActive, LocalDateTime timeStamp, User userId, Event eventId )
-    {
+    SosResponseDto(Long id,String alertType, String message, Boolean isActive, LocalDateTime timeStamp, Long userId, Long eventId )
+    {   this.id=id;
         this.alertType=alertType;
         this.message=message;
         this.isActive= isActive;
@@ -78,19 +73,19 @@ public class Sos {
         this.timeStamp = timeStamp;
     }
 
-    public User getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-     public Event getEventId() {
+     public Long getEventId() {
         return eventId;
     }
 
-    public void setEventId(Event eventId) {
+    public void setEventId(Long eventId) {
         this.eventId = eventId;
     }
     

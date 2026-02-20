@@ -3,10 +3,14 @@ package com.example.control.synapse.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.example.control.synapse.dto.response.EventMerchandiseResponseDto;
 import com.example.control.synapse.models.EventMerchandise;
 import com.example.control.synapse.repository.EventMerchandiseRepository;
 
+
+@Service
 public class EventMerchandiseService {
 
     private final EventMerchandiseRepository eventMerchandiseRepository;
@@ -22,12 +26,13 @@ public class EventMerchandiseService {
 
         EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
 
+        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
         eventMerchandiseResponseDto.setName(eventMerchandise.getName());
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
 
         return eventMerchandiseResponseDto;
     
@@ -48,12 +53,13 @@ public class EventMerchandiseService {
 
         EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
 
+        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
         eventMerchandiseResponseDto.setName(eventMerchandise.getName());
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
 
         dtoList.add(eventMerchandiseResponseDto);
         }
@@ -76,12 +82,13 @@ public class EventMerchandiseService {
 
         EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
 
+        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
         eventMerchandiseResponseDto.setName(eventMerchandise.getName());
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
 
         dtoList.add(eventMerchandiseResponseDto);
         }
@@ -103,13 +110,15 @@ public class EventMerchandiseService {
         {
 
         EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
+       
 
+        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
         eventMerchandiseResponseDto.setName(eventMerchandise.getName());
         eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
         eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
         eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId());
+        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadiumId().getId());
+        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrderId().getId());
 
         dtoList.add(eventMerchandiseResponseDto);
         }

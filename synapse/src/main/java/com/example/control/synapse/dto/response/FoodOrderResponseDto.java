@@ -1,13 +1,6 @@
 
 package com.example.control.synapse.dto.response;
-import com.example.control.synapse.models.Restaurant;
-import com.example.control.synapse.models.Seat;
-import com.example.control.synapse.models.User;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 
 
 public class FoodOrderResponseDto {
@@ -16,15 +9,15 @@ public class FoodOrderResponseDto {
 
      private Long id;
      private double price;
-     private Seat seatId;
-     private User userId;
-     private Restaurant restaurantId;
+     private Long seatId;
+     private Long userId;
+     private Long restaurantId;
 
 
      
      public FoodOrderResponseDto(){}
-     public FoodOrderResponseDto(double price, Seat seat, User user, Restaurant restaurant)
-     {
+     public FoodOrderResponseDto(Long id,double price, Long seat, Long user, Long restaurant)
+     {  this.id=id;
         this.userId=user;
         this.price=price;
         this.seatId=seat;
@@ -42,23 +35,23 @@ public class FoodOrderResponseDto {
      public void setPrice(double price) {
          this.price = price;
      }
-     public Seat getSeatId() {
+     public Long getSeatId() {
          return seatId;
      }
-     public void setSeatId(Seat seat) {
+     public void setSeatId(Long seat) {
          this.seatId = seat;
      }
-     public User getUserId() {
+     public Long getUserId() {
          return userId;
      }
-     public void setUserId(User user) {
+     public void setUserId(Long user) {
          this.userId = user;
      }
 
-     public Restaurant getRestaurantId() {
+     public Long getRestaurantId() {
         return restaurantId;
     }
-     public void setRestaurantId(Restaurant restaurantId) {
+     public void setRestaurantId(Long restaurantId) {
          this.restaurantId = restaurantId;
      }
 
