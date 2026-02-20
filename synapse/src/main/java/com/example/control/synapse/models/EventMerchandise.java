@@ -11,15 +11,14 @@ public class EventMerchandise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     private String name;
     private String description;
     private double price;
     private double rating;
     @ManyToOne
-    private Stadium stadiumId;
+    private Stadium stadium;
     @ManyToOne
-    private MerchandiseOrder merchandiseOrderId;
+    private MerchandiseOrder merchandiseOrder;
   
 
     
@@ -29,8 +28,8 @@ public class EventMerchandise {
         this.description = description;
         this.price = price;
         this.rating = rating;
-        this.stadiumId = stadiumId;
-        this.merchandiseOrderId= merchandiseOrderId;
+        this.stadium = stadiumId;
+        this.merchandiseOrder= merchandiseOrderId;
     }
 
     public Long getId() {
@@ -66,17 +65,17 @@ public class EventMerchandise {
         this.rating = rating;
     }
     public Stadium getStadiumId() {
-        return stadiumId;
+        return stadium;
     }
     public void setStadiumId(Stadium stadium) {
-        this.stadiumId = stadium;
+        this.stadium = stadium;
     }
 
     public MerchandiseOrder getMerchandiseOrderId() {
-        return merchandiseOrderId;
+        return merchandiseOrder;
     }
     public void setMerchandiseOrderId(MerchandiseOrder merchandiseOrderId) {
-        this.merchandiseOrderId = merchandiseOrderId;
+        this.merchandiseOrder = merchandiseOrderId;
     }
     
     

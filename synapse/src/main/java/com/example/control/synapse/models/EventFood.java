@@ -13,24 +13,21 @@ public class EventFood{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
     @ManyToOne
-    private Restaurant restaurantId;
-
+    private Restaurant restaurant;
     private float price;
     private float rating;
-
     @ManyToOne
-    private FoodOrder orderId;
+    private FoodOrder order;
 
 
     public EventFood(){}
     public EventFood(String name, Restaurant restaurantId, float price, float rating, FoodOrder orderId)
     {this.price=price;
-    this.restaurantId= restaurantId;
+    this.restaurant= restaurantId;
     this.price=price;
     this.rating=rating;
-    this.orderId=orderId;
+    this.order=orderId;
 
 
 
@@ -43,10 +40,10 @@ public class EventFood{
         this.name = name;
     }
     public Restaurant getRestaurantId() {
-        return restaurantId;
+        return restaurant;
     }
     public void setRestaurantId(Restaurant restaurantId) {
-        this.restaurantId = restaurantId;
+        this.restaurant = restaurantId;
     }
 
 
@@ -57,10 +54,10 @@ public class EventFood{
         this.rating = rating;
     }
     public FoodOrder getOrderId() {
-        return orderId;
+        return order;
     }
     public void setOrderId(FoodOrder orderId) {
-        this.orderId = orderId;
+        this.order = orderId;
     }
 
 

@@ -11,24 +11,21 @@ public class EventSeat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
-    private Seat seatId;
+    private Seat seat;
     private Boolean availability;
-
     @ManyToOne
-    private Booking bookingId;
+    private Booking booking;
     private double price;
-
     @ManyToOne
-    private Event eventId;
+    private Event event;
     public EventSeat() {}
     public EventSeat(Seat seatId, Boolean availability, Booking bookingId, double price, Event eventId) {
-        this.seatId = seatId;
+        this.seat = seatId;
         this.availability = availability;
-        this.bookingId = bookingId;
+        this.booking = bookingId;
         this.price = price;
-        this.eventId = eventId;
+        this.event = eventId;
     }
     public Long getId() {
         return id;
@@ -37,10 +34,10 @@ public class EventSeat {
         this.id = id;
     }
     public Seat getSeatId() {
-        return seatId;
+        return seat;
     }
     public void setSeatId(Seat seatId) {
-        this.seatId = seatId;
+        this.seat = seatId;
     }
     public Boolean getAvailability() {
         return availability;
@@ -49,10 +46,10 @@ public class EventSeat {
         this.availability = availability;
     }
     public Booking getBookingId() {
-        return bookingId;
+        return booking;
     }
     public void setBookingId(Booking bookingId) {
-        this.bookingId = bookingId;
+        this.booking = bookingId;
     }
     public double getPrice() {
         return price;
@@ -61,10 +58,10 @@ public class EventSeat {
         this.price = price;
     }
     public Event getEventId() {
-        return eventId;
+        return event;
     }
     public void setEventId(Event eventId) {
-        this.eventId = eventId;
+        this.event = eventId;
     }
 
     

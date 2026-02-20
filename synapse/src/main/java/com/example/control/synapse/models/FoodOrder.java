@@ -15,23 +15,23 @@ public class FoodOrder {
 
     private double price;
     @ManyToOne
-    private Seat seatId;
+    private Seat seat;
     
     @ManyToOne
-    private User userId;
+    private User user;
 
     @ManyToOne
-    private Restaurant restaurantId;
+    private Restaurant restaurant;
 
 
     
     public FoodOrder(){}
     public FoodOrder(double price, Seat seat, User user, Restaurant restaurantId)
      {
-        this.userId=user;
+        this.user=user;
         this.price=price;
-        this.seatId=seat;
-        this.restaurantId=restaurantId;
+        this.seat=seat;
+        this.restaurant=restaurantId;
     }
     public Long getId() {
         return id;
@@ -46,24 +46,24 @@ public class FoodOrder {
         this.price = price;
     }
     public Seat getSeatId() {
-        return seatId;
+        return seat;
     }
     public void setSeatId(Seat seat) {
-        this.seatId = seat;
+        this.seat = seat;
     }
     public User getUserId() {
-        return userId;
+        return user;
     }
     public void setUserId(User user) {
-        this.userId = user;
+        this.user = user;
     }
 
     public Restaurant getRestaurantId() {
-        return restaurantId;
+        return restaurant;
     }
     public void setRestaurantId(Restaurant restaurantId) {
 
-        this.restaurantId = restaurantId;
+        this.restaurant = restaurantId;
      }
 
      

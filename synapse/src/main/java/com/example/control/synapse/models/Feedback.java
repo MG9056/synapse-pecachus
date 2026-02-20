@@ -12,15 +12,15 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private User userId;
+    private User user;
     @ManyToOne
-    private Event eventId;
+    private Event event;
     private String content;
     private Double rating;
     public Feedback() {}
     public Feedback(User userId, Event eventId, String content, Double rating) {
-        this.userId = userId;
-        this.eventId = eventId;
+        this.user = userId;
+        this.event = eventId;
         this.content = content;
         this.rating = rating;
     }
@@ -31,16 +31,16 @@ public class Feedback {
         this.id = id;
     }
     public User getUser() {
-        return userId;
+        return user;
     }
     public void setUser(User user) {
-        this.userId = user;
+        this.user = user;
     }
     public Event getEventId() {
-        return eventId;
+        return event;
     }
     public void setEventId(Event eventId) {
-        this.eventId = eventId;
+        this.event= eventId;
     }
     public String getContent() {
         return content;

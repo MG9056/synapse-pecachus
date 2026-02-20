@@ -14,7 +14,7 @@ public class Food {
     private Long id;
     private String name;
     @ManyToOne
-    private Restaurant restaurantId;
+    private Restaurant restaurant;
     private float price;
     private float rating;
     
@@ -24,7 +24,7 @@ public class Food {
 
     public Food( String name, Restaurant restaurant, float price, float rating)
     { this.name=name;
-        this.restaurantId= restaurant;
+        this.restaurant= restaurant;
         this.price= price;
         this.rating=rating;
         
@@ -48,11 +48,11 @@ public class Food {
     }
 
     public Restaurant getRestaurantId() {
-        return restaurantId;
+        return restaurant;
     }
 
     public void setRestaurantId(Restaurant restaurant) {
-        this.restaurantId = restaurant;
+        this.restaurant = restaurant;
     }
 
     public float getPrice() {

@@ -13,7 +13,7 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Stadium stadiumId;
+    private Stadium stadium;
     private String name;
     private LocalDateTime dateTime;
     private String description;
@@ -21,7 +21,7 @@ public class Event {
     private String category;
     public Event() {}
     public Event(Stadium stadiumId, String name, LocalDateTime dateTime, String description,Double minPrice,String category) {
-        this.stadiumId = stadiumId;
+        this.stadium = stadiumId;
         this.name = name;
         this.dateTime = dateTime;
         this.description = description;
@@ -37,10 +37,10 @@ public class Event {
         this.id = id;
     }
     public Stadium getStadiumId() {
-        return stadiumId;
+        return stadium;
     }
     public void setStadiumId(Stadium stadiumId) {
-        this.stadiumId = stadiumId;
+        this.stadium = stadiumId;
     }
     public String getName() {
         return name;

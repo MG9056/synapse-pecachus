@@ -11,20 +11,19 @@ public class Merchandise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     private String name;
     private String description;
     private double price;
     private double rating;
     @ManyToOne
-    private Stadium stadiumId;
+    private Stadium stadium;
     public Merchandise() {}
     public Merchandise(String name, String description, double price, double rating, Stadium stadiumId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
-        this.stadiumId = stadiumId;
+        this.stadium = stadiumId;
     }
 
     public Long getId() {
@@ -60,10 +59,10 @@ public class Merchandise {
         this.rating = rating;
     }
     public Stadium getStadiumId() {
-        return stadiumId;
+        return stadium;
     }
     public void setStadiumId(Stadium stadium) {
-        this.stadiumId = stadium;
+        this.stadium = stadium;
     }
     
     

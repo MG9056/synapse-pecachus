@@ -16,23 +16,23 @@ public class MerchandiseOrder {
 
     private double price;
     @ManyToOne
-    private Seat seatId;
+    private Seat seat;
     
     @ManyToOne
-    private User userId;
+    private User user;
 
     @ManyToOne
-    private Stadium stadiumId;
+    private Stadium stadium;
 
 
     
     public MerchandiseOrder(){}
     public MerchandiseOrder(double price, Seat seat, User user, Stadium stadiumId)
     {
-        this.userId=user;
+        this.user=user;
         this.price=price;
-        this.seatId=seat;
-        this.stadiumId=stadiumId;
+        this.seat=seat;
+        this.stadium=stadiumId;
     }
     public Long getId() {
         return id;
@@ -47,23 +47,23 @@ public class MerchandiseOrder {
         this.price = price;
     }
     public Seat getSeatId() {
-        return seatId;
+        return seat;
     }
      public void setSeatId(Seat seat) {
-        this.seatId = seat;
+        this.seat = seat;
     }
     public User getUserId() {
-        return userId;
+        return user;
     }
     public void setUserId(User user) {
-        this.userId = user;
+        this.user = user;
     }
 
     public Stadium getStadiumId() {
-        return stadiumId;
+        return stadium;
     }
     public void setStadiumId(Stadium stadiumId) {
-        this.stadiumId = stadiumId;
+        this.stadium = stadiumId;
      }
 
      
