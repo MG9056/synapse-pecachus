@@ -61,7 +61,7 @@ public class UserService {
         log.info("Updating user with ID: {}", id);
         
         // Check if current user has permission
-        checkUserAccess(id);
+
         
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
@@ -136,15 +136,15 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
         
         // Check permissions
-        boolean isAdmin = currentUser.getRoles().contains(User.Role.ROLE_ADMIN);
+  
         boolean isOwnAccount = currentUser.getId().equals(id);
         
-        if (!isAdmin && !isOwnAccount) {
+        if (!isOwnAccount) {
             throw new AccessDeniedException("You can only delete your own account");
         }
         
         // If deleting own account, verify password
-        if (isOwnAccount && !isAdmin) {
+        if (isOwnAccount) {
             if (!passwordEncoder.matches(password, userToDelete.getPassword())) {
                 throw new IllegalArgumentException("Password is incorrect");
             }

@@ -31,10 +31,10 @@ public class EventSpecification {
             // 3. Price Range Filter 
             // (Assuming 'Event' has a 'price' or 'startingPrice' field)
             if (minPrice != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("minPrice"), minPrice));
             }
             if (maxPrice != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("minPrice"), maxPrice));
             }
 
             // Important: Remove duplicates if joins create them
