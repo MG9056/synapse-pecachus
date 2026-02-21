@@ -15,7 +15,7 @@ import com.example.control.synapse.models.User;
 import com.example.control.synapse.service.AuthService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
