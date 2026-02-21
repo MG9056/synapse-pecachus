@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.RestaurantRequest;
 import com.example.control.synapse.dto.request.RestaurantUpdateDto;
 
@@ -76,7 +77,7 @@ public class RestaurantController {
     @PatchMapping("/{id}/update")
     public Map<String,String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantUpdateDto restaurantUpdateDto)
     {  return restaurantService.updateRestaurant(
-        restaurantUpdateDto.getRestaurantId(),
+        id,
         restaurantUpdateDto.getName(),
         restaurantUpdateDto.getRating(),
         restaurantUpdateDto.getStadiumId()
@@ -91,8 +92,8 @@ public class RestaurantController {
 
      @DeleteMapping("{id}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Map<String,String> deleteStadium(@RequestBody String password,@PathVariable Long id, @RequestBody Long restaurantId) {
-        return restaurantService.deleteRestaurant(id,password,restaurantId);
+    public Map<String,String> deleteRestaurant(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
+        return restaurantService.deleteRestaurant(id,deleteCredentialsDto);
     }
 
 

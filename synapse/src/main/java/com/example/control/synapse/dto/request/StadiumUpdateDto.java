@@ -2,7 +2,7 @@ package com.example.control.synapse.dto.request;
 
 public class StadiumUpdateDto {
 
-    private Long stadiumId;
+   
 
   
 
@@ -22,13 +22,7 @@ public class StadiumUpdateDto {
     }
 
 
-      public Long getStadiumId() {
-        return stadiumId;
-    }
-
-    public void setStadiumId(Long stadiumId) {
-        this.stadiumId = stadiumId;
-    }
+   
 
     public String getCity() {
         return city;

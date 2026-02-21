@@ -64,13 +64,19 @@ public class SosService {
         
     }
 
-    public void resolveSOS(Long sosId) {
+    public Map<String,String> resolveSOS(Long sosId) {
 
     Sos sos = sosRepository.findById(sosId)
             .orElseThrow();
 
     sos.setIsActive(false);
     sosRepository.save(sos);
+    Map<String,String> response = new HashMap<>();
+        response.put("message", "Sos resolved successfully!");
+        return response;
+
+
+
 
     // Long userId= sos.getUserId().getId();
 

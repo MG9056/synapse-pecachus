@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.FoodRequest;
 import com.example.control.synapse.dto.request.FoodUpdateDto;
 import com.example.control.synapse.dto.response.FoodResponseDto;
@@ -86,8 +87,8 @@ public class FoodController {
 
      @DeleteMapping("{id}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Map<String,String> deleteFood(@RequestBody String password,@PathVariable Long id, @RequestBody Long foodId) {
-        return foodService.deleteFood(id,password,foodId);
+    public Map<String,String> deleteFood(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
+        return foodService.deleteFood(id,deleteCredentialsDto);
     }
 
 

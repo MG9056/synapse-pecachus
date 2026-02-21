@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.FoodResponseDto;
 import com.example.control.synapse.models.Food;
 import com.example.control.synapse.models.Restaurant;
@@ -147,7 +148,10 @@ public class FoodService {
    }
 
    
-    public Map<String,String> deleteFood(Long userId,String password, Long foodId) {
+    public Map<String,String> deleteFood(Long foodId, DeleteCredentialsDto deleteCredentialsDto) {
+        Long userId= deleteCredentialsDto.getUserId();
+        String password= deleteCredentialsDto.getPassword();
+
         Map<String,String> response = new HashMap<>();
         User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
         Food food= foodRepository.findById(foodId).orElseThrow(()-> new RuntimeException("No such merchandise with exists with id"+foodId));

@@ -3,7 +3,7 @@ package com.example.control.synapse.dto.request;
 
 public class RestaurantUpdateDto {
 
-    private Long restaurantId;
+    
     private String name;
     private double rating;
     private Long stadiumId;
@@ -17,13 +17,7 @@ public class RestaurantUpdateDto {
         
     }
 
-    public Long getRestaurantId() {
-        return restaurantId;
-    }
 
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId=restaurantId;
-    }
 
     public String getName() {
         return name;

@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
 
 import com.example.control.synapse.models.Merchandise;
@@ -134,14 +134,16 @@ public class MerchandiseService {
     }
 
 
-    public Map<String, String> updateMerchandise(Long merchandiseId, String name, String description, double price, double rating, Stadium stadiumId)
+    public Map<String, String> updateMerchandise(Long merchandiseId, String name, String description, double price, double rating, Long stadiumId)
     {Merchandise merchandise= merchandiseRepository.findById(merchandiseId).orElseThrow();
 
      merchandise.setName(name);
      merchandise.setName(description);
      merchandise.setPrice(price);
      merchandise.setRating(rating);
-     merchandise.setStadium(stadiumId);
+
+     Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+     merchandise.setStadium(stadium);
 
      merchandiseRepository.save(merchandise);
 
@@ -157,7 +159,11 @@ public class MerchandiseService {
     }
 
 
-    public Map<String,String> deleteMerchandise(Long userId,String password, Long merchandiseId) {
+    public Map<String,String> deleteMerchandise(Long merchandiseId,DeleteCredentialsDto deleteCredentialsDto) {
+        
+        Long userId= deleteCredentialsDto.getUserId();
+        String password=deleteCredentialsDto.getPassword();
+
         Map<String,String> response = new HashMap<>();
         User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
         Merchandise merchandise= merchandiseRepository.findById(merchandiseId).orElseThrow(()-> new RuntimeException("No such merchandise with exists with id"+merchandiseId));

@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.StadiumResponseDto;
 
 import com.example.control.synapse.models.Stadium;
@@ -129,7 +129,12 @@ public class StadiumService {
     }
 
 
-    public Map<String,String> deleteStadium(Long userId,String password, Long stadiumId) {
+    public Map<String,String> deleteStadium(Long stadiumId, DeleteCredentialsDto deleteCredentialsDto) {
+        
+        Long userId= deleteCredentialsDto.getUserId();
+        String password= deleteCredentialsDto.getPassword();
+
+        
         Map<String,String> response = new HashMap<>();
         User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
         Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow(()-> new RuntimeException("No such stadium with exists with id"+stadiumId));

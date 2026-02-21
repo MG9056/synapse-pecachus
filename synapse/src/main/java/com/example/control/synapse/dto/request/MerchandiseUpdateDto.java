@@ -1,6 +1,6 @@
 package com.example.control.synapse.dto.request;
 
-import com.example.control.synapse.models.Stadium;
+
 
 
 
@@ -12,9 +12,9 @@ public class MerchandiseUpdateDto {
     private double price;
     private double rating;
     
-    private Stadium stadiumId;
+    private Long stadiumId;
     public MerchandiseUpdateDto() {}
-    public MerchandiseUpdateDto(String name, String description, double price, double rating, Stadium stadiumId) {
+    public MerchandiseUpdateDto(String name, String description, double price, double rating, Long stadiumId) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -45,10 +45,10 @@ public class MerchandiseUpdateDto {
     public void setRating(double rating) {
         this.rating = rating;
     }
-    public Stadium getStadiumId() {
+    public Long getStadiumId() {
         return stadiumId;
     }
-    public void setStadiumId(Stadium stadium) {
+    public void setStadiumId(Long stadium) {
         this.stadiumId = stadium;
     }
     

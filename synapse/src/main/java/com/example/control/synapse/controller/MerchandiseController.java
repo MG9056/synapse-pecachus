@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.MerchandiseRequest;
 import com.example.control.synapse.dto.request.MerchandiseUpdateDto;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
@@ -87,8 +87,8 @@ public class MerchandiseController {
 
      @DeleteMapping("{id}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Map<String,String> deleteMerchandise(@RequestBody String password,@PathVariable Long id, @RequestBody Long merchandiseId) {
-        return merchandiseService.deleteMerchandise(id,password,merchandiseId);
+    public Map<String,String> deleteMerchandise(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
+        return merchandiseService.deleteMerchandise(id,deleteCredentialsDto);
     }
 
 

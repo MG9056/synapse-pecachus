@@ -1,6 +1,7 @@
 package com.example.control.synapse.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.control.synapse.dto.request.SosRequest;
+import com.example.control.synapse.dto.response.SosResponseDto;
 import com.example.control.synapse.service.SosService;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
 
 @RestController
 @RequestMapping("/Sos")
@@ -44,10 +49,27 @@ public class SosController {
     }
 
     @PatchMapping("/{id}/resolveSos")
-    public void resolveSos(@PathVariable Long id)
+    public Map<String,String> resolveSos(@PathVariable Long id)
     {
-        sosService.resolveSOS(id);
+        return sosService.resolveSOS(id);
     }
+
+    @GetMapping("/allSos")
+    public List<SosResponseDto> getAllSos() {
+        return sosService.getAllSos(); 
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<SosResponseDto> getSosByUserId(@PathVariable Long userId) {
+        return sosService.getSosByUserId(userId);
+    }
+
+    @GetMapping("/event/{eventId}")
+    public List<SosResponseDto> getSosByEventId(@PathVariable Long eventId) {
+        return sosService.getSosByEventId(eventId);
+    }
+    
+    
 
 
     

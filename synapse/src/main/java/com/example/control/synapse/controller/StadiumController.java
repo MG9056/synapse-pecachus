@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.example.control.synapse.dto.request.StadiumRequest;
 import com.example.control.synapse.dto.request.StadiumUpdateDto;
+import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
 import com.example.control.synapse.dto.response.StadiumResponseDto;
@@ -53,12 +54,12 @@ public class StadiumController {
     }
 
     @GetMapping("/{id}/restaurants")
-    public List<RestaurantResponseDto> getRestaurantsByStadiumId(@PathVariable Long stadiumId)
+    public List<RestaurantResponseDto> getRestaurantsByStadiumId(@PathVariable Long id)
     {
-        return restaurantService.getRestaurantByStadiumId(stadiumId);
+        return restaurantService.getRestaurantByStadiumId(id);
     }
 
-    @GetMapping("/id/merchandise")
+    @GetMapping("/{id}/merchandise")
     public List<MerchandiseResponseDto> getMerchandiseByStadiumId(@PathVariable Long id)
     {
         return merchandiseService.getMerchandiseByStadiumId(id);
@@ -82,7 +83,7 @@ public class StadiumController {
         {
             
             return stadiumService.updateStadium(
-             stadiumUpdateDto.getStadiumId(),
+             id,
              stadiumUpdateDto.getCity(),
              stadiumUpdateDto.getState(),
              stadiumUpdateDto.getCountry(),
@@ -93,10 +94,12 @@ public class StadiumController {
 
         }
     
-        @DeleteMapping("{id}/delete")
+        @DeleteMapping("{stadiumiId}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Map<String,String> deleteStadium(@RequestBody String password,@PathVariable Long id, @RequestBody Long stadiumId) {
-        return stadiumService.deleteStadium(id,password,stadiumId);
+    public Map<String,String> deleteStadium(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
+        
+        
+        return stadiumService.deleteStadium(id,deleteCredentialsDto);
     }
     
 
