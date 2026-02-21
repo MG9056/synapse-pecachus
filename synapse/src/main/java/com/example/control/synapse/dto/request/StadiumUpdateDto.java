@@ -9,11 +9,11 @@ public class StadiumUpdateDto {
     private String city;
     private String state;
     private String country;
-    private int capacity;
+    private Integer capacity;
 
     public StadiumUpdateDto(){}
 
-    public StadiumUpdateDto(String city, String state, String country, int capacity)
+    public StadiumUpdateDto(String city, String state, String country, Integer capacity)
     {
         this.city=city;
         this.state=state;
@@ -48,11 +48,11 @@ public class StadiumUpdateDto {
         this.country = country;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
