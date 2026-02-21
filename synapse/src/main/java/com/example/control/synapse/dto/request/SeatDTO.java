@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SeatDTO {
     
-    private Long id;
-    
+    Long id;
     @NotBlank(message = "Row is required")
     private String row;
     

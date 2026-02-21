@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/event-seats")
+@RequestMapping("/event-seats")
 @RequiredArgsConstructor
 public class EventSeatController {
 

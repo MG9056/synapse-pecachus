@@ -14,7 +14,7 @@ import com.example.control.synapse.service.SeatService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/seats")
+@RequestMapping("/seats")
 public class SeatController {
     
     private final SeatService seatService;
