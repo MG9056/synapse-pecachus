@@ -136,6 +136,35 @@ public class MerchandiseOrderService {
 
     }
 
+    public List<MerchandiseOrderResponseDto> getAllMerchandiseOrders()
+    {List<MerchandiseOrder> orders= merchandiseOrderRepository.findAll();
+
+        List<MerchandiseOrderResponseDto> dtoList= new ArrayList<>();
+
+        for(MerchandiseOrder order:orders)
+        {MerchandiseOrderResponseDto orderResponseDto= new MerchandiseOrderResponseDto();
+
+             orderResponseDto.setId(order.getId());
+            orderResponseDto.setPrice(order.getPrice());
+            orderResponseDto.setSeatId(order.getSeat().getId());
+            orderResponseDto.setUserId(order.getUser().getId());
+            orderResponseDto.setStadiumId(order.getStadium().getId());
+        
+
+
+        dtoList.add(orderResponseDto);
+
+
+
+        }
+
+        return dtoList;
+
+
+    }
+
+
+
     public List<MerchandiseOrderResponseDto> getMerchandiseOrderByStadiumId(Long userId)
     {List<MerchandiseOrder> orders= merchandiseOrderRepository.findByStadiumId((userId));
 
@@ -160,6 +189,26 @@ public class MerchandiseOrderService {
         }
 
         return dtoList;
+
+
+    }
+
+    public MerchandiseOrderResponseDto getMerchandiseOrderById(Long id)
+    {MerchandiseOrder order= merchandiseOrderRepository.findById(id).orElseThrow();
+        MerchandiseOrderResponseDto orderResponseDto= new MerchandiseOrderResponseDto();
+
+
+            orderResponseDto.setId(order.getId());
+            orderResponseDto.setPrice(order.getPrice());
+            orderResponseDto.setSeatId(order.getSeat().getId());
+            orderResponseDto.setUserId(order.getUser().getId());
+            orderResponseDto.setStadiumId(order.getStadium().getId());
+
+            return orderResponseDto;
+
+
+
+
 
 
     }

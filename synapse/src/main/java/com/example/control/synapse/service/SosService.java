@@ -142,6 +142,24 @@ public List<SosResponseDto> getSosByUserId(Long userId)
 
 }
 
+public SosResponseDto getSosById(Long id)
+{Sos sos= sosRepository.findById(id).orElseThrow();
+
+    SosResponseDto sosResponseDto= new SosResponseDto();
+
+        sosResponseDto.setId(sos.getId());
+        sosResponseDto.setAlertType(sos.getAlertType());
+        sosResponseDto.setMessage(sos.getMessage());
+        sosResponseDto.setIsActive(sos.getIsActive());
+        sosResponseDto.setTimeStamp(sos.getTimeStamp());
+        sosResponseDto.setUserId(sos.getUser().getId());
+        sosResponseDto.setEventId(sos.getEvent().getId());
+
+        return sosResponseDto;
+
+
+}
+
 public List<SosResponseDto> getSosByEventId(Long eventId)
 {List<Sos> sosList= sosRepository.findByEventId(eventId);
     List<SosResponseDto> dtoList=  new ArrayList<>();

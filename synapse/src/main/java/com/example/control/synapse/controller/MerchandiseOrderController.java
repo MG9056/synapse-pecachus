@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/MerchandiseOrder")
+@RequestMapping("/merchandiseOrder")
 public class MerchandiseOrderController {
 
     private final MerchandiseOrderService merchandiseOrderService;
@@ -32,9 +32,15 @@ public class MerchandiseOrderController {
         
     }
 
+    @GetMapping("/allMerchandiseOrders")
+      public List<MerchandiseOrderResponseDto> getAllMerchandiseOrder()
+    { return merchandiseOrderService.getAllMerchandiseOrders();
+        
+    }
+
     @PostMapping("/placeMerchandiseOrder")
-    public  Map<String,String> bookFoodOrder(@RequestBody MerchandiseOrderRequest request)
-    {
+    public  Map<String,String> bookFoodOrder(@RequestBody MerchandiseOrderRequest request) {
+    
 
         return merchandiseOrderService.bookMerchandiseOrder(
             request.getMerchandiseIdlist(),
@@ -51,6 +57,12 @@ public class MerchandiseOrderController {
     public List<MerchandiseOrderResponseDto> getMerchandiseOrderByUserId(@PathVariable Long id)
     { return merchandiseOrderService.getMerchandiseOrderByUserId(id);
         
+    }
+
+    @GetMapping("{id}")
+    public MerchandiseOrderResponseDto getMerchandiseOrderById(@PathVariable Long id)
+    {
+        return merchandiseOrderService.getMerchandiseOrderById(id);
     }
 
     @GetMapping("/stadium/{stadiumId}")

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
-@RequestMapping("/Sos")
+@RequestMapping("/sos")
 public class SosController {
 
     private final SosService sosService;
@@ -52,6 +52,12 @@ public class SosController {
     public Map<String,String> resolveSos(@PathVariable Long id)
     {
         return sosService.resolveSOS(id);
+    }
+
+    @GetMapping("/id")
+    public SosResponseDto getSosById(Long id)
+    {
+        return sosService.getSosById(id);
     }
 
     @GetMapping("/allSos")
