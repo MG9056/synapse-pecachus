@@ -177,6 +177,24 @@ public class FoodOrderService {
 
     }
 
+    public FoodOrderResponseDto getFoodOrderById(Long id)
+    {FoodOrder order= foodOrderRepository.findById(id).orElseThrow();
+
+        FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
+        orderResponseDto.setId(order.getId());
+        orderResponseDto.setPrice(order.getPrice());
+        orderResponseDto.setSeatId(order.getSeat().getId());
+        orderResponseDto.setUserId(order.getUser().getId());
+        orderResponseDto.setRestaurantId(order.getRestaurant().getId());
+
+        return orderResponseDto;
+
+
+
+
+
+    }
+
 
 
 

@@ -37,7 +37,7 @@ public class RestaurantController {
         this.foodService= foodService;
     }
 
-    @GetMapping
+    @GetMapping("allRestaurants")
     public List<Restaurant> getAllRestaurants()
         {
             return restaurantRepository.findAll();
@@ -56,7 +56,7 @@ public class RestaurantController {
         
     }
 
-    @GetMapping("stadiun/{stadiumId}")
+    @GetMapping("stadium/{stadiumId}")
     public List<RestaurantResponseDto> getRestaurantByRestaurantId(@PathVariable Long stadiumId)
     {
         return restaurantService.getRestaurantByStadiumId(stadiumId);
@@ -74,7 +74,7 @@ public class RestaurantController {
 
     }
 
-    @PatchMapping("/{id}/update")
+    @PatchMapping("/{id}")
     public Map<String,String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantUpdateDto restaurantUpdateDto)
     {  return restaurantService.updateRestaurant(
         id,
@@ -90,7 +90,7 @@ public class RestaurantController {
 
     }
 
-     @DeleteMapping("{id}/delete")
+     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Map<String,String> deleteRestaurant(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         return restaurantService.deleteRestaurant(id,deleteCredentialsDto);

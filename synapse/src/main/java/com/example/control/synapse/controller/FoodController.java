@@ -66,7 +66,7 @@ public class FoodController {
 
     }
 
-    @PatchMapping("/{id}/update")
+    @PatchMapping("/{id}")
     public Map<String,String> updateFood(@PathVariable Long id, @RequestBody FoodUpdateDto foodUpdateDto)
     {
 
@@ -85,7 +85,7 @@ public class FoodController {
         );
     }
 
-     @DeleteMapping("{id}/delete")
+     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Map<String,String> deleteFood(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         return foodService.deleteFood(id,deleteCredentialsDto);

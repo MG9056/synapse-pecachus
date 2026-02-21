@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/FoodOrder")
+@RequestMapping("/foodOrder")
 public class FoodOrderController {
 
     private final FoodOrderService foodOrderService;
@@ -33,6 +33,19 @@ public class FoodOrderController {
         this.foodOrderService=foodOrderSerive;
        
     }
+
+    @GetMapping("/allFoodOrders")
+     public List<FoodOrderResponseDto> getAllFoodOrders()
+    { return foodOrderService.getAllFoodOrders();
+        
+    }
+
+    @GetMapping("/{id}")
+    public FoodOrderResponseDto getOrderById(@PathVariable Long id)
+    {
+        return foodOrderService.getFoodOrderById(id);
+    }
+
 
     @PostMapping("/placeFoodOrder")
     public  Map<String,String> bookFoodOrder(@RequestBody FoodOrderRequest request)

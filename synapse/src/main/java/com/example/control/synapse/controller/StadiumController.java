@@ -20,7 +20,7 @@ import com.example.control.synapse.service.StadiumService;
 
 
 @RestController
-@RequestMapping("/stadiums")
+@RequestMapping("/stadium")
 public class StadiumController {
 
 
@@ -37,7 +37,7 @@ public class StadiumController {
         this.merchandiseService= merchandiseService;
     }
 
-    @GetMapping
+    @GetMapping("allStadiums")
     public List<StadiumResponseDto> getAllStadiums()
     {
         return stadiumService.getAllStadiums();
@@ -77,7 +77,7 @@ public class StadiumController {
         );
     }
 
-    @PatchMapping("/{id}/update")
+    @PatchMapping("/{id}")
     public  Map<String,String> updateStadium(@PathVariable Long id,
         @RequestBody StadiumUpdateDto stadiumUpdateDto )
         {
@@ -94,7 +94,7 @@ public class StadiumController {
 
         }
     
-        @DeleteMapping("{stadiumiId}/delete")
+        @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Map<String,String> deleteStadium(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         

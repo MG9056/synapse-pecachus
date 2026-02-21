@@ -14,7 +14,7 @@ import com.example.control.synapse.dto.response.EventFoodResponseDto;
 import com.example.control.synapse.service.EventFoodService;
 
 @RestController
-@RequestMapping("/Eventfood")
+@RequestMapping("/eventfood")
 public class EventFoodController {
 
     private EventFoodService eventFoodService;
@@ -24,7 +24,7 @@ public class EventFoodController {
         this.eventFoodService= eventFoodService;
     }
 
-    @GetMapping
+    @GetMapping("/allEventFoods")
     public List<EventFoodResponseDto> getAllEventFood()
     {
         return eventFoodService.getAllEventFood();

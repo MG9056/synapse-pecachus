@@ -33,7 +33,7 @@ public class MerchandiseController {
         this.merchandiseService= merchandiseService;
     }
 
-    @GetMapping
+    @GetMapping("/allMerchandise")
     public List<MerchandiseResponseDto> getAllMerchandise()
     {
         return merchandiseService.getAllMerchandise();
@@ -68,7 +68,7 @@ public class MerchandiseController {
         }
 
 
-        @PatchMapping("/{id}/update")
+        @PatchMapping("/{id}")
     public Map<String,String> updateMerchandise(@PathVariable Long id, @RequestBody MerchandiseUpdateDto merchandiseUpdateDto)
     {
 
@@ -85,7 +85,7 @@ public class MerchandiseController {
         );
     }
 
-     @DeleteMapping("{id}/delete")
+     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Map<String,String> deleteMerchandise(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         return merchandiseService.deleteMerchandise(id,deleteCredentialsDto);
