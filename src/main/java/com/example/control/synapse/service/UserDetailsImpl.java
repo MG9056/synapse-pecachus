@@ -15,18 +15,21 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-    
+
     private Long id;
     private String username;
     private String email;
     private String firstName;
-    
+
     @JsonIgnore
     private String password;
-    
+
     private Collection<? extends GrantedAuthority> authorities;
     private boolean enabled;
-    private boolean locked;
+
+    // ✅ Fixed: renamed from 'locked' to 'accountNonLocked' — was storing !isLocked
+    //    but field was named 'locked', which was deeply confusing
+    private boolean accountNonLocked;
 
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -35,13 +38,13 @@ public class UserDetailsImpl implements UserDetails {
 
         return new UserDetailsImpl(
                 user.getId(),
-            user.getUsername(),   // ← correct
-            user.getEmail(),      // ← correct
-            user.getFirstName(),  // ← correct
-            user.getPassword(),
-            authorities,
-            user.getIsEnabled(),
-            !user.getIsLocked()
+                user.getUsername(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getPassword(),
+                authorities,
+                user.getIsEnabled(),
+                !user.getIsLocked()   // accountNonLocked = true means NOT locked = can log in
         );
     }
 
@@ -67,7 +70,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return locked;
+        return accountNonLocked;
     }
 
     @Override

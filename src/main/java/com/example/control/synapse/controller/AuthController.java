@@ -11,7 +11,8 @@ import com.example.control.synapse.dto.request.LoginRequest;
 import com.example.control.synapse.dto.request.RegisterRequest;
 import com.example.control.synapse.dto.response.JwtResponse;
 import com.example.control.synapse.dto.response.MessageResponse;
-import com.example.control.synapse.models.User;
+import com.example.control.synapse.dto.response.UserResponseDto;
+
 import com.example.control.synapse.service.AuthService;
 
 @RestController
@@ -22,8 +23,8 @@ public class AuthController {
     private final AuthService authService;
 
     /**
-     * Login endpoint
-     * POST /api/auth/login
+     * POST /auth/login
+     * Body: { "username": "", "password": "" }
      */
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -32,8 +33,8 @@ public class AuthController {
     }
 
     /**
-     * Register endpoint
-     * POST /api/auth/register
+     * POST /auth/register
+     * Body: { "username","gender","email","password","firstName","lastName","phoneNumber","roles" }
      */
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
@@ -42,13 +43,14 @@ public class AuthController {
     }
 
     /**
-     * Get current user endpoint
-     * GET /api/auth/me
+     * GET /auth/me
+     * Returns current user's profile — no password exposed
+     * Requires valid JWT
      */
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> getCurrentUser() {
-        User user = authService.getCurrentUser();
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserResponseDto> getCurrentUser() {
+        UserResponseDto userProfile = authService.getCurrentUserProfile();
+        return ResponseEntity.ok(userProfile);
     }
 }
