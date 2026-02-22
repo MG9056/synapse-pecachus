@@ -63,7 +63,7 @@ public class MerchandiseController {
         }
 
         @PostMapping("/upload")
-        public Map<String,String> uploadMerchandise(MerchandiseRequest merchandiseRequest)
+        public Map<String,String> uploadMerchandise(@RequestBody MerchandiseRequest merchandiseRequest)
         {
             return merchandiseService.uploadMerchandise(
                 merchandiseRequest.getName(),
