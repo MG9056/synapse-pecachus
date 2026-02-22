@@ -11,7 +11,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.NoHandlerFoundException;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,18 +38,6 @@ public class GlobalExceptionHandler {
     // ──────────────────────────────────────────────
     // 404 - No endpoint matched
     // ──────────────────────────────────────────────
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNoHandlerFound(
-            NoHandlerFoundException ex, HttpServletRequest request) {
-
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                "Not Found",
-                "No endpoint found for: " + ex.getHttpMethod() + " " + ex.getRequestURL(),
-                request.getRequestURI()
-        );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
 
     // ──────────────────────────────────────────────
     // 409 - Duplicate Resource

@@ -5,6 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.control.synapse.dto.request.EventSeatCreateDto;
 import com.example.control.synapse.dto.response.EventSeatResponseDto;
+import com.example.control.synapse.error.BusinessException;
+import com.example.control.synapse.error.InvalidRequestException;
+import com.example.control.synapse.error.ResourceNotFoundException;
 import com.example.control.synapse.models.Event;
 import com.example.control.synapse.models.EventSeat;
 import com.example.control.synapse.models.Seat;
@@ -41,13 +44,13 @@ public class EventSeatService {
 
         
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RuntimeException("Event not found with id: " + eventId));
+                .orElseThrow(() -> new ResourceNotFoundException("Event", "id", eventId));
         
         // Get all seats for the stadium
         List<Seat> seats = seatRepository.findByStadiumId(event.getStadium().getId());
         
         if (seats.isEmpty()) {
-            throw new IllegalStateException("No seats found for stadium with id: " + event.getStadium().getId());
+            throw new BusinessException("No seats found for stadium with id: " + event.getStadium().getId());
         }
         
         List<EventSeat> eventSeats = new ArrayList<>();
@@ -56,9 +59,7 @@ public class EventSeatService {
             Double price = categoryPriceMap.get(seat.getCategory().toString());
             
             if (price == null) {
-                throw new IllegalArgumentException(
-                    "Price not provided for seat category: " + seat.getCategory()
-                );
+                throw new InvalidRequestException("Price not provided for seat category: " + seat.getCategory());
             }
             
             EventSeat eventSeat = new EventSeat();
@@ -230,6 +231,7 @@ public class EventSeatService {
                 .id(eventSeat.getId())
                 .seatId(eventSeat.getSeat().getId())
                 .seatNumber(eventSeat.getSeat().getSeatNo())
+                .row(eventSeat.getSeat().getRow())
                 .seatCategory(eventSeat.getSeat().getCategory())
                 .eventId(eventSeat.getEvent().getId())
                 .eventName(eventSeat.getEvent().getName())
