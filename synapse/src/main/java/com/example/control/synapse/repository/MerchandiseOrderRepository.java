@@ -9,7 +9,7 @@ import com.example.control.synapse.models.MerchandiseOrder;
 public interface MerchandiseOrderRepository extends JpaRepository<MerchandiseOrder,Long>
 {
 
-    List<MerchandiseOrder>findByUserId(Long userId);
-    List<MerchandiseOrder>findByStadiumId(Long stadiumId);
+    List<MerchandiseOrder>findByUser_Id(Long userId);
+    List<MerchandiseOrder>findByStadium_Id(Long stadiumId);
     
 }

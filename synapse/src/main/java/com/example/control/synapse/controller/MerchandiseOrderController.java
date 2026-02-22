@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.control.synapse.dto.request.MerchandiseOrderRequest;
 
-import com.example.control.synapse.dto.response.MerchandiseOrderResponseDto;
 
+import com.example.control.synapse.models.MerchandiseOrder;
+import com.example.control.synapse.repository.MerchandiseOrderRepository;
 import com.example.control.synapse.service.MerchandiseOrderService;
 
 import java.util.List;
@@ -23,18 +24,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/merchandiseOrder")
 public class MerchandiseOrderController {
 
+    private final MerchandiseOrderRepository merchandiseOrderRepository;
+
     private final MerchandiseOrderService merchandiseOrderService;
  
 
-    public MerchandiseOrderController(MerchandiseOrderService merchandiseOrderSerive)
+    public MerchandiseOrderController(MerchandiseOrderService merchandiseOrderSerive, MerchandiseOrderRepository merchandiseOrderRepository)
     {
         this.merchandiseOrderService=merchandiseOrderSerive;
+        this.merchandiseOrderRepository = merchandiseOrderRepository;
         
     }
 
     @GetMapping("/allMerchandiseOrders")
-      public List<MerchandiseOrderResponseDto> getAllMerchandiseOrder()
-    { return merchandiseOrderService.getAllMerchandiseOrders();
+      public List<MerchandiseOrder> getAllMerchandiseOrder()
+    { return merchandiseOrderRepository.findAll();
         
     }
 
@@ -47,28 +51,31 @@ public class MerchandiseOrderController {
             request.getUserId(),
             request.getPrice(),
             request.getSeatId(),
-            request.getStadiumId()
+            request.getStadiumId(),
+            request.getEventId(),
+            request.getOrderTime()
+
         );
     }
 
    
 
     @GetMapping("/user/{userId}")
-    public List<MerchandiseOrderResponseDto> getMerchandiseOrderByUserId(@PathVariable Long id)
-    { return merchandiseOrderService.getMerchandiseOrderByUserId(id);
+    public List<MerchandiseOrder> getMerchandiseOrderByUserId(@PathVariable Long id)
+    { return merchandiseOrderRepository.findByUser_Id(id);
         
     }
 
     @GetMapping("{id}")
-    public MerchandiseOrderResponseDto getMerchandiseOrderById(@PathVariable Long id)
+    public MerchandiseOrder getMerchandiseOrderById(@PathVariable Long id)
     {
-        return merchandiseOrderService.getMerchandiseOrderById(id);
+        return merchandiseOrderRepository.findById(id).orElseThrow();
     }
 
     @GetMapping("/stadium/{stadiumId}")
-    public List<MerchandiseOrderResponseDto> getMerchandiseOrderByStadiumId(@PathVariable Long stadiumid)
+    public List<MerchandiseOrder> getMerchandiseOrderByStadiumId(@PathVariable Long stadiumid)
     {
-        return merchandiseOrderService.getMerchandiseOrderByStadiumId(stadiumid);
+        return merchandiseOrderRepository.findByStadium_Id(stadiumid);
     }
 
    

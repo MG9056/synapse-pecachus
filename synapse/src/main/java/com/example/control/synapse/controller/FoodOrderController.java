@@ -5,11 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.control.synapse.dto.request.FoodOrderRequest;
 
-import com.example.control.synapse.dto.response.FoodOrderResponseDto;
 
-
-
-
+import com.example.control.synapse.models.FoodOrder;
+import com.example.control.synapse.repository.FoodOrderRepository;
 import com.example.control.synapse.service.FoodOrderService;
 
 import java.util.List;
@@ -25,25 +23,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/foodOrder")
 public class FoodOrderController {
 
+    private final FoodOrderRepository foodOrderRepository;
+
     private final FoodOrderService foodOrderService;
     
 
-    public FoodOrderController(FoodOrderService foodOrderSerive)
+    public FoodOrderController(FoodOrderService foodOrderSerive, FoodOrderRepository foodOrderRepository)
     {
         this.foodOrderService=foodOrderSerive;
+        this.foodOrderRepository = foodOrderRepository;
        
     }
 
     @GetMapping("/allFoodOrders")
-     public List<FoodOrderResponseDto> getAllFoodOrders()
-    { return foodOrderService.getAllFoodOrders();
+     public List<FoodOrder> getAllFoodOrders()
+    { return foodOrderRepository.findAll();
         
     }
 
     @GetMapping("/{id}")
-    public FoodOrderResponseDto getOrderById(@PathVariable Long id)
+    public FoodOrder getOrderById(@PathVariable Long id)
     {
-        return foodOrderService.getFoodOrderById(id);
+        return foodOrderRepository.findById(id).orElseThrow();
     }
 
 
@@ -56,22 +57,30 @@ public class FoodOrderController {
             request.getUserId(),
             request.getPrice(),
             request.getSeatId(),
-            request.getRestaurantId()
+            request.getRestaurantId(),
+            request.getEventId(),
+            request.getOrderTime()
         );
     }
 
    
 
     @GetMapping("/user/{userId}")
-    public List<FoodOrderResponseDto> getFoodOrderByUserId(@PathVariable Long id)
-    { return foodOrderService.getFoodOrderByUserId(id);
+    public List<FoodOrder> getFoodOrderByUserId(@PathVariable Long id)
+    { return foodOrderRepository.findByUser_Id(id);
         
     }
 
     @GetMapping("/restaurant/{restuarantId}")
-    public List<FoodOrderResponseDto> getFoodOrderByRestaurantId(@PathVariable Long restaurantid)
+    public List<FoodOrder> getFoodOrderByRestaurantId(@PathVariable Long restaurantid)
     {
-        return foodOrderService.getFoodOrderByRestaurantId(restaurantid);
+        return foodOrderRepository.findByRestaurant_Id(restaurantid);
+    }
+
+      @GetMapping("/event/{eventId}")
+    public List<FoodOrder> getFoodOrderByEventId(@PathVariable Long eventid)
+    {
+        return foodOrderRepository.findByEvent_Id(eventid);
     }
 
    

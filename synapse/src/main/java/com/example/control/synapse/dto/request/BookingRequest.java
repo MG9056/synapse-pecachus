@@ -1,5 +1,6 @@
 package com.example.control.synapse.dto.request;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BookingRequest {
@@ -8,13 +9,17 @@ public class BookingRequest {
     private Long userId;
     private Long eventId;
     private List<Long> seatIdList;
+    private Long stadiumId;
+    private LocalDateTime bookingTime;
 
+  
     public BookingRequest(){}
-    public BookingRequest(Long userId, Long eventId, List<Long>seatIdlist)
+    public BookingRequest(Long userId, Long eventId, List<Long>seatIdlist, Long stadiumId, LocalDateTime bookingTime)
     {
         this.userId=userId;
         this.eventId=eventId;
         this.seatIdList=seatIdlist;
+        this.bookingTime=bookingTime;
     }
 
 
@@ -41,5 +46,18 @@ public class BookingRequest {
     public void setSeatIdList(List<Long> seatIdList)
     {
         this.seatIdList=seatIdList;
+    }
+
+      public Long getStadiumId() {
+        return stadiumId;
+    }
+    public void setStadiumId(Long stadiumId) {
+        this.stadiumId = stadiumId;
+    }
+    public LocalDateTime getBookingTime() {
+        return bookingTime;
+    }
+    public void setBookingTime(LocalDateTime bookingTime) {
+        this.bookingTime = bookingTime;
     }
 }

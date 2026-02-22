@@ -86,7 +86,7 @@ public class MerchandiseService {
 
 
     public List<MerchandiseResponseDto> getMerchandiseByStadiumId(Long stadiumId )
-    {List<Merchandise> merchandises= merchandiseRepository.findByStadiumId(stadiumId);
+    {List<Merchandise> merchandises= merchandiseRepository.findByStadium_Id(stadiumId);
         List<MerchandiseResponseDto> dtoList= new ArrayList<>();
 
         for(Merchandise merchandise: merchandises)
@@ -110,7 +110,7 @@ public class MerchandiseService {
         return dtoList;
     }
 
-    public Map<String,String> uploadMerchandise(String name, String description, double price, double rating, Long stadiumId)
+    public Map<String,String> uploadMerchandise(String name, String description, double price, double rating, Long stadiumId, String size, String type, Integer stock)
     {
         Merchandise merchandise= new Merchandise();
 
@@ -118,6 +118,9 @@ public class MerchandiseService {
         merchandise.setDescription(description);
         merchandise.setPrice(price);
         merchandise.setRating(rating);
+        merchandise.setSize(size);
+        merchandise.setType(type);
+        merchandise.setStock(stock);
 
         Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
         merchandise.setStadium(stadium);
@@ -134,16 +137,34 @@ public class MerchandiseService {
     }
 
 
-    public Map<String, String> updateMerchandise(Long merchandiseId, String name, String description, double price, double rating, Long stadiumId)
+    public Map<String, String> updateMerchandise(Long merchandiseId, String name, String description, Double price, Double rating, Long stadiumId, String type, String size, Integer stock)
     {Merchandise merchandise= merchandiseRepository.findById(merchandiseId).orElseThrow();
 
-     merchandise.setName(name);
-     merchandise.setName(description);
-     merchandise.setPrice(price);
-     merchandise.setRating(rating);
+     if (name != null) {
+    merchandise.setName(name);
+}
+if (description != null) {
+    merchandise.setDescription(description);
+}
+if (price != null) {
+    merchandise.setPrice(price);
+}
+if (rating != null) {
+    merchandise.setRating(rating);
+}
+if (type != null) {
+    merchandise.setType(type);
+}
+if (size != null) {
+    merchandise.setSize(size);
+}
+if (stock != null) {
+    merchandise.setStock(stock);
+}
 
-     Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
-     merchandise.setStadium(stadium);
+if(stadiumId!=null)
+     {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+     merchandise.setStadium(stadium);}
 
      merchandiseRepository.save(merchandise);
 

@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.MerchandiseRequest;
 import com.example.control.synapse.dto.request.MerchandiseUpdateDto;
-import com.example.control.synapse.dto.response.MerchandiseResponseDto;
+
+import com.example.control.synapse.models.Merchandise;
+import com.example.control.synapse.repository.MerchandiseRepository;
 import com.example.control.synapse.service.MerchandiseService;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -26,17 +28,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/merchandise")
 public class MerchandiseController {
 
+    private final MerchandiseRepository merchandiseRepository;
+
     private final MerchandiseService merchandiseService;
 
-    public MerchandiseController(MerchandiseService merchandiseService)
+    public MerchandiseController(MerchandiseService merchandiseService, MerchandiseRepository merchandiseRepository)
     {
         this.merchandiseService= merchandiseService;
+        this.merchandiseRepository = merchandiseRepository;
     }
 
     @GetMapping("/allMerchandise")
-    public List<MerchandiseResponseDto> getAllMerchandise()
+    public List<Merchandise> getAllMerchandise()
     {
-        return merchandiseService.getAllMerchandise();
+        return merchandiseRepository.findAll();
         
     }
     
@@ -46,9 +51,15 @@ public class MerchandiseController {
     
 
         @GetMapping("/{id}")
-        public MerchandiseResponseDto getMerchandiseById(@PathVariable Long id)
+        public Merchandise getMerchandiseById(@PathVariable Long id)
         {
-            return merchandiseService.getMerchandiseById(id);
+            return merchandiseRepository.findById(id).orElseThrow();
+        }
+
+        @GetMapping("/stadium/{stadiumId}")
+        public List<Merchandise> getMerchandiseByStadiumId(@PathVariable Long stadiumId)
+        {
+            return merchandiseRepository.findByStadium_Id(stadiumId);
         }
 
         @PostMapping("/upload")
@@ -59,7 +70,10 @@ public class MerchandiseController {
                 merchandiseRequest.getDescription(),
                 merchandiseRequest.getPrice(),
                 merchandiseRequest.getRating(),
-                merchandiseRequest.getStadiumId()
+                merchandiseRequest.getStadiumId(),
+                merchandiseRequest.getType(),
+                merchandiseRequest.getSize(),
+                merchandiseRequest.getStock()
 
 
 
@@ -79,7 +93,10 @@ public class MerchandiseController {
             merchandiseUpdateDto.getDescription(),
             merchandiseUpdateDto.getPrice(),
             merchandiseUpdateDto.getRating(),
-            merchandiseUpdateDto.getStadiumId()
+            merchandiseUpdateDto.getStadiumId(),
+            merchandiseUpdateDto.getType(),
+            merchandiseUpdateDto.getSize(),
+            merchandiseUpdateDto.getStock()
 
 
         );

@@ -11,8 +11,9 @@ import com.example.control.synapse.models.Sos;
 
 public interface SosRepository extends JpaRepository<Sos,Long> {
 
-    List<Sos> findByUserId(Long userId);
-    List<Sos> findByEventId(Long eventId);
+    List<Sos> findByUser_Id(Long userId);
+    List<Sos> findByEvent_Id(Long eventId);
+    List<Sos> findByStadium_Id(Long stadiumId);
     
 }
 

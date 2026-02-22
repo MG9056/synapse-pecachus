@@ -13,20 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.control.synapse.dto.request.SosRequest;
 import com.example.control.synapse.dto.response.SosResponseDto;
+import com.example.control.synapse.models.Sos;
+import com.example.control.synapse.repository.SosRepository;
 import com.example.control.synapse.service.SosService;
 import org.springframework.web.bind.annotation.GetMapping;
-
 
 
 @RestController
 @RequestMapping("/sos")
 public class SosController {
 
+    private final SosRepository sosRepository;
+
     private final SosService sosService;
 
-    public SosController(SosService sosService)
+    public SosController(SosService sosService, SosRepository sosRepository)
     {
         this.sosService= sosService;
+        this.sosRepository = sosRepository;
     }
     
 
@@ -40,7 +44,8 @@ public class SosController {
     sosRequest.getIsActive(),
     sosRequest.getTimeStamp(),
     sosRequest.getUserId(),
-    sosRequest.getEventId()
+    sosRequest.getEventId(),
+    sosRequest.getStadiumId()
 
         );
 
@@ -61,18 +66,24 @@ public class SosController {
     }
 
     @GetMapping("/allSos")
-    public List<SosResponseDto> getAllSos() {
-        return sosService.getAllSos(); 
+    public List<Sos> getAllSos() {
+        return sosRepository.findAll(); 
     }
 
     @GetMapping("/user/{userId}")
-    public List<SosResponseDto> getSosByUserId(@PathVariable Long userId) {
-        return sosService.getSosByUserId(userId);
+    public List<Sos> getSosByUserId(@PathVariable Long userId) {
+        return sosRepository.findByUser_Id(userId);
     }
 
     @GetMapping("/event/{eventId}")
-    public List<SosResponseDto> getSosByEventId(@PathVariable Long eventId) {
-        return sosService.getSosByEventId(eventId);
+    public List<Sos> getSosByEventId(@PathVariable Long eventId) {
+        return sosRepository.findByEvent_Id(eventId);
+    }
+
+    @GetMapping("/stadium/{stadiumId}")
+    public List<Sos> getSosByStadiumId(@PathVariable Long stadiumId)
+    {
+        return sosRepository.findByStadium_Id(stadiumId);
     }
     
     

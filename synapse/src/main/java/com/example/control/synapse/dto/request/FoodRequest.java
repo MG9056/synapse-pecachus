@@ -6,16 +6,22 @@ public class FoodRequest
     private Long restaurantId;
     private float price;
     private float rating;
+    private String type;
+    private String diet;
+    private Integer stock;
 
 
     public FoodRequest(){}
 
-    public FoodRequest(String name, Long restaurantId, float price, float rating)
+    public FoodRequest(String name, Long restaurantId, float price, float rating, String type, String diet, Integer stock)
     {
         this.name=name;
         this.restaurantId=restaurantId;
         this.price=price;
         this.rating=rating;
+        this.type=type;
+        this.diet=diet;
+        this.stock=stock;
     }
 
 
@@ -42,6 +48,31 @@ public class FoodRequest
     }
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDiet() {
+        return diet;
+    }
+
+    public void setDiet(String diet) {
+        this.diet = diet;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     

@@ -10,24 +10,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.example.control.synapse.dto.response.EventFoodResponseDto;
-import com.example.control.synapse.service.EventFoodService;
+
+import com.example.control.synapse.models.EventFood;
+import com.example.control.synapse.repository.EventFoodRepository;
+
 
 @RestController
 @RequestMapping("/eventfood")
 public class EventFoodController {
 
-    private EventFoodService eventFoodService;
+    private final EventFoodRepository eventFoodRepository;
 
-    public EventFoodController(EventFoodService eventFoodService)
+
+
+    public EventFoodController( EventFoodRepository eventFoodRepository)
     {
-        this.eventFoodService= eventFoodService;
+       
+        this.eventFoodRepository = eventFoodRepository;
     }
 
     @GetMapping("/allEventFoods")
-    public List<EventFoodResponseDto> getAllEventFood()
+    public List<EventFood> getAllEventFood()
     {
-        return eventFoodService.getAllEventFood();
+        return eventFoodRepository.findAll();
     }
     
 
@@ -36,23 +41,33 @@ public class EventFoodController {
 
 
     @GetMapping("/{id}")
-    public EventFoodResponseDto getEventFoodById(@PathVariable Long id)
+    public EventFood getEventFoodById(@PathVariable Long id)
     {
-        return eventFoodService.getEventFoodById(id);
+        return eventFoodRepository.findById(id).orElseThrow();
     }
 
     @GetMapping("/order/{orderId}")
-    public List<EventFoodResponseDto> getEventFoodByOrderId(@PathVariable Long orderId)
+    public List<EventFood> getEventFoodByOrderId(@PathVariable Long orderId)
     {
-        return eventFoodService.getEventFoodByOrderId(orderId);
+        return eventFoodRepository.findByOrder_Id(orderId);
     }
 
     @GetMapping("/restaurant/{restaurantId}")
-    public List<EventFoodResponseDto> getEventFoodByRestaurantId(@PathVariable Long restaurantId)
+    public List<EventFood> getEventFoodByRestaurantId(@PathVariable Long restaurantId)
     { 
-        return eventFoodService.getEventFoodByRestaurantId(restaurantId);
+        return eventFoodRepository.findByRestaurant_Id(restaurantId);
 
     }
+
+    @GetMapping("/event/{eventId}")
+    public List<EventFood> getEventFoodByEventId(@PathVariable Long eventId)
+    { 
+        return eventFoodRepository.findByEvent_Id(eventId);
+
+    }
+
+
+
 
 
     

@@ -7,43 +7,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.control.synapse.dto.response.EventMerchandiseResponseDto;
-import com.example.control.synapse.service.EventMerchandiseService;
+
+import com.example.control.synapse.models.EventMerchandise;
+import com.example.control.synapse.repository.EventMerchandiseRepository;
+
 
 @RestController
 @RequestMapping("/eventMerchandise")
 public class EventMerchandiseController {
 
-    private EventMerchandiseService eventMerchandiseService;
+    private final EventMerchandiseRepository eventMerchandiseRepository;
 
-    public EventMerchandiseController(EventMerchandiseService eventMerchandiseService)
+
+
+    public EventMerchandiseController( EventMerchandiseRepository eventMerchandiseRepository)
     {
-        this.eventMerchandiseService= eventMerchandiseService;
+      
+        this.eventMerchandiseRepository = eventMerchandiseRepository;
     }
 
     @GetMapping("/allEventMerchandise")
-    public List<EventMerchandiseResponseDto> getAllEventMerchandise()
+    public List<EventMerchandise> getAllEventMerchandise()
     {
-        return eventMerchandiseService.getAllEventMerchandise();
+        return eventMerchandiseRepository.findAll();
     }
     
 
     @GetMapping("/{id}")
-    public EventMerchandiseResponseDto getEventMerchandiseById(@PathVariable Long id)
+    public EventMerchandise getEventMerchandiseById(@PathVariable Long id)
     {
-        return eventMerchandiseService.getEventMerchandiseById(id);
+        return eventMerchandiseRepository.findById(id).orElseThrow();
     }
 
     @GetMapping("/order/{orderId}")
-    public List<EventMerchandiseResponseDto> getEventMerchandiseByMerchandiseOrderId(@PathVariable Long orderId)
+    public List<EventMerchandise> getEventMerchandiseByMerchandiseOrderId(@PathVariable Long orderId)
     {
-        return eventMerchandiseService.getEventMerchandiseByMerchandiseOrderId(orderId);
+        return eventMerchandiseRepository.findByMerchandiseOrder_Id(orderId);
     }
 
     @GetMapping("/stadium/{stadiumId}")
-    public List<EventMerchandiseResponseDto> getEventMerchandiseByStadiumId(@PathVariable Long stadiumId)
+    public List<EventMerchandise> getEventMerchandiseByStadiumId(@PathVariable Long stadiumId)
     { 
-        return eventMerchandiseService.getEventMerchandiseByStadiumId(stadiumId);
+        return eventMerchandiseRepository.findByStadium_Id(stadiumId);
+
+    }
+    @GetMapping("/event/{eventId}")
+    public List<EventMerchandise> getEventMerchandiseByEventId(@PathVariable Long eventId)
+    { 
+        return eventMerchandiseRepository.findByEvent_Id(eventId);
 
     }
 

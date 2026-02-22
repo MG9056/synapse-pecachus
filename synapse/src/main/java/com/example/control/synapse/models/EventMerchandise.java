@@ -19,17 +19,21 @@ public class EventMerchandise {
     private Stadium stadium;
     @ManyToOne
     private MerchandiseOrder merchandiseOrder;
+
+    @ManyToOne
+    private Event event;
   
 
-    
+
     public EventMerchandise() {}
-    public EventMerchandise(String name, String description, double price, double rating, Stadium stadiumId, MerchandiseOrder merchandiseOrderId) {
+    public EventMerchandise(String name, String description, double price, double rating, Stadium stadiumId, MerchandiseOrder merchandiseOrderId, Event event) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
         this.stadium = stadiumId;
         this.merchandiseOrder= merchandiseOrderId;
+        this.event=event;
     }
 
     public Long getId() {
@@ -76,6 +80,13 @@ public class EventMerchandise {
     }
     public void setMerchandiseOrder(MerchandiseOrder merchandiseOrderId) {
         this.merchandiseOrder = merchandiseOrderId;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+    public void setEvent(Event event) {
+        this.event = event;
     }
     
     

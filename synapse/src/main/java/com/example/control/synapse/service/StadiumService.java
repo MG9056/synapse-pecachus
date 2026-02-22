@@ -38,13 +38,14 @@ public class StadiumService {
 
 
 
-    public Map<String,String> uploadStadium(String city, String state, String country, Integer capacity)
+    public Map<String,String> uploadStadium(String city, String state, String country, Integer capacity, String name)
     {
         Stadium stadium= new Stadium();
         stadium.setCity(city);
         stadium.setState(state);
         stadium.setCountry(country);
         stadium.setCapacity(capacity);
+        stadium.setName(name);
 
         stadiumRepository.save(stadium);
 
@@ -105,7 +106,7 @@ public class StadiumService {
         
     }
 
-    public Map<String,String> updateStadium(Long stadiumId, String city, String state, String country, Integer capacity )
+    public Map<String,String> updateStadium(Long stadiumId, String city, String state, String country, Integer capacity, String name )
     { Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
 
 
@@ -121,6 +122,10 @@ if (country != null)
 
 if (capacity != null)
     stadium.setCapacity(capacity);
+
+if(name!=null)
+    stadium.setName(name);
+
     
 
 

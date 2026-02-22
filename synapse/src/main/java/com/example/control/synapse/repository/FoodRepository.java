@@ -6,5 +6,7 @@ import com.example.control.synapse.models.Food;
 
 public interface FoodRepository extends JpaRepository<Food,Long>{
     
-    List<Food> findByRestaurantId(Long restaurantId);
+    List<Food> findByRestaurant_Id(Long restaurantId);
+    List<Food>findByDiet(String dietType);
+    List<Food>findByType(String type);
 }

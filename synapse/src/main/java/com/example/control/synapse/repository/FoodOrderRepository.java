@@ -12,7 +12,8 @@ import com.example.control.synapse.models.FoodOrder;
 public interface FoodOrderRepository extends JpaRepository<FoodOrder,Long>
 {
 
-    List<FoodOrder>findByUserId(Long userId);
-    List<FoodOrder>findByRestaurantId(Long restaurantId);
+    List<FoodOrder>findByUser_Id(Long userId);
+    List<FoodOrder>findByRestaurant_Id(Long restaurantId);
+    List<FoodOrder>findByEvent_Id(Long eventId);
     
 }

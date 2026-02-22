@@ -7,62 +7,67 @@ import java.util.Map;
 import com.example.control.synapse.dto.request.StadiumRequest;
 import com.example.control.synapse.dto.request.StadiumUpdateDto;
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
-import com.example.control.synapse.dto.response.MerchandiseResponseDto;
-import com.example.control.synapse.dto.response.RestaurantResponseDto;
-import com.example.control.synapse.dto.response.StadiumResponseDto;
 
+import com.example.control.synapse.models.Merchandise;
+import com.example.control.synapse.models.Restaurant;
+import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.repository.MerchandiseRepository;
+import com.example.control.synapse.repository.RestaurantRepository;
+import com.example.control.synapse.repository.StadiumRepository;
 
-import com.example.control.synapse.service.MerchandiseService;
-import com.example.control.synapse.service.RestaurantService;
 import com.example.control.synapse.service.StadiumService;
-
-
 
 
 @RestController
 @RequestMapping("/stadium")
 public class StadiumController {
 
+    private final MerchandiseRepository merchandiseRepository;
+
+    private final RestaurantRepository restaurantRepository;
+
+    private final StadiumRepository stadiumRepository;
+
 
     private final StadiumService stadiumService;
-    private final RestaurantService restaurantService;
-    private final MerchandiseService merchandiseService;
+
     
 
     public StadiumController(
-           StadiumService stadiumService, RestaurantService restaurantService, MerchandiseService merchandiseService) {
+           StadiumService stadiumService, StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository, MerchandiseRepository merchandiseRepository) {
        
         this.stadiumService=stadiumService;
-        this.restaurantService=restaurantService;
-        this.merchandiseService= merchandiseService;
+        this.stadiumRepository = stadiumRepository;
+        this.restaurantRepository = restaurantRepository;
+        this.merchandiseRepository = merchandiseRepository;
     }
 
     @GetMapping("allStadiums")
-    public List<StadiumResponseDto> getAllStadiums()
+    public List<Stadium> getAllStadiums()
     {
-        return stadiumService.getAllStadiums();
+        return stadiumRepository.findAll();
 
     }
 
     @GetMapping("/{id}")
-    public StadiumResponseDto getStadiumById(@PathVariable Long id)
+    public Stadium getStadiumById(@PathVariable Long id)
 
     {
-        return stadiumService.getStadiumById(id);
+        return stadiumRepository.findById(id).orElseThrow();
 
 
     }
 
     @GetMapping("/{id}/restaurants")
-    public List<RestaurantResponseDto> getRestaurantsByStadiumId(@PathVariable Long id)
+    public List<Restaurant> getRestaurantsByStadiumId(@PathVariable Long id)
     {
-        return restaurantService.getRestaurantByStadiumId(id);
+        return restaurantRepository.findByStadium_Id(id);
     }
 
     @GetMapping("/{id}/merchandise")
-    public List<MerchandiseResponseDto> getMerchandiseByStadiumId(@PathVariable Long id)
+    public List<Merchandise> getMerchandiseByStadiumId(@PathVariable Long id)
     {
-        return merchandiseService.getMerchandiseByStadiumId(id);
+        return merchandiseRepository.findByStadium_Id(id);
     }
 
     @PostMapping("/upload")
@@ -72,7 +77,8 @@ public class StadiumController {
             stadiumRequest.getCity(),
             stadiumRequest.getState(),
             stadiumRequest.getCountry(),
-            stadiumRequest.getCapacity()
+            stadiumRequest.getCapacity(),
+            stadiumRequest.getName()
 
         );
     }
@@ -87,7 +93,8 @@ public class StadiumController {
              stadiumUpdateDto.getCity(),
              stadiumUpdateDto.getState(),
              stadiumUpdateDto.getCountry(),
-             stadiumUpdateDto.getCapacity()
+             stadiumUpdateDto.getCapacity(),
+             stadiumUpdateDto.getName()
 
             );
 

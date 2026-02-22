@@ -5,12 +5,12 @@ public class RestaurantUpdateDto {
 
     
     private String name;
-    private double rating;
+    private Double rating;
     private Long stadiumId;
 
     public RestaurantUpdateDto(){}
 
-    public RestaurantUpdateDto(String name, double rating, Long stadiumId)
+    public RestaurantUpdateDto(String name, Double rating, Long stadiumId)
     {   this.name=name;
         this.rating= rating;
         this.stadiumId=stadiumId;
@@ -27,11 +27,11 @@ public class RestaurantUpdateDto {
         this.name = name;
     }
 
-    public double getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

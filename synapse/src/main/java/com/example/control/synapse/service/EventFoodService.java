@@ -48,7 +48,7 @@ public class EventFoodService {
 
 
     public List<EventFoodResponseDto> getEventFoodByOrderId(Long orderId)
- {List<EventFood> eventFoods= eventFoodRepository.findByOrderId(orderId);
+ {List<EventFood> eventFoods= eventFoodRepository.findByOrder_Id(orderId);
     List<EventFoodResponseDto> dtoList= new ArrayList<>();
 
     for(EventFood eventFood:eventFoods)
@@ -73,7 +73,7 @@ public class EventFoodService {
 
 
    public List<EventFoodResponseDto> getEventFoodByRestaurantId(Long restaurantId)
- {List<EventFood> eventFoods= eventFoodRepository.findByRestaurantId(restaurantId);
+ {List<EventFood> eventFoods= eventFoodRepository.findByRestaurant_Id(restaurantId);
     List<EventFoodResponseDto> dtoList= new ArrayList<>();
 
     for(EventFood eventFood:eventFoods)

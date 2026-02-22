@@ -10,15 +10,17 @@ public class StadiumUpdateDto {
     private String state;
     private String country;
     private Integer capacity;
+    private String name;
 
     public StadiumUpdateDto(){}
 
-    public StadiumUpdateDto(String city, String state, String country, Integer capacity)
+    public StadiumUpdateDto(String city, String state, String country, Integer capacity, String name)
     {
         this.city=city;
         this.state=state;
         this.country=country;
         this.capacity=capacity;
+        this.name=name;
     }
 
 
@@ -54,6 +56,14 @@ public class StadiumUpdateDto {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     

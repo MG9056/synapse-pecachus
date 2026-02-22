@@ -8,8 +8,10 @@ import com.example.control.synapse.models.EventMerchandise;
 
 
 public interface EventMerchandiseRepository extends JpaRepository<EventMerchandise,Long> {
-    List<EventMerchandise> findByStadiumId(Long restaurantId);
-    List<EventMerchandise> findByMerchandiseOrderId(Long orderId);
+    List<EventMerchandise> findByStadium_Id(Long restaurantId);
+    List<EventMerchandise> findByMerchandiseOrder_Id(Long orderId);
+    List<EventMerchandise> findByEvent_Id(Long eventId);
+
   
 
 

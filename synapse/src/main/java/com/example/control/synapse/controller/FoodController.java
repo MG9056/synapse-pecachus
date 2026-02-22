@@ -1,6 +1,7 @@
 package com.example.control.synapse.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -17,31 +18,39 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.FoodRequest;
 import com.example.control.synapse.dto.request.FoodUpdateDto;
-import com.example.control.synapse.dto.response.FoodResponseDto;
 
-
-
+import com.example.control.synapse.models.Food;
+import com.example.control.synapse.repository.FoodRepository;
 import com.example.control.synapse.service.FoodService;
 
 @RestController
 @RequestMapping("/food")
 public class FoodController {
 
+    private final FoodRepository foodRepository;
+
     private final FoodService foodService;
    
 
-    public FoodController(FoodService foodService)
+    public FoodController(FoodService foodService, FoodRepository foodRepository)
     {
         this.foodService= foodService;
+        this.foodRepository = foodRepository;
         
         
     }
+
+    @GetMapping("/allFoods")
+    public List<Food> getAllFoods()
+    {return foodRepository.findAll();
+
+    }
      
     @GetMapping("/{id}")
-    public FoodResponseDto getFoodById(@PathVariable Long id)
+    public Food getFoodById(@PathVariable Long id)
 
     {
-        return foodService.getFoodById(id);
+        return foodRepository.findById(id).orElseThrow();
     }    
 
     // @GetMapping("/restaurant/{restaurantId}")
@@ -51,6 +60,25 @@ public class FoodController {
 
     // }
 
+    @GetMapping("/restaurant/{restaurantId}")
+    public List<Food> getFoodByRestaurantId(Long restaurantId)
+    {
+        return foodRepository.findByRestaurant_Id(restaurantId);
+    }
+
+    @GetMapping("/diet/{diet}")
+    public List<Food> getFoodByDiet(String diet)
+    {
+        return foodRepository.findByDiet(diet);
+    }
+
+    @GetMapping("type/{type}")
+    public List<Food> getFoodByType(String type)
+    {
+        return foodRepository.findByType(type);
+    }
+
+
 
     @PostMapping("/upload")
     public Map<String,String> uploadFood(@RequestBody FoodRequest foodRequest)
@@ -58,7 +86,10 @@ public class FoodController {
         foodRequest.getName(),
         foodRequest.getRestaurantId(),
         foodRequest.getPrice(),
-        foodRequest.getRating()
+        foodRequest.getRating(),
+        foodRequest.getType(),
+        foodRequest.getDiet(),
+        foodRequest.getStock()
         
 
 
@@ -76,7 +107,11 @@ public class FoodController {
             foodUpdateDto.getName(),
             foodUpdateDto.getRestaurantId(),
             foodUpdateDto.getPrice(),
-            foodUpdateDto.getRating()
+            foodUpdateDto.getRating(),
+            foodUpdateDto.getType(),
+            foodUpdateDto.getDiet(),
+            foodUpdateDto.getStock()
+            
 
 
 

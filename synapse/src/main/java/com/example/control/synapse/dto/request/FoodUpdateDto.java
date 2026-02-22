@@ -6,18 +6,23 @@ public class FoodUpdateDto {
     
     private String name;
     private Long restaurantId;
-    private float price;
-    private float rating;
+    private Float price;
+    private Float rating;
+    private String type;
+    private String diet;
+    private Integer stock;
     
-
 
     public FoodUpdateDto(){}
 
-    public FoodUpdateDto(String name, Long restaurantId, float price, float rating)
+    public FoodUpdateDto(String name, Long restaurantId, Float price, Float rating, String type, String diet, Integer stock)
     { this.name=name;
         this.restaurantId= restaurantId;
         this.price= price;
         this.rating=rating;
+        this.type=type;
+        this.diet=diet;
+        this.stock=stock;
         
 
     }
@@ -40,20 +45,44 @@ public class FoodUpdateDto {
         this.restaurantId = restaurantId;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public float getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
+    }
+
+     public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDiet() {
+        return diet;
+    }
+
+    public void setDiet(String diet) {
+        this.diet = diet;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
 

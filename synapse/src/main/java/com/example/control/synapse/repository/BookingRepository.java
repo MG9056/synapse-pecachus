@@ -8,7 +8,8 @@ import com.example.control.synapse.models.Booking;
 
 public interface BookingRepository extends JpaRepository<Booking,Long> {
 
-    List<Booking>findByUserId(Long userId);
-    List<Booking>findByEventId(Long eventId);
+    List<Booking>findByUser_Id(Long userId);
+    List<Booking>findByEvent_Id(Long eventId);
+    List<Booking>findByStadium_Id(Long eventId);
 
 }

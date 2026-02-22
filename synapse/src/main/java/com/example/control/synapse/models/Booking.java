@@ -19,14 +19,18 @@ public class Booking {
 
      @ManyToOne
      private Event event;
+     @ManyToOne
+     private Stadium stadium;
+
      private LocalDateTime bookingTime;
 
      public Booking(){}
 
-     public Booking(User user, Event event, LocalDateTime datetime)
+     public Booking(User user, Event event, LocalDateTime datetime, Stadium stadium)
      {this.user=user;
         this.event=event;
         this.bookingTime=datetime;
+        this.stadium=stadium;
 
 
 
@@ -65,6 +69,14 @@ public class Booking {
 
      public void setBookingTime(LocalDateTime datetime) {
          this.bookingTime = datetime;
+     }
+
+     public Stadium getStadium() {
+        return stadium;
+    }
+
+     public void setStadium(Stadium stadium) {
+         this.stadium = stadium;
      }
 
      

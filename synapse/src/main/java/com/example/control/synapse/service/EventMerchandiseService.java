@@ -44,7 +44,7 @@ public class EventMerchandiseService {
 
     public List<EventMerchandiseResponseDto> getEventMerchandiseByMerchandiseOrderId(Long merchandiseOrderId)
     {
-        List<EventMerchandise> eventMerchandises= eventMerchandiseRepository.findByMerchandiseOrderId(merchandiseOrderId);
+        List<EventMerchandise> eventMerchandises= eventMerchandiseRepository.findByMerchandiseOrder_Id(merchandiseOrderId);
 
         List<EventMerchandiseResponseDto> dtoList=new ArrayList<>();
 
@@ -73,7 +73,7 @@ public class EventMerchandiseService {
 
     public List<EventMerchandiseResponseDto> getEventMerchandiseByStadiumId(Long stadiumId)
     {
-        List<EventMerchandise> eventMerchandises= eventMerchandiseRepository.findByMerchandiseOrderId(stadiumId);
+        List<EventMerchandise> eventMerchandises= eventMerchandiseRepository.findByMerchandiseOrder_Id(stadiumId);
 
         List<EventMerchandiseResponseDto> dtoList=new ArrayList<>();
 

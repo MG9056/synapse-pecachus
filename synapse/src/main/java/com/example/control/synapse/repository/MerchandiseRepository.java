@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.control.synapse.models.Merchandise;
 
 public interface MerchandiseRepository extends JpaRepository<Merchandise,Long>{
-    List<Merchandise> findByStadiumId(Long stadiumId);
+    List<Merchandise> findByStadium_Id(Long stadiumId);
 }

@@ -1,4 +1,5 @@
 package com.example.control.synapse.dto.request;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FoodOrderRequest {
@@ -7,19 +8,22 @@ public class FoodOrderRequest {
         private float price;
         private Long seatId;
         private Long restaurantId;
+        private Long eventId;
+        private LocalDateTime orderTime;
 
 
-        
 
         public FoodOrderRequest(){}
 
-        public FoodOrderRequest(List<Long>foodIdlist, Long userId, float price, Long seatId, Long restaurantId)
+        public FoodOrderRequest(List<Long>foodIdlist, Long userId, float price, Long seatId, Long restaurantId, Long eventId, LocalDateTime orderTime)
         {
             this.foodIdlist=foodIdlist;
             this.userId=userId;
             this.price=price;
             this.seatId=seatId;
             this.restaurantId=restaurantId;
+            this.eventId=eventId;
+            this.orderTime=orderTime;
         }
 
         public List<Long> getFoodIdlist() {
@@ -54,6 +58,25 @@ public class FoodOrderRequest {
         public void setRestaurantId(Long restaurantId) {
             this.restaurantId = restaurantId;
         }
+
+        
+        public Long getEventId() {
+            return eventId;
+        }
+
+        public void setEventId(Long eventId) {
+            this.eventId = eventId;
+        }
+
+        
+        public LocalDateTime getOrderTime() {
+            return orderTime;
+        }
+
+        public void setOrderTime(LocalDateTime orderTime) {
+            this.orderTime = orderTime;
+        }
+
 
         
 

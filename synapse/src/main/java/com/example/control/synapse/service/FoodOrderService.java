@@ -1,6 +1,7 @@
 package com.example.control.synapse.service;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.example.control.synapse.models.FoodOrder;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.models.Food;
 import com.example.control.synapse.dto.response.FoodOrderResponseDto;
+import com.example.control.synapse.models.Event;
 import com.example.control.synapse.models.EventFood;
 
 import com.example.control.synapse.models.User;
@@ -28,22 +30,23 @@ public class FoodOrderService {
     private final UserRepository userRepository;
     private final FoodRepository foodRepository;
     private final RestaurantRepository restaurantRepository;
+    private final EventRepository eventRepository;
     
 
 
-    public FoodOrderService(EventFoodRepository eventFoodRepository, FoodOrderRepository foodOrderRepository, UserRepository userRepository, FoodRepository foodRepository, SeatRepository seatRepository, RestaurantRepository restaurantRepository)
+    public FoodOrderService(EventFoodRepository eventFoodRepository, FoodOrderRepository foodOrderRepository, UserRepository userRepository, FoodRepository foodRepository, SeatRepository seatRepository, RestaurantRepository restaurantRepository, EventRepository eventRepository)
     {this.eventFoodRepository=eventFoodRepository;
         this.foodOrderRepository=foodOrderRepository;
         this.userRepository=userRepository;
         this.foodRepository= foodRepository;
         this.seatRepository = seatRepository;
         this.restaurantRepository= restaurantRepository;
-        
+        this.eventRepository=eventRepository;
 
 
     }
 
-    public Map<String,String> bookFoodOrder(List<Long>foodIdlist, Long userId,float price, Long seatId, Long restaurantId)
+    public Map<String,String> bookFoodOrder(List<Long>foodIdlist, Long userId,float price, Long seatId, Long restaurantId, Long eventId, LocalDateTime orderTime)
     {int size= foodIdlist.size();
 
          User user = (User) userRepository.findById(userId)
@@ -56,6 +59,9 @@ public class FoodOrderService {
         Restaurant restaurant= restaurantRepository.findById(restaurantId)
         .orElseThrow(() -> new RuntimeException("Restaurant not found"));
 
+        Event event= eventRepository.findById(eventId)
+        .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+        
 
 
 
@@ -64,6 +70,8 @@ public class FoodOrderService {
         foodOrder.setUser(user);
         foodOrder.setSeat(seat);
         foodOrder.setRestaurant(restaurant);
+        foodOrder.setEvent(event);
+        foodOrder.setOrderTime(orderTime);
         foodOrderRepository.save(foodOrder);
         
 
@@ -77,7 +85,7 @@ public class FoodOrderService {
             eventFood.setRestaurant(bookedFood.getRestaurant());
             eventFood.setPrice(bookedFood.getPrice());
             eventFood.setRating(bookedFood.getRating());
-
+            eventFood.setEvent(event);
             eventFood.setOrder(foodOrder);
             eventFoodRepository.save(eventFood);
         
@@ -106,7 +114,7 @@ public class FoodOrderService {
 
 
     public List<FoodOrderResponseDto> getFoodOrderByUserId(Long userId)
-    {List<FoodOrder> orders= foodOrderRepository.findByUserId((userId));
+    {List<FoodOrder> orders= foodOrderRepository.findByUser_Id((userId));
 
         List<FoodOrderResponseDto> dtoList= new ArrayList<>();
 
@@ -154,7 +162,7 @@ public class FoodOrderService {
     }
 
     public List<FoodOrderResponseDto> getFoodOrderByRestaurantId(Long restaurantId)
-    {List<FoodOrder> orders= foodOrderRepository.findByRestaurantId((restaurantId));
+    {List<FoodOrder> orders= foodOrderRepository.findByRestaurant_Id((restaurantId));
 
         List<FoodOrderResponseDto> dtoList= new ArrayList<>();
 

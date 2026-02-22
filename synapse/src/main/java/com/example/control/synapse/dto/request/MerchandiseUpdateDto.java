@@ -9,17 +9,23 @@ public class MerchandiseUpdateDto {
     
     private String name;
     private String description;
-    private double price;
-    private double rating;
-    
+    private Double price;
+    private Double rating;
+    private String type;
+    private String size;
+    private Integer stock;
+ 
     private Long stadiumId;
     public MerchandiseUpdateDto() {}
-    public MerchandiseUpdateDto(String name, String description, double price, double rating, Long stadiumId) {
+    public MerchandiseUpdateDto(String name, String description, Double price,Double rating, Long stadiumId, String type, String size, Integer stock) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.rating = rating;
         this.stadiumId = stadiumId;
+        this.type=type;
+        this.size=size;
+        this.stock=stock;
     }
     public String getName() {
         return name;
@@ -33,16 +39,16 @@ public class MerchandiseUpdateDto {
     public void setDescription(String description) {
         this.description = description;
     }
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
-    public double getRating() {
+    public Double getRating() {
         return rating;
     }
-    public void setRating(double rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
     public Long getStadiumId() {
@@ -50,6 +56,26 @@ public class MerchandiseUpdateDto {
     }
     public void setStadiumId(Long stadium) {
         this.stadiumId = stadium;
+    }
+
+       
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getSize() {
+        return size;
+    }
+    public void setSize(String size) {
+        this.size = size;
+    }
+    public Integer getStock() {
+        return stock;
+    }
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
     
     

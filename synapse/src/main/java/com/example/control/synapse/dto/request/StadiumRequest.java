@@ -6,15 +6,18 @@ public class StadiumRequest {
     private String state;
     private String country;
     private int capacity;
+    private String name;
+
 
     public StadiumRequest(){}
 
-    public StadiumRequest(String city, String state, String country, int capacity)
+    public StadiumRequest(String city, String state, String country, int capacity, String name)
     {
         this.city=city;
         this.state=state;
         this.country=country;
         this.capacity=capacity;
+        this.name=name;
     }
 
 
@@ -42,6 +45,14 @@ public class StadiumRequest {
     }
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     

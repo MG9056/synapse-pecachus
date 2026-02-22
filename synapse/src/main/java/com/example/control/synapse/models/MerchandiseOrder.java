@@ -1,5 +1,7 @@
 
 package com.example.control.synapse.models;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,15 +26,20 @@ public class MerchandiseOrder {
     @ManyToOne
     private Stadium stadium;
 
+    @ManyToOne
+    private Event event;
 
-    
+    private LocalDateTime orderTime;
+
     public MerchandiseOrder(){}
-    public MerchandiseOrder(double price, Seat seat, User user, Stadium stadiumId)
+    public MerchandiseOrder(double price, Seat seat, User user, Stadium stadiumId, Event event, LocalDateTime orderTime)
     {
         this.user=user;
         this.price=price;
         this.seat=seat;
         this.stadium=stadiumId;
+        this.event=event;
+        this.orderTime=orderTime;
     }
     public Long getId() {
         return id;
@@ -65,6 +72,21 @@ public class MerchandiseOrder {
     public void setStadium(Stadium stadium) {
         this.stadium = stadium;
      }
+
+      
+    public Event getEvent() {
+        return event;
+    }
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+     public LocalDateTime getOrderTime() {
+        return orderTime;
+    }
+    public void setOrderTime(LocalDateTime orderTime) {
+        this.orderTime = orderTime;
+    }
 
      
      

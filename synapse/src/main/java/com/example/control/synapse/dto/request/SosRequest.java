@@ -13,12 +13,14 @@ public class SosRequest {
     private LocalDateTime timeStamp;
     private long userId;
     private long eventId;
+    private long stadiumId;
 
    
 
+
     SosRequest(){}
 
-    SosRequest(String alertType, String message, Boolean isActive, LocalDateTime timeStamp, Long userId, Long eventId )
+    SosRequest(String alertType, String message, Boolean isActive, LocalDateTime timeStamp, Long userId, Long eventId, Long stadiumId)
     {
         this.alertType=alertType;
         this.message=message;
@@ -26,6 +28,7 @@ public class SosRequest {
         this.timeStamp=timeStamp;
         this.userId=userId;
         this.eventId= eventId;
+        this.stadiumId=stadiumId;
     }
 
 
@@ -75,6 +78,14 @@ public class SosRequest {
 
     public void setEventId(long eventId) {
         this.eventId = eventId;
+    }
+
+     public long getStadiumId() {
+        return stadiumId;
+    }
+
+    public void setStadiumId(long stadiumId) {
+        this.stadiumId = stadiumId;
     }
 
     

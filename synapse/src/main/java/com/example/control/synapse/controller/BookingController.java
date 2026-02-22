@@ -4,25 +4,34 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.*;
-
+import com.example.control.synapse.repository.BookingRepository;
 import com.example.control.synapse.service.BookingService;
 import com.example.control.synapse.dto.request.BookingRequest;
-import com.example.control.synapse.dto.response.BookingResponseDto;
 
+import com.example.control.synapse.models.Booking;
 
 
 @RestController
 @RequestMapping("/bookings")
 public class BookingController {
 
+    private final BookingRepository bookingRepository;
+
     private final BookingService bookingService;
 
     
 
     
-    public BookingController(BookingService bookingService) {
+    public BookingController(BookingService bookingService, BookingRepository bookingRepository) {
         this.bookingService = bookingService;
+        this.bookingRepository = bookingRepository;
         
+    }
+
+    @GetMapping("/allBookings")
+    public List<Booking> getAllBookings()
+    {
+        return bookingRepository.findAll();
     }
 
     // Reserve a seat for 5 minutes
@@ -37,21 +46,30 @@ public class BookingController {
         return bookingService.confirmBooking(
             request.getSeatIdList(), 
             request.getUserId(), 
-            request.getEventId()
+            request.getEventId(),
+            request.getStadiumId()
+           
         );
     }
 
     @GetMapping("/user/{userId}")
-    public List<BookingResponseDto> getBookingByUserId(@PathVariable Long userId)
-    {return bookingService.getBookingByUserId(userId);
+    public List<Booking> getBookingByUserId(@PathVariable Long userId)
+    {return bookingRepository.findByUser_Id(userId);
         
     }
 
     @GetMapping("/event/{eventId}")
-    public List<BookingResponseDto> getBookingByEventId(@PathVariable Long eventId)
-    {return bookingService.getBookingByEventId(eventId);
+    public List<Booking> getBookingByEventId(@PathVariable Long eventId)
+    {return bookingRepository.findByEvent_Id(eventId);
         
     }
+
+     @GetMapping("/stadium/{stadiumId}")
+    public List<Booking> getBookingByStadiumId(@PathVariable Long stadiumId)
+    {return bookingRepository.findByStadium_Id(stadiumId);
+        
+    }
+
     
     
 

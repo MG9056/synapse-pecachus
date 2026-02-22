@@ -77,7 +77,7 @@ public class RestaurantService {
     public List<RestaurantResponseDto> getRestaurantByStadiumId(Long stadiumId)
     {List<RestaurantResponseDto> dtoList= new ArrayList<>();
 
-        List<Restaurant> restaurants= restaurantRepository.findByStadiumId(stadiumId);
+        List<Restaurant> restaurants= restaurantRepository.findByStadium_Id(stadiumId);
 
         for(Restaurant restaurant: restaurants)
         {RestaurantResponseDto restaurantResponseDto= new RestaurantResponseDto();
@@ -104,14 +104,18 @@ public class RestaurantService {
     }
 
 
-    public Map<String,String> updateRestaurant(Long restaurantId, String name, double rating, Long stadiumId)
+    public Map<String,String> updateRestaurant(Long restaurantId, String name, Double rating, Long stadiumId)
     { Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
+       
+       if(name!=null)
+        {restaurant.setName(name);}
 
-        restaurant.setName(name);
-        restaurant.setRating(rating);
+       if(rating!=null)
+       { restaurant.setRating(rating);}
 
-        Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
-        restaurant.setStadiumId(stadium);
+       if(stadiumId!=null)
+       {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+        restaurant.setStadiumId(stadium);}
 
         restaurantRepository.save(restaurant);
 

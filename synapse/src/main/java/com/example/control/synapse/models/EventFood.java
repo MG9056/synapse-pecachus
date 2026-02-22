@@ -19,16 +19,17 @@ public class EventFood{
     private float rating;
     @ManyToOne
     private FoodOrder order;
-
+    @ManyToOne
+    private Event event;
 
     public EventFood(){}
-    public EventFood(String name, Restaurant restaurantId, float price, float rating, FoodOrder orderId)
+    public EventFood(String name, Restaurant restaurantId, float price, float rating, FoodOrder orderId, Event event)
     {this.price=price;
     this.restaurant= restaurantId;
     this.price=price;
     this.rating=rating;
     this.order=orderId;
-
+    this.event=event;
 
 
     }
@@ -72,6 +73,14 @@ public class EventFood{
     }
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    
+    public Event getEvent() {
+        return event;
+    }
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
 

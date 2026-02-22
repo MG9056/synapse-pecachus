@@ -1,7 +1,6 @@
 package com.example.control.synapse.controller;
 
-import com.example.control.synapse.dto.response.FoodResponseDto;
-import com.example.control.synapse.dto.response.RestaurantResponseDto;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,28 +12,30 @@ import java.util.Map;
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.RestaurantRequest;
 import com.example.control.synapse.dto.request.RestaurantUpdateDto;
-
+import com.example.control.synapse.models.Food;
 import com.example.control.synapse.models.Restaurant;
-
+import com.example.control.synapse.repository.FoodRepository;
 import com.example.control.synapse.repository.RestaurantRepository;
-import com.example.control.synapse.service.FoodService;
-import com.example.control.synapse.service.RestaurantService;
 
+import com.example.control.synapse.service.RestaurantService;
 
 
 @RestController
 @RequestMapping("/restaurant")
 public class RestaurantController {
+
+    private final FoodRepository foodRepository;
     public final RestaurantRepository restaurantRepository;
 
     private final RestaurantService restaurantService;
-    private final FoodService foodService;
+   
 
-    public RestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantService, FoodService foodService)
+    public RestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantService, FoodRepository foodRepository)
     {this.restaurantRepository= restaurantRepository;
        
         this.restaurantService= restaurantService;
-        this.foodService= foodService;
+        
+        this.foodRepository = foodRepository;
     }
 
     @GetMapping("allRestaurants")
@@ -44,22 +45,22 @@ public class RestaurantController {
         }
 
     @GetMapping("/{id}")
-    public RestaurantResponseDto getRestaurantById(@PathVariable Long id)
+    public Restaurant getRestaurantById(@PathVariable Long id)
 
     {
-        return restaurantService.getRestaurantById(id);
+        return restaurantRepository.findById(id).orElseThrow();
     }    
 
     @GetMapping("{id}/menu")
-    public List<FoodResponseDto> getFoodByRestaurantId(@PathVariable Long restaurantId)
-    { return foodService.getFoodByRestaurantId(restaurantId);
+    public List<Food> getFoodByRestaurantId(@PathVariable Long restaurantId)
+    { return foodRepository.findByRestaurant_Id(restaurantId);
         
     }
 
     @GetMapping("stadium/{stadiumId}")
-    public List<RestaurantResponseDto> getRestaurantByRestaurantId(@PathVariable Long stadiumId)
+    public List<Restaurant> getRestaurantByRestaurantId(@PathVariable Long stadiumId)
     {
-        return restaurantService.getRestaurantByStadiumId(stadiumId);
+        return restaurantRepository.findByStadium_Id(stadiumId);
 
     }
 

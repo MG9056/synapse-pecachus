@@ -9,11 +9,13 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.example.control.synapse.models.Sos;
+import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.dto.response.SosResponseDto;
 import com.example.control.synapse.models.Event;
 import com.example.control.synapse.repository.EventRepository;
 import com.example.control.synapse.repository.SosRepository;
+import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.repository.UserRepository;
 
 
@@ -23,17 +25,18 @@ public class SosService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final SosRepository sosRepository;
-   
+    private final StadiumRepository stadiumRepository;
 
-    public SosService(UserRepository userRepository, EventRepository eventRepository, SosRepository sosRepository)
+    public SosService(UserRepository userRepository, EventRepository eventRepository, SosRepository sosRepository, StadiumRepository stadiumRepository)
     {
         this.userRepository= userRepository;
         this.eventRepository= eventRepository;
         this.sosRepository=sosRepository;
+        this.stadiumRepository=stadiumRepository;
      
     }
 
-    public Map<String,String> raiseSos (String alertType, String message, Boolean isActive, LocalDateTime timeStamp, Long userId, Long eventId)
+    public Map<String,String> raiseSos (String alertType, String message, Boolean isActive, LocalDateTime timeStamp, Long userId, Long eventId, Long stadiumId)
     {
         Sos sos= new Sos();
 
@@ -42,11 +45,14 @@ public class SosService {
         sos.setIsActive(isActive);
         sos.setTimeStamp(timeStamp);
         
+        
         User user= userRepository.findById(userId).orElseThrow();
         Event event= eventRepository.findById(eventId).orElseThrow();
+        Stadium stadium=stadiumRepository.findById(stadiumId).orElseThrow();
 
         sos.setUser(user);
         sos.setEvent(event);
+        sos.setStadium(stadium);
 
         sosRepository.save(sos);
 
@@ -114,7 +120,7 @@ public List<SosResponseDto> getAllSos()
 }
 
 public List<SosResponseDto> getSosByUserId(Long userId)
-{List<Sos> sosList= sosRepository.findByUserId(userId);
+{List<Sos> sosList= sosRepository.findByUser_Id(userId);
     List<SosResponseDto> dtoList=  new ArrayList<>();
 
     for(Sos sos: sosList)
@@ -161,7 +167,7 @@ public SosResponseDto getSosById(Long id)
 }
 
 public List<SosResponseDto> getSosByEventId(Long eventId)
-{List<Sos> sosList= sosRepository.findByEventId(eventId);
+{List<Sos> sosList= sosRepository.findByEvent_Id(eventId);
     List<SosResponseDto> dtoList=  new ArrayList<>();
 
     for(Sos sos: sosList)

@@ -12,15 +12,18 @@ import com.example.control.synapse.dto.response.BookingResponseDto;
 import com.example.control.synapse.dto.websocket.SeatUpdateMessage;
 import com.example.control.synapse.models.Booking;
 import com.example.control.synapse.models.EventSeat;
+import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.models.Event;
 import com.example.control.synapse.repository.BookingRepository;
 import com.example.control.synapse.repository.EventSeatRepository;
+import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.repository.UserRepository;
 
 import jakarta.annotation.PreDestroy;
 
 import com.example.control.synapse.repository.EventRepository;
+
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -40,17 +43,19 @@ public class BookingService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final SimpMessagingTemplate messagingTemplate;
+    private final StadiumRepository stadiumRepository;
 
 
        private final Map<Long, ScheduledFuture<?>> reservationTimers = new ConcurrentHashMap<>();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 
-     public BookingService(EventSeatRepository seatRepo, BookingRepository bookingRepo, UserRepository userRepo, EventRepository eventRepo, SimpMessagingTemplate messagingTemplate) {
+     public BookingService(EventSeatRepository seatRepo, BookingRepository bookingRepo, UserRepository userRepo, EventRepository eventRepo, SimpMessagingTemplate messagingTemplate, StadiumRepository stadiumRepository) {
         this.eventSeatRepository = seatRepo;
         this.bookingRepository = bookingRepo;
         this.userRepository=userRepo;
         this.eventRepository=eventRepo;
         this.messagingTemplate= messagingTemplate;
+        this.stadiumRepository= stadiumRepository;
     }
 
     //Method for websocket, broadcastSeatUpdate is called in all 3->reserve,confirm,release and a msg of the class messageTemplate whatever is seat at the provided API
@@ -107,7 +112,7 @@ public class BookingService {
 
 
 
-     public Map<String,String> confirmBooking(List<Long> seatIdlist, Long userId, Long eventId) {
+     public Map<String,String> confirmBooking(List<Long> seatIdlist, Long userId, Long eventId, Long stadiumId) {
 
         int size= seatIdlist.size();
 
@@ -137,10 +142,14 @@ public class BookingService {
         Event event= eventRepository.findById(eventId)
         .orElseThrow(() -> new RuntimeException("Event not found"));
 
+        Stadium stadium= stadiumRepository.findById(stadiumId)
+        .orElseThrow(() -> new RuntimeException("Event not found"));
+
         
         Booking booking = new Booking();
         booking.setEvent(event);
         booking.setUser(user);
+        booking.setStadium(stadium);
         booking.setBookingTime(LocalDateTime.now());
         bookingRepository.save(booking);
 
@@ -203,7 +212,7 @@ public class BookingService {
 
     public List<BookingResponseDto> getBookingByUserId(Long userId)
     {
-        List<Booking> bookings = bookingRepository.findByUserId(userId);
+        List<Booking> bookings = bookingRepository.findByUser_Id(userId);
         List<BookingResponseDto> dtoList= new ArrayList<>();
 
 
@@ -257,7 +266,7 @@ public class BookingService {
 
     public List<BookingResponseDto> getBookingByEventId(Long eventId)
     {
-        List<Booking> bookings = bookingRepository.findByEventId(eventId);
+        List<Booking> bookings = bookingRepository.findByEvent_Id(eventId);
         List<BookingResponseDto> dtoList= new ArrayList<>();
 
 

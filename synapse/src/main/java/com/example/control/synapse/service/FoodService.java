@@ -35,7 +35,7 @@ public class FoodService {
         this.passwordEncoder= passwordEncoder;
     }
     
-   public Map<String,String> uploadFood(String name, Long restaurantId, float price, float rating )
+   public Map<String,String> uploadFood(String name, Long restaurantId, float price, float rating, String type, String diet, Integer stock )
    {Food food= new Food();
 
     food.setName(name);
@@ -48,6 +48,9 @@ public class FoodService {
 
     food.setPrice(price);
     food.setRating(rating);
+    food.setType(type);
+    food.setDiet(diet);
+    food.setStock(stock);
     foodRepository.save(food);
     
 
@@ -58,15 +61,31 @@ public class FoodService {
    }
 
 
-   public Map<String,String> updateFood(Long foodId, String name, Long restaurantId, float price, float rating)
+   public Map<String,String> updateFood(Long foodId, String name, Long restaurantId, Float price, Float rating, String type, String diet, Integer stock)
    {Food food= foodRepository.findById(foodId).orElseThrow();
 
+    if (name != null) {
     food.setName(name);
-    
-    Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
-    food.setRestaurant(restaurant);
+}
+if (price != null) {
     food.setPrice(price);
+}
+if (rating != null) {
     food.setRating(rating);
+}
+if (type != null) {
+    food.setType(type);
+}
+if (diet != null) {
+    food.setDiet(diet);
+}
+if (stock != null) {
+    food.setStock(stock);
+}
+
+if(restaurantId!=null)
+  {  Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
+    food.setRestaurant(restaurant);}
 
     foodRepository.save(food);
 
@@ -82,7 +101,7 @@ public class FoodService {
 
 
    public List<FoodResponseDto>  getFoodByRestaurantId(Long restaurantId)
-   {List<Food> foods= foodRepository.findByRestaurantId(restaurantId);
+   {List<Food> foods= foodRepository.findByRestaurant_Id(restaurantId);
     List<FoodResponseDto> dtoList= new ArrayList<>();
 
     for(Food food:foods)
