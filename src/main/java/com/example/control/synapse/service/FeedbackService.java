@@ -77,9 +77,9 @@ public class FeedbackService {
         
         // Apply rating filter if provided
         if (minRating != null && maxRating != null) {
-            feedbackPage = feedbackRepository.findByUserIdAndRatingBetween(user, minRating, maxRating, pageable);
+            feedbackPage = feedbackRepository.findByUser_IdAndRatingBetween(user, minRating, maxRating, pageable);
         } else {
-            feedbackPage = feedbackRepository.findByUserId(user, pageable);
+            feedbackPage = feedbackRepository.findByUser_Id(user, pageable);
         }
         
         // Convert to DTO using mapper
@@ -93,9 +93,9 @@ public class FeedbackService {
         
         // Apply rating filter if provided
         if (minRating != null && maxRating != null) {
-            feedbackPage = feedbackRepository.findByEventIdAndRatingBetween(event, minRating, maxRating, pageable);
+            feedbackPage = feedbackRepository.findByEvent_IdAndRatingBetween(event, minRating, maxRating, pageable);
         } else {
-            feedbackPage = feedbackRepository.findByEventId(event, pageable);
+            feedbackPage = feedbackRepository.findByEvent_Id(event, pageable);
         }
         
         // Convert to DTO using mapper

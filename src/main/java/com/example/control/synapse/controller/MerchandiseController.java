@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.MerchandiseRequest;
@@ -21,7 +22,7 @@ import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.repository.MerchandiseRepository;
 import com.example.control.synapse.service.MerchandiseService;
 
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 
 @RestController
@@ -53,7 +54,8 @@ public class MerchandiseController {
         @GetMapping("/{id}")
         public Merchandise getMerchandiseById(@PathVariable Long id)
         {
-            return merchandiseRepository.findById(id).orElseThrow();
+            return merchandiseRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Merchandise not found with id " + id));
         }
 
         @GetMapping("/stadium/{stadiumId}")
@@ -102,8 +104,7 @@ public class MerchandiseController {
         );
     }
 
-     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+     @DeleteMapping("/{id}")
     public Map<String,String> deleteMerchandise(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         return merchandiseService.deleteMerchandise(id,deleteCredentialsDto);
     }

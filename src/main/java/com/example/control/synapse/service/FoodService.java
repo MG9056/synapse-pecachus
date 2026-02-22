@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.FoodResponseDto;
@@ -40,8 +42,8 @@ public class FoodService {
 
     food.setName(name);
     
-      Restaurant restaurant= restaurantRepository.findById(restaurantId)
-        .orElseThrow(() -> new RuntimeException("Stadium not found"));
+    Restaurant restaurant = restaurantRepository.findById(restaurantId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found with id " + restaurantId));
 
 
     food.setRestaurant(restaurant);
@@ -62,7 +64,8 @@ public class FoodService {
 
 
    public Map<String,String> updateFood(Long foodId, String name, Long restaurantId, Float price, Float rating, String type, String diet, Integer stock)
-   {Food food= foodRepository.findById(foodId).orElseThrow();
+   {Food food = foodRepository.findById(foodId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Food not found with id " + foodId));
 
     if (name != null) {
     food.setName(name);
@@ -84,14 +87,11 @@ if (stock != null) {
 }
 
 if(restaurantId!=null)
-  {  Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
+  { Restaurant restaurant = restaurantRepository.findById(restaurantId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found with id " + restaurantId));
     food.setRestaurant(restaurant);}
 
     foodRepository.save(food);
-
-
-
-
 
 
      Map<String,String> response = new HashMap<>();
@@ -147,7 +147,8 @@ if(restaurantId!=null)
    }
 
    public FoodResponseDto getFoodById(Long foodId)
-   {Food food= foodRepository.findById(foodId).orElseThrow();
+   {Food food = foodRepository.findById(foodId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Food not found with id " + foodId));
     
     FoodResponseDto foodResponseDto= new FoodResponseDto();
 
@@ -172,15 +173,20 @@ if(restaurantId!=null)
         String password= deleteCredentialsDto.getPassword();
 
         Map<String,String> response = new HashMap<>();
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
-        Food food= foodRepository.findById(foodId).orElseThrow(()-> new RuntimeException("No such merchandise with exists with id"+foodId));
+        
+        User user = userRepository.findById(userId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such user exists with id " + userId));
+
+Food food = foodRepository.findById(foodId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such food exists with id " + foodId));
+
         if (passwordEncoder.matches(password, user.getPassword())) {
-            foodRepository.delete(food);
-            response.put("message","Food successfully deleted with Food Id"+food.getId());
-            
-        } else {
-            response.put("message","Password did not match");
-        }
+    foodRepository.delete(food);
+    response.put("message", "Food successfully deleted with Food Id " + food.getId());
+} else {
+    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password did not match");
+}
+
         return response;
     }
 

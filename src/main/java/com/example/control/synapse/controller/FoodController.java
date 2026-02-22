@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.FoodRequest;
@@ -50,7 +50,8 @@ public class FoodController {
     public Food getFoodById(@PathVariable Long id)
 
     {
-        return foodRepository.findById(id).orElseThrow();
+        return foodRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Food not found with id " + id));
     }    
 
     // @GetMapping("/restaurant/{restaurantId}")
@@ -61,19 +62,19 @@ public class FoodController {
     // }
 
     @GetMapping("/restaurant/{restaurantId}")
-    public List<Food> getFoodByRestaurantId(Long restaurantId)
+    public List<Food> getFoodByRestaurantId(@PathVariable Long restaurantId)
     {
         return foodRepository.findByRestaurant_Id(restaurantId);
     }
 
     @GetMapping("/diet/{diet}")
-    public List<Food> getFoodByDiet(String diet)
+    public List<Food> getFoodByDiet(@PathVariable String diet)
     {
         return foodRepository.findByDiet(diet);
     }
 
-    @GetMapping("type/{type}")
-    public List<Food> getFoodByType(String type)
+    @GetMapping("/type/{type}")
+    public List<Food> getFoodByType(@PathVariable String type)
     {
         return foodRepository.findByType(type);
     }
@@ -120,8 +121,7 @@ public class FoodController {
         );
     }
 
-     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+     @DeleteMapping("/{id}")
     public Map<String,String> deleteFood(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         return foodService.deleteFood(id,deleteCredentialsDto);
     }

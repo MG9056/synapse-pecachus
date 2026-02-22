@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
@@ -35,7 +37,8 @@ public class MerchandiseService {
     }
 
     public MerchandiseResponseDto getMerchandiseById(Long id)
-    {Merchandise merchandise= merchandiseRepository.findById(id).orElseThrow();
+    {Merchandise merchandise = merchandiseRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Merchandise not found with id " + id));
 
         MerchandiseResponseDto merchandiseResponseDto= new MerchandiseResponseDto();
 
@@ -122,7 +125,9 @@ public class MerchandiseService {
         merchandise.setType(type);
         merchandise.setStock(stock);
 
-        Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+      Stadium stadium = stadiumRepository.findById(stadiumId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
+
         merchandise.setStadium(stadium);
 
         merchandiseRepository.save(merchandise);
@@ -138,7 +143,8 @@ public class MerchandiseService {
 
 
     public Map<String, String> updateMerchandise(Long merchandiseId, String name, String description, Double price, Double rating, Long stadiumId, String type, String size, Integer stock)
-    {Merchandise merchandise= merchandiseRepository.findById(merchandiseId).orElseThrow();
+    {Merchandise merchandise = merchandiseRepository.findById(merchandiseId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Merchandise not found with id " + merchandiseId));
 
      if (name != null) {
     merchandise.setName(name);
@@ -163,7 +169,8 @@ if (stock != null) {
 }
 
 if(stadiumId!=null)
-     {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+     {Stadium stadium = stadiumRepository.findById(stadiumId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
      merchandise.setStadium(stadium);}
 
      merchandiseRepository.save(merchandise);
@@ -186,15 +193,20 @@ if(stadiumId!=null)
         String password=deleteCredentialsDto.getPassword();
 
         Map<String,String> response = new HashMap<>();
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
-        Merchandise merchandise= merchandiseRepository.findById(merchandiseId).orElseThrow(()-> new RuntimeException("No such merchandise with exists with id"+merchandiseId));
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            merchandiseRepository.delete(merchandise);
-            response.put("message","Merchandise successfully deleted with Merchandise Id"+merchandise.getId());
-            
-        } else {
-            response.put("message","Password did not match");
-        }
+
+       User user = userRepository.findById(userId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such user exists with id " + userId));
+
+Merchandise merchandise = merchandiseRepository.findById(merchandiseId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such merchandise exists with id " + merchandiseId));
+
+
+       if (passwordEncoder.matches(password, user.getPassword())) {
+    merchandiseRepository.delete(merchandise);
+    response.put("message", "Merchandise successfully deleted with Merchandise Id " + merchandise.getId());
+} else {
+    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password did not match");
+}
         return response;
     }
 }

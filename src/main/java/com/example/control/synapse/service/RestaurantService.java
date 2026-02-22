@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
@@ -20,10 +22,10 @@ import com.example.control.synapse.repository.UserRepository;
 @Service
 public class RestaurantService {
 
-    public StadiumRepository stadiumRepository;
-    public RestaurantRepository restaurantRepository;
-    public UserRepository userRepository;
-    public PasswordEncoder passwordEncoder;
+    private final StadiumRepository stadiumRepository;
+    private final RestaurantRepository restaurantRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public RestaurantService(StadiumRepository stadiumRepository, RestaurantRepository restaurantRepository, UserRepository userRepository, PasswordEncoder passwordEncoder)
     {this.stadiumRepository=stadiumRepository;
@@ -41,8 +43,10 @@ public class RestaurantService {
         restaurant.setName(name);
         restaurant.setRating(rating);
 
-        Stadium stadium= stadiumRepository.findById(stadiumId)
-        .orElseThrow(() -> new RuntimeException("Stadium not found"));
+       
+        Stadium stadium = stadiumRepository.findById(stadiumId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
+
 
         restaurant.setStadiumId(stadium);
         restaurantRepository.save(restaurant);
@@ -59,7 +63,8 @@ public class RestaurantService {
     public RestaurantResponseDto getRestaurantById(Long id)
     {RestaurantResponseDto restaurantResponseDto= new RestaurantResponseDto();
 
-    Restaurant restaurant= restaurantRepository.findById(id).orElseThrow();
+    Restaurant restaurant = restaurantRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found with id " + id));
     
     restaurantResponseDto.setId(restaurant.getId());
     restaurantResponseDto.setName(restaurant.getName());
@@ -105,7 +110,8 @@ public class RestaurantService {
 
 
     public Map<String,String> updateRestaurant(Long restaurantId, String name, Double rating, Long stadiumId)
-    { Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow();
+    { Restaurant restaurant = restaurantRepository.findById(restaurantId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found with id " + restaurantId));
        
        if(name!=null)
         {restaurant.setName(name);}
@@ -114,7 +120,7 @@ public class RestaurantService {
        { restaurant.setRating(rating);}
 
        if(stadiumId!=null)
-       {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+       {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
         restaurant.setStadiumId(stadium);}
 
         restaurantRepository.save(restaurant);
@@ -137,15 +143,21 @@ Long userId= deleteCredentialsDto.getUserId();
 String password= deleteCredentialsDto.getPassword();
 
         Map<String,String> response = new HashMap<>();
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
-        Restaurant restaurant= restaurantRepository.findById(restaurantId).orElseThrow(()-> new RuntimeException("No such stadium with exists with id"+restaurantId));
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such user exists with id " + userId));
+
+         Restaurant restaurant = restaurantRepository.findById(restaurantId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such restaurant exists with id " + restaurantId));
+
         if (passwordEncoder.matches(password, user.getPassword())) {
             restaurantRepository.delete(restaurant);
-            response.put("message","Restaurant successfully deleted with Restaurant Id"+restaurant.getId());
-            
+            response.put("message", "Restaurant successfully deleted with Restaurant Id " + restaurant.getId());
         } else {
-            response.put("message","Password did not match");
+            // FIX 5: wrong password now throws 401 instead of returning 200
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password did not match");
         }
+
+
         return response;
     }
     
