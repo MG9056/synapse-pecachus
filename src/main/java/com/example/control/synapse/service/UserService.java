@@ -123,44 +123,6 @@ public class UserService {
         log.info("Account deleted successfully for user ID: {}", id);
     }
 
-    // ─── Admin-only helpers (kept — useful for admin panel) ──────────────────
-
-    /**
-     * GET /users — Admin only
-     */
-    public List<UserResponseDto> getAllUsers() {
-        log.info("Fetching all users");
-        User currentUser = getCurrentUser();
-
-        if (!currentUser.getRoles().contains(User.Role.ROLE_ADMIN)) {
-            throw new AccessDeniedException("Only admins can view all users");
-        }
-
-        return userRepository.findAll().stream()
-                .map(this::convertToResponseDto)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * PATCH /users/{id}/status — Admin only
-     */
-    @Transactional
-    public void toggleUserStatus(Long id, Boolean enabled) {
-        log.info("Toggling user status for ID: {} to {}", id, enabled);
-        User currentUser = getCurrentUser();
-
-        if (!currentUser.getRoles().contains(User.Role.ROLE_ADMIN)) {
-            throw new AccessDeniedException("Only admins can change user status");
-        }
-
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-
-        user.setIsEnabled(enabled);
-        userRepository.save(user);
-
-        log.info("User status toggled successfully for ID: {}", id);
-    }
 
     // ─── Private helpers ─────────────────────────────────────────────────────
 

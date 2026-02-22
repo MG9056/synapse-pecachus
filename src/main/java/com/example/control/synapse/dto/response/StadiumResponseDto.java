@@ -68,12 +68,5 @@ public class StadiumResponseDto {
     }
 
     
-
-
-
-
-
-
-    
     
 }
