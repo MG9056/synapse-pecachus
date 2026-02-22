@@ -1,5 +1,7 @@
 package com.example.control.synapse.dto.response;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +20,6 @@ public class FeedbackResponseDto {
     private String eventName;
     private String content;
     private double rating;
+    private LocalDateTime createdAt;
 }
+

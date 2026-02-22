@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.control.synapse.dto.request.LoginRequest;
 import com.example.control.synapse.dto.request.RegisterRequest;
 import com.example.control.synapse.dto.response.JwtResponse;
+import com.example.control.synapse.dto.response.UserResponseDto;
 import com.example.control.synapse.helper.JwtUtils;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.UserRepository;
@@ -34,7 +35,7 @@ public class AuthService {
     private final JwtUtils jwtUtils;
 
     /**
-     * Authenticate user and generate JWT token
+     * Authenticate user and return JWT token
      */
     public JwtResponse authenticateUser(LoginRequest loginRequest) {
         log.info("Authenticating user: {}", loginRequest.getUsername());
@@ -68,23 +69,20 @@ public class AuthService {
     }
 
     /**
-     * Register new user
+     * Register a new user
      */
     @Transactional
     public void registerUser(RegisterRequest registerRequest) {
         log.info("Registering new user: {}", registerRequest.getUsername());
 
-        // Check if username exists
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             throw new IllegalArgumentException("Username is already taken!");
         }
 
-        // Check if email exists
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
             throw new IllegalArgumentException("Email is already in use!");
         }
 
-        // Create new user
         User user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
@@ -95,12 +93,10 @@ public class AuthService {
         user.setIsEnabled(true);
         user.setIsLocked(false);
 
-        // Assign roles
         Set<String> strRoles = registerRequest.getRoles();
         Set<User.Role> roles = new HashSet<>();
 
         if (strRoles == null || strRoles.isEmpty()) {
-            // Default role: USER
             roles.add(User.Role.ROLE_USER);
         } else {
             strRoles.forEach(role -> {
@@ -123,17 +119,48 @@ public class AuthService {
     }
 
     /**
-     * Get current authenticated user
+     * GET /auth/me — returns current user's profile as DTO (no password exposed)
+     */
+    public UserResponseDto getCurrentUserProfile() {
+        User user = getCurrentUser();
+        return convertToResponseDto(user);
+    }
+
+    /**
+     * Internal helper — gets the authenticated User entity
+     * ✅ Fixed: checks for anonymousUser to prevent 500 when no token is provided
      */
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
-        if (authentication == null || !authentication.isAuthenticated()) {
+
+        if (authentication == null
+                || !authentication.isAuthenticated()
+                || "anonymousUser".equals(authentication.getName())) {
             throw new RuntimeException("No authenticated user found");
         }
 
         String username = authentication.getName();
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
+    }
+
+    private UserResponseDto convertToResponseDto(User user) {
+        List<String> roleNames = user.getRoles().stream()
+                .map(role -> role.name())
+                .collect(Collectors.toList());
+
+        return UserResponseDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phoneNumber(user.getPhoneNumber())
+                .roles(roleNames)
+                .enabled(user.getIsEnabled())
+                .locked(user.getIsLocked())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
     }
 }
