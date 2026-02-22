@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.models.Sos;
 import com.example.control.synapse.models.Stadium;
@@ -46,9 +48,14 @@ public class SosService {
         sos.setTimeStamp(timeStamp);
         
         
-        User user= userRepository.findById(userId).orElseThrow();
-        Event event= eventRepository.findById(eventId).orElseThrow();
-        Stadium stadium=stadiumRepository.findById(stadiumId).orElseThrow();
+        User user = userRepository.findById(userId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId));
+
+Event event = eventRepository.findById(eventId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found with id " + eventId));
+
+Stadium stadium = stadiumRepository.findById(stadiumId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
 
         sos.setUser(user);
         sos.setEvent(event);
@@ -73,7 +80,7 @@ public class SosService {
     public Map<String,String> resolveSOS(Long sosId) {
 
     Sos sos = sosRepository.findById(sosId)
-            .orElseThrow();
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SOS not found with id " + sosId));
 
     sos.setIsActive(false);
     sosRepository.save(sos);
@@ -149,7 +156,8 @@ public List<SosResponseDto> getSosByUserId(Long userId)
 }
 
 public SosResponseDto getSosById(Long id)
-{Sos sos= sosRepository.findById(id).orElseThrow();
+{Sos sos = sosRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SOS not found with id " + id));
 
     SosResponseDto sosResponseDto= new SosResponseDto();
 

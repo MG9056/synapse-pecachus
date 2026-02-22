@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.models.Seat;
 import com.example.control.synapse.models.FoodOrder;
@@ -47,20 +48,20 @@ public class FoodOrderService {
     }
 
     public Map<String,String> bookFoodOrder(List<Long>foodIdlist, Long userId,float price, Long seatId, Long restaurantId, Long eventId, LocalDateTime orderTime)
-    {int size= foodIdlist.size();
+    {
 
-         User user = (User) userRepository.findById(userId)
-         .orElseThrow(() -> new RuntimeException("User not found"));
-        
+        User user = userRepository.findById(userId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId));
 
-        Seat seat= seatRepository.findById(seatId)
-        .orElseThrow(() -> new RuntimeException("Seat not found"));
+      Seat seat = seatRepository.findById(seatId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seat not found with id " + seatId));
 
-        Restaurant restaurant= restaurantRepository.findById(restaurantId)
-        .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+       Restaurant restaurant = restaurantRepository.findById(restaurantId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found with id " + restaurantId));
 
-        Event event= eventRepository.findById(eventId)
-        .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+
+       Event event = eventRepository.findById(eventId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found with id " + eventId));
         
 
 
@@ -75,31 +76,20 @@ public class FoodOrderService {
         foodOrderRepository.save(foodOrder);
         
 
-        for(int i=0; i<size; i++)
-        {Food bookedFood= foodRepository.findById(foodIdlist.get(i))
-            .orElseThrow(() -> new RuntimeException("Food not found"));
+        for(Long foodId : foodIdlist)
+{
+    Food bookedFood = foodRepository.findById(foodId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Food not found with id " + foodId));
 
-            EventFood eventFood= new EventFood();
-
-            eventFood.setName(bookedFood.getName());
-            eventFood.setRestaurant(bookedFood.getRestaurant());
-            eventFood.setPrice(bookedFood.getPrice());
-            eventFood.setRating(bookedFood.getRating());
-            eventFood.setEvent(event);
-            eventFood.setOrder(foodOrder);
-            eventFoodRepository.save(eventFood);
-        
-
-
-
-
-
-
-
-
-
-
-        }
+    EventFood eventFood = new EventFood();
+    eventFood.setName(bookedFood.getName());
+    eventFood.setRestaurant(bookedFood.getRestaurant());
+    eventFood.setPrice(bookedFood.getPrice());
+    eventFood.setRating(bookedFood.getRating());
+    eventFood.setEvent(event);
+    eventFood.setOrder(foodOrder);
+    eventFoodRepository.save(eventFood);
+}
 
   Map<String,String> response = new HashMap<>();
         response.put("message", "Food Order booked!");
@@ -186,7 +176,8 @@ public class FoodOrderService {
     }
 
     public FoodOrderResponseDto getFoodOrderById(Long id)
-    {FoodOrder order= foodOrderRepository.findById(id).orElseThrow();
+    {FoodOrder order = foodOrderRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Food order not found with id " + id));
 
         FoodOrderResponseDto orderResponseDto= new FoodOrderResponseDto();
         orderResponseDto.setId(order.getId());

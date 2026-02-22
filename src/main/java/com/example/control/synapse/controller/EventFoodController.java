@@ -2,14 +2,13 @@ package com.example.control.synapse.controller;
 
 import java.util.List;
 
-
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.models.EventFood;
 import com.example.control.synapse.repository.EventFoodRepository;
@@ -43,7 +42,8 @@ public class EventFoodController {
     @GetMapping("/{id}")
     public EventFood getEventFoodById(@PathVariable Long id)
     {
-        return eventFoodRepository.findById(id).orElseThrow();
+        return eventFoodRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "EventFood not found with id " + id));
     }
 
     @GetMapping("/order/{orderId}")

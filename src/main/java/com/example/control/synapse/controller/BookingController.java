@@ -3,7 +3,10 @@ package com.example.control.synapse.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.example.control.synapse.repository.BookingRepository;
 import com.example.control.synapse.service.BookingService;
 import com.example.control.synapse.dto.request.BookingRequest;
@@ -55,6 +58,13 @@ public class BookingController {
     @GetMapping("/user/{userId}")
     public List<Booking> getBookingByUserId(@PathVariable Long userId)
     {return bookingRepository.findByUser_Id(userId);
+        
+    }
+
+    @GetMapping("/{id}")
+    public Booking getBookingById(@PathVariable Long id)
+    {return bookingRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found with id " + id));
         
     }
 

@@ -3,8 +3,9 @@ package com.example.control.synapse.service;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.response.EventFoodResponseDto;
 
@@ -25,8 +26,8 @@ public class EventFoodService {
 
 
     public EventFoodResponseDto getEventFoodById(Long id)
-    {EventFood eventFood= eventFoodRepository.findById(id).orElseThrow();
-     
+    {EventFood eventFood = eventFoodRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "EventFood not found with id " + id));
         EventFoodResponseDto eventFoodResponseDto= new EventFoodResponseDto();
 
       eventFoodResponseDto.setId(eventFood.getId());

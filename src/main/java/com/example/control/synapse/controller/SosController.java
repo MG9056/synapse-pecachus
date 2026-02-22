@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.SosRequest;
-import com.example.control.synapse.dto.response.SosResponseDto;
+
 import com.example.control.synapse.models.Sos;
 import com.example.control.synapse.repository.SosRepository;
 import com.example.control.synapse.service.SosService;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -59,10 +62,11 @@ public class SosController {
         return sosService.resolveSOS(id);
     }
 
-    @GetMapping("/id")
-    public SosResponseDto getSosById(Long id)
+    @GetMapping("/{id}")
+    public Sos getSosById(@PathVariable Long id)
     {
-        return sosService.getSosById(id);
+       return sosRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "SOS not found with id " + id));
     }
 
     @GetMapping("/allSos")

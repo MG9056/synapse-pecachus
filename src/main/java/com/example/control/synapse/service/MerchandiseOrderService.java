@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.models.Seat;
 import com.example.control.synapse.models.Stadium;
@@ -50,22 +51,20 @@ public class MerchandiseOrderService {
     }
 
     public Map<String,String> bookMerchandiseOrder(List<Long>merchandiseIdlist, Long userId,float price, Long seatId, Long stadiumId,Long eventId, LocalDateTime orderTime)
-    {int size= merchandiseIdlist.size();
+    {
 
-         User user = (User) userRepository.findById(userId)
-         .orElseThrow(() -> new RuntimeException("User not found"));
+   User user = userRepository.findById(userId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId));
         
 
-        Seat seat= seatRepository.findById(seatId)
-        .orElseThrow(() -> new RuntimeException("Seat not found"));
+        Seat seat = seatRepository.findById(seatId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seat not found with id " + seatId));
 
-        Stadium stadium= stadiumRepository.findById(stadiumId)
-        .orElseThrow(() -> new RuntimeException("Stadium not found"));
+Stadium stadium = stadiumRepository.findById(stadiumId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
 
-        Event event= eventRepository.findById(stadiumId)
-        .orElseThrow(() -> new RuntimeException("Event not found"));
-
-
+Event event = eventRepository.findById(eventId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found with id " + eventId));
 
 
 
@@ -80,33 +79,21 @@ public class MerchandiseOrderService {
         merchandiseOrderRepository.save(merchandiseOrder);
         
 
-        for(int i=0; i<size; i++)
-        {Merchandise bookedMerchandise= merchandiseRepository.findById(merchandiseIdlist.get(i))
-            .orElseThrow(() -> new RuntimeException("Merchandise not found"));
+       for(Long merchandiseId : merchandiseIdlist)
+{
+    Merchandise bookedMerchandise = merchandiseRepository.findById(merchandiseId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Merchandise not found with id " + merchandiseId));
 
-            EventMerchandise eventMerchandise= new EventMerchandise();
-
-            eventMerchandise.setName(bookedMerchandise.getName());
-            eventMerchandise.setDescription(bookedMerchandise.getDescription());
-            eventMerchandise.setPrice(bookedMerchandise.getPrice());
-            eventMerchandise.setRating(bookedMerchandise.getRating());
-            eventMerchandise.setStadium(stadium);
-            eventMerchandise.setEvent(event);
-
-            eventMerchandise.setMerchandiseOrder(merchandiseOrder);
-            eventMerchandiseRepository.save(eventMerchandise);
-        
-
-
-
-
-
-
-
-
-
-
-        }
+    EventMerchandise eventMerchandise = new EventMerchandise();
+    eventMerchandise.setName(bookedMerchandise.getName());
+    eventMerchandise.setDescription(bookedMerchandise.getDescription());
+    eventMerchandise.setPrice(bookedMerchandise.getPrice());
+    eventMerchandise.setRating(bookedMerchandise.getRating());
+    eventMerchandise.setStadium(stadium);
+    eventMerchandise.setEvent(event);
+    eventMerchandise.setMerchandiseOrder(merchandiseOrder);
+    eventMerchandiseRepository.save(eventMerchandise);
+}
 
   Map<String,String> response = new HashMap<>();
         response.put("message", "Merchandise Order booked!");
@@ -176,8 +163,8 @@ public class MerchandiseOrderService {
 
 
 
-    public List<MerchandiseOrderResponseDto> getMerchandiseOrderByStadiumId(Long userId)
-    {List<MerchandiseOrder> orders= merchandiseOrderRepository.findByStadium_Id((userId));
+    public List<MerchandiseOrderResponseDto> getMerchandiseOrderByStadiumId(Long stadiumId)
+    {List<MerchandiseOrder> orders= merchandiseOrderRepository.findByStadium_Id((stadiumId));
 
         List<MerchandiseOrderResponseDto> dtoList= new ArrayList<>();
 
@@ -205,7 +192,9 @@ public class MerchandiseOrderService {
     }
 
     public MerchandiseOrderResponseDto getMerchandiseOrderById(Long id)
-    {MerchandiseOrder order= merchandiseOrderRepository.findById(id).orElseThrow();
+    {MerchandiseOrder order = merchandiseOrderRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "MerchandiseOrder not found with id " + id));
+
         MerchandiseOrderResponseDto orderResponseDto= new MerchandiseOrderResponseDto();
 
 

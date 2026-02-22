@@ -24,9 +24,10 @@ import jakarta.annotation.PreDestroy;
 
 import com.example.control.synapse.repository.EventRepository;
 
-
+import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,31 +82,29 @@ public class BookingService {
 
         public Map<String,String> reserveSeat(List<Long> seatIdlist) {
 
-            int size=seatIdlist.size();
+          
+    for(Long seatId : seatIdlist) {
+        EventSeat eventSeat = eventSeatRepository.findById(seatId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seat not found with id " + seatId));
 
-            for(int j=0; j<size; j++)
-{Long seatId=seatIdlist.get(j);
-        EventSeat eventSeat = eventSeatRepository.findById(seatIdlist.get(j))
-                .orElseThrow(() -> new RuntimeException("Seat not found"));
-
-        if (eventSeat.getAvailability()==false) {
-              Map<String,String> response = new HashMap<>();
-        response.put("message", "Seat is already booked or reserved!");
-        return response;
+        if (eventSeat.getAvailability() == false) {
+            Map<String,String> response = new HashMap<>();
+            response.put("message", "Seat is already booked or reserved!");
+            return response;
         }
 
         eventSeat.setAvailability(false);
         eventSeatRepository.save(eventSeat);
 
-         broadcastSeatUpdate(eventSeat, "RESERVED");
+        broadcastSeatUpdate(eventSeat, "RESERVED");
 
         ScheduledFuture<?> timer = scheduler.schedule(() -> releaseSeat(seatId), 5, TimeUnit.MINUTES);
         reservationTimers.put(seatId, timer);
     }
 
-      Map<String,String> response = new HashMap<>();
-        response.put("message", "Seats reserved for 5 minutes. Confirm booking to finalize!");
-        return response;
+    Map<String,String> response = new HashMap<>();
+    response.put("message", "Seats reserved for 5 minutes. Confirm booking to finalize!");
+    return response;
 
         
     }
@@ -114,60 +113,53 @@ public class BookingService {
 
      public Map<String,String> confirmBooking(List<Long> seatIdlist, Long userId, Long eventId, Long stadiumId) {
 
-        int size= seatIdlist.size();
-
-       for(int i=0; i<size; i++)
-{
-        EventSeat eventSeat = eventSeatRepository.findById(seatIdlist.get(i))
-                .orElseThrow(() -> new RuntimeException("Seat not found"));
+       for(Long seatId : seatIdlist) {
+        EventSeat eventSeat = eventSeatRepository.findById(seatId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seat not found with id " + seatId));
 
         if (eventSeat.getAvailability()) {
-              Map<String,String> response = new HashMap<>();
-        response.put("message", "Seat reservation expired or not found!");
-        return response;
+            Map<String,String> response = new HashMap<>();
+            response.put("message", "Seat reservation expired or not found!");
+            return response;
         }
 
         // timer cancel ka logic
-        ScheduledFuture<?> timer = reservationTimers.remove(seatIdlist.get(i));
+        ScheduledFuture<?> timer = reservationTimers.remove(seatId);
         if (timer != null) {
-            timer.cancel(false); // cacnels release seat ka execution
+            timer.cancel(false); // cancels releaseSeat ka execution
         }
     }
 
-      
-       
-        User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id " + userId));
 
-        Event event= eventRepository.findById(eventId)
-        .orElseThrow(() -> new RuntimeException("Event not found"));
+    Event event = eventRepository.findById(eventId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found with id " + eventId));
 
-        Stadium stadium= stadiumRepository.findById(stadiumId)
-        .orElseThrow(() -> new RuntimeException("Event not found"));
+    Stadium stadium = stadiumRepository.findById(stadiumId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
 
-        
-        Booking booking = new Booking();
-        booking.setEvent(event);
-        booking.setUser(user);
-        booking.setStadium(stadium);
-        booking.setBookingTime(LocalDateTime.now());
-        bookingRepository.save(booking);
+    Booking booking = new Booking();
+    booking.setEvent(event);
+    booking.setUser(user);
+    booking.setStadium(stadium);
+    booking.setBookingTime(LocalDateTime.now());
+    bookingRepository.save(booking);
 
-        // saving same booking IDs in all seats
+    // saving same booking IDs in all seats
+    for(Long seatId : seatIdlist) {
+        EventSeat bookedSeat = eventSeatRepository.findById(seatId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seat not found with id " + seatId));
 
-        for(int i=0; i<size; i++)
-       { EventSeat bookedSeat= eventSeatRepository.findById(seatIdlist.get(i))
-        .orElseThrow(() -> new RuntimeException("Seat not found"));
-        
         bookedSeat.setBooking(booking);
         eventSeatRepository.save(bookedSeat);
 
-         broadcastSeatUpdate(bookedSeat, "BOOKED");
-       }
+        broadcastSeatUpdate(bookedSeat, "BOOKED");
+    }
 
-          Map<String,String> response = new HashMap<>();
-        response.put("message", "Booking confirmed!");
-        return response;
+    Map<String,String> response = new HashMap<>();
+    response.put("message", "Booking confirmed!");
+    return response;
     }
 
      private Map<String,String> releaseSeat(Long seatId) {
@@ -197,7 +189,9 @@ public class BookingService {
         scheduler.shutdown();
     }
     public BookingResponseDto getBookingById(Long id)
-    {Booking booking= bookingRepository.findById(id).orElseThrow();
+    {Booking booking = bookingRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found with id " + id));
+    
         BookingResponseDto bookingResponseDto= new BookingResponseDto();
             bookingResponseDto.setId(booking.getId());
             bookingResponseDto.setUserId(booking.getUser().getId());
