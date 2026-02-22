@@ -58,12 +58,12 @@ public class AuthService {
 
         return new JwtResponse(
                 jwt,
-                userDetails.getFirstName(),
                 "Bearer",
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles
+                roles,
+                userDetails.getFirstName()
         );
     }
 
