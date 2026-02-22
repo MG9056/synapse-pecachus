@@ -35,13 +35,13 @@ public class UserDetailsImpl implements UserDetails {
 
         return new UserDetailsImpl(
                 user.getId(),
-                user.getFirstName(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
-                authorities,
-                user.getIsEnabled(),
-                !user.getIsLocked()
+            user.getUsername(),   // ← correct
+            user.getEmail(),      // ← correct
+            user.getFirstName(),  // ← correct
+            user.getPassword(),
+            authorities,
+            user.getIsEnabled(),
+            !user.getIsLocked()
         );
     }
 
