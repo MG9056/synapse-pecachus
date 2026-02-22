@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.StadiumResponseDto;
@@ -60,7 +62,7 @@ public class StadiumService {
     }
 
     public StadiumResponseDto getStadiumById(Long stadiumId)
-    {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+    {Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
 
         StadiumResponseDto stadiumResponseDto= new StadiumResponseDto();
 
@@ -107,7 +109,7 @@ public class StadiumService {
     }
 
     public Map<String,String> updateStadium(Long stadiumId, String city, String state, String country, Integer capacity, String name )
-    { Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow();
+    { Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stadium not found with id " + stadiumId));
 
 
 
@@ -149,15 +151,19 @@ if(name!=null)
 
         
         Map<String,String> response = new HashMap<>();
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("No such user with exists with id"+userId));
-        Stadium stadium= stadiumRepository.findById(stadiumId).orElseThrow(()-> new RuntimeException("No such stadium with exists with id"+stadiumId));
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            stadiumRepository.delete(stadium);
-            response.put("message","Stadium successfully deleted with Stadium Id"+stadium.getId());
-            
-        } else {
-            response.put("message","Password did not match");
-        }
+      
+        User user = userRepository.findById(userId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such user exists with id " + userId));
+
+Stadium stadium = stadiumRepository.findById(stadiumId)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No such stadium exists with id " + stadiumId));
+
+       if (passwordEncoder.matches(password, user.getPassword())) {
+    stadiumRepository.delete(stadium);
+    response.put("message", "Stadium successfully deleted with Stadium Id " + stadium.getId());
+} else {
+    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password did not match");
+}
         return response;
     }
 

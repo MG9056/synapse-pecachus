@@ -1,6 +1,8 @@
 package com.example.control.synapse.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +44,7 @@ public class StadiumController {
         this.merchandiseRepository = merchandiseRepository;
     }
 
-    @GetMapping("allStadiums")
+    @GetMapping("/allStadiums")
     public List<Stadium> getAllStadiums()
     {
         return stadiumRepository.findAll();
@@ -53,7 +55,7 @@ public class StadiumController {
     public Stadium getStadiumById(@PathVariable Long id)
 
     {
-        return stadiumRepository.findById(id).orElseThrow();
+        return stadiumRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found"));
 
 
     }
@@ -101,8 +103,7 @@ public class StadiumController {
 
         }
     
-        @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
     public Map<String,String> deleteStadium(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         
         

@@ -9,14 +9,14 @@ import com.example.control.synapse.models.Feedback;
 import com.example.control.synapse.models.User;
 
 public interface FeedbackRepository extends JpaRepository<Feedback,Long> {
-    Page<Feedback> findByUserId(User user, Pageable pageable);
+    Page<Feedback> findByUser_Id(User user, Pageable pageable);
     
-    Page<Feedback> findByEventId(Event event, Pageable pageable);
+    Page<Feedback> findByEvent_Id(Event event, Pageable pageable);
     
     // Methods with rating filters
-    Page<Feedback> findByUserIdAndRatingBetween(User user, double minRating, double maxRating, Pageable pageable);
+    Page<Feedback> findByUser_IdAndRatingBetween(User user, double minRating, double maxRating, Pageable pageable);
     
-    Page<Feedback> findByEventIdAndRatingBetween(Event event, double minRating, double maxRating, Pageable pageable);
+    Page<Feedback> findByEvent_IdAndRatingBetween(Event event, double minRating, double maxRating, Pageable pageable);
     
     Page<Feedback> findByRatingBetween(double minRating, double maxRating, Pageable pageable);
 }

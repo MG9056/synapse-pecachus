@@ -2,6 +2,7 @@ package com.example.control.synapse.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.control.synapse.dto.request.FoodOrderRequest;
 
@@ -13,6 +14,7 @@ import com.example.control.synapse.service.FoodOrderService;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +46,8 @@ public class FoodOrderController {
     @GetMapping("/{id}")
     public FoodOrder getOrderById(@PathVariable Long id)
     {
-        return foodOrderRepository.findById(id).orElseThrow();
+       return foodOrderRepository.findById(id)
+    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Food order not found with id " + id));
     }
 
 
@@ -66,21 +69,21 @@ public class FoodOrderController {
    
 
     @GetMapping("/user/{userId}")
-    public List<FoodOrder> getFoodOrderByUserId(@PathVariable Long id)
-    { return foodOrderRepository.findByUser_Id(id);
+    public List<FoodOrder> getFoodOrderByUserId(@PathVariable Long userId)
+    { return foodOrderRepository.findByUser_Id(userId);
         
     }
 
-    @GetMapping("/restaurant/{restuarantId}")
-    public List<FoodOrder> getFoodOrderByRestaurantId(@PathVariable Long restaurantid)
+    @GetMapping("/restaurant/{restaurantId}")
+    public List<FoodOrder> getFoodOrderByRestaurantId(@PathVariable Long restaurantId)
     {
-        return foodOrderRepository.findByRestaurant_Id(restaurantid);
+        return foodOrderRepository.findByRestaurant_Id(restaurantId);
     }
 
       @GetMapping("/event/{eventId}")
-    public List<FoodOrder> getFoodOrderByEventId(@PathVariable Long eventid)
+    public List<FoodOrder> getFoodOrderByEventId(@PathVariable Long eventId)
     {
-        return foodOrderRepository.findByEvent_Id(eventid);
+        return foodOrderRepository.findByEvent_Id(eventId);
     }
 
    

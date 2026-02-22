@@ -4,7 +4,7 @@ package com.example.control.synapse.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,7 @@ import com.example.control.synapse.service.RestaurantService;
 public class RestaurantController {
 
     private final FoodRepository foodRepository;
-    public final RestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
 
     private final RestaurantService restaurantService;
    
@@ -38,7 +38,7 @@ public class RestaurantController {
         this.foodRepository = foodRepository;
     }
 
-    @GetMapping("allRestaurants")
+    @GetMapping("/allRestaurants")
     public List<Restaurant> getAllRestaurants()
         {
             return restaurantRepository.findAll();
@@ -48,17 +48,17 @@ public class RestaurantController {
     public Restaurant getRestaurantById(@PathVariable Long id)
 
     {
-        return restaurantRepository.findById(id).orElseThrow();
+        return restaurantRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found"));
     }    
 
-    @GetMapping("{id}/menu")
-    public List<Food> getFoodByRestaurantId(@PathVariable Long restaurantId)
-    { return foodRepository.findByRestaurant_Id(restaurantId);
+    @GetMapping("/{id}/menu")
+    public List<Food> getFoodByRestaurantId(@PathVariable Long id)
+    { return foodRepository.findByRestaurant_Id(id);
         
     }
 
-    @GetMapping("stadium/{stadiumId}")
-    public List<Restaurant> getRestaurantByRestaurantId(@PathVariable Long stadiumId)
+    @GetMapping("/stadium/{stadiumId}")
+    public List<Restaurant> getRestaurantByStadiumId(@PathVariable Long stadiumId)
     {
         return restaurantRepository.findByStadium_Id(stadiumId);
 
@@ -91,8 +91,7 @@ public class RestaurantController {
 
     }
 
-     @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+     @DeleteMapping("/{id}")
     public Map<String,String> deleteRestaurant(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
         return restaurantService.deleteRestaurant(id,deleteCredentialsDto);
     }
