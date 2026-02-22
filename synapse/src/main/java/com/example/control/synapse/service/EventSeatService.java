@@ -44,7 +44,7 @@ public class EventSeatService {
                 .orElseThrow(() -> new RuntimeException("Event not found with id: " + eventId));
         
         // Get all seats for the stadium
-        List<Seat> seats = seatRepository.findByStadiumId_Id(event.getStadium().getId());
+        List<Seat> seats = seatRepository.findByStadiumId(event.getStadium().getId());
         
         if (seats.isEmpty()) {
             throw new IllegalStateException("No seats found for stadium with id: " + event.getStadium().getId());
@@ -53,7 +53,7 @@ public class EventSeatService {
         List<EventSeat> eventSeats = new ArrayList<>();
         
         for (Seat seat : seats) {
-            Double price = categoryPriceMap.get(seat.getCategory());
+            Double price = categoryPriceMap.get(seat.getCategory().toString());
             
             if (price == null) {
                 throw new IllegalArgumentException(

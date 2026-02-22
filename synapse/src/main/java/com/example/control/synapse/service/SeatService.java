@@ -40,7 +40,7 @@ public class SeatService {
                         "Stadium not found with id: " + seatDTO.getStadiumId()));
         
         // Check if seat already exists
-        if (seatRepository.existsByRowAndSeatNoAndStadiumId_Id(
+        if (seatRepository.existsByRowAndSeatNoAndStadiumId(
                 seatDTO.getRow(), seatDTO.getSeatNo(), seatDTO.getStadiumId())) {
             throw new RuntimeException("Seat already exists in row " + seatDTO.getRow() + 
                     " with seat number " + seatDTO.getSeatNo());
@@ -104,7 +104,7 @@ public class SeatService {
             throw new RuntimeException("Stadium not found with id: " + stadiumId);
         }
         
-        List<Seat> seats = seatRepository.findByStadiumId_Id(stadiumId);
+        List<Seat> seats = seatRepository.findByStadiumId(stadiumId);
         
         log.info("Found {} seats for stadium id: {}", seats.size(), stadiumId);
         return seats.stream()
