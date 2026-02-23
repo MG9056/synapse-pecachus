@@ -53,5 +53,13 @@ public class EventService {
         a.put("message", "Event has gone live");
         return a;
     }
+    public Map<String,String> goDown(Long id) {
+        Event event = eventRepository.findById(id).orElseThrow(()-> new RuntimeException("No such event found"));
+        event.setLive(false);
+        eventRepository.save(event);
+        Map<String,String> a = new HashMap<>();
+        a.put("message", "Event has gone down");
+        return a;
+    }
 
 }

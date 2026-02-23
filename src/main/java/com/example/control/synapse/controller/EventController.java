@@ -38,6 +38,7 @@ public class EventController {
             @RequestParam(required = false) Double maxPrice ) {
                 return eventService.getAllEvents(category,city,minPrice,maxPrice);
     }
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Map<String,String> createEvent(@RequestBody EventRequestDto request) {
@@ -52,6 +53,10 @@ public class EventController {
     @PatchMapping("/{id}")
     public Map<String,String> goEventLive(@PathVariable Long id) {
         return eventService.goEventLive(id);
+    }
+    @PatchMapping("/false{id}")
+    public Map<String,String> eventDown(@PathVariable Long id) {
+        return eventService.goDown(id);
     }
     
     
