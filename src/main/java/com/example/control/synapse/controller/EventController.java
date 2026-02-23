@@ -7,11 +7,10 @@ import com.example.control.synapse.dto.request.EventRequestDto;
 
 import com.example.control.synapse.dto.response.EventResponseDto;
 import com.example.control.synapse.models.Event;
-import com.example.control.synapse.service.EventService;
+import com.example.control.synapse.service.interfaces.IEventService;
 
 import java.util.List;
 import java.util.Map;
-
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,27 +21,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
 @RestController
 @RequestMapping("/events")
 public class EventController {
-    private EventService eventService;
+    private IEventService eventService;
 
-    public EventController(EventService eventService) {
-        this.eventService=eventService;
+    public EventController(IEventService eventService) {
+        this.eventService = eventService;
     }
 
     @GetMapping
     public List<Event> getAllEvents(@RequestParam(required = false) String category,
-            @RequestParam(required = false) String city,@RequestParam(required = false) Double minPrice,
-            @RequestParam(required = false) Double maxPrice ) {
-                return eventService.getAllEvents(category,city,minPrice,maxPrice);
+            @RequestParam(required = false) String city, @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice) {
+        return eventService.getAllEvents(category, city, minPrice, maxPrice);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String,String> createEvent(@RequestBody EventRequestDto request) {
-        return eventService.createEvent(request.getName(),request.getDateTime(),request.getCategory(),request.getStadiumId(),request.getDescription(),request.getMinPrice(),request.getLive());
+    public Map<String, String> createEvent(@RequestBody EventRequestDto request) {
+        return eventService.createEvent(request.getName(), request.getDateTime(), request.getCategory(),
+                request.getStadiumId(), request.getDescription(), request.getMinPrice(), request.getLive());
     }
 
     // READ ONE
@@ -50,14 +49,15 @@ public class EventController {
     public EventResponseDto getEvent(@PathVariable Long id) {
         return eventService.getEvent(id);
     }
+
     @PatchMapping("/{id}")
-    public Map<String,String> goEventLive(@PathVariable Long id) {
+    public Map<String, String> goEventLive(@PathVariable Long id) {
         return eventService.goEventLive(id);
     }
-    @PatchMapping("/false{id}")
-    public Map<String,String> eventDown(@PathVariable Long id) {
+
+    @PatchMapping("/{id}/down")
+    public Map<String, String> eventDown(@PathVariable Long id) {
         return eventService.goDown(id);
     }
-    
-    
+
 }

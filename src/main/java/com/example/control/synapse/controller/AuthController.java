@@ -1,6 +1,5 @@
 package com.example.control.synapse.controller;
 
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +12,14 @@ import com.example.control.synapse.dto.response.JwtResponse;
 import com.example.control.synapse.dto.response.MessageResponse;
 import com.example.control.synapse.dto.response.UserResponseDto;
 
-import com.example.control.synapse.service.AuthService;
+import com.example.control.synapse.service.interfaces.IAuthService;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private final IAuthService authService;
 
     /**
      * POST /auth/login
@@ -34,7 +33,9 @@ public class AuthController {
 
     /**
      * POST /auth/register
-     * Body: { "username","gender","email","password","firstName","lastName","phoneNumber","roles" }
+     * Body: {
+     * "username","gender","email","password","firstName","lastName","phoneNumber","roles"
+     * }
      */
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {

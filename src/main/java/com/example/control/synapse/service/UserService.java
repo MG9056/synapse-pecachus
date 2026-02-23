@@ -1,6 +1,5 @@
 package com.example.control.synapse.service;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
@@ -18,11 +17,12 @@ import com.example.control.synapse.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import com.example.control.synapse.service.interfaces.IUserService;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserService {
+public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -35,7 +35,8 @@ public class UserService {
     public UserResponseDto updateUser(Long id, UserUpdateDto updateDto) {
         log.info("Updating user with ID: {}", id);
 
-        // ✅ Fixed: this call was accidentally removed — without it any user could update anyone
+        // ✅ Fixed: this call was accidentally removed — without it any user could
+        // update anyone
         checkUserAccess(id);
 
         User user = userRepository.findById(id)
@@ -122,7 +123,6 @@ public class UserService {
         userRepository.delete(userToDelete);
         log.info("Account deleted successfully for user ID: {}", id);
     }
-
 
     // ─── Private helpers ─────────────────────────────────────────────────────
 

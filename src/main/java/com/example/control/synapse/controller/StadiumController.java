@@ -12,7 +12,7 @@ import com.example.control.synapse.models.Merchandise;
 import com.example.control.synapse.models.Restaurant;
 import com.example.control.synapse.repository.MerchandiseRepository;
 import com.example.control.synapse.repository.RestaurantRepository;
-import com.example.control.synapse.service.StadiumService;
+import com.example.control.synapse.service.interfaces.IStadiumService;
 
 @RestController
 @RequestMapping("/stadium")
@@ -20,10 +20,10 @@ public class StadiumController {
 
     private final MerchandiseRepository merchandiseRepository;
     private final RestaurantRepository restaurantRepository;
-    private final StadiumService stadiumService;
+    private final IStadiumService stadiumService;
 
     public StadiumController(
-            StadiumService stadiumService,
+            IStadiumService stadiumService,
             RestaurantRepository restaurantRepository,
             MerchandiseRepository merchandiseRepository) {
         this.stadiumService = stadiumService;

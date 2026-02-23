@@ -1,7 +1,5 @@
 package com.example.control.synapse.service;
 
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -22,13 +20,12 @@ import com.example.control.synapse.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-
+import com.example.control.synapse.service.interfaces.IFeedbackService;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FeedbackService {
+public class FeedbackService implements IFeedbackService {
 
     private final FeedbackRepository feedbackRepository;
     private final EventRepository eventRepository;
@@ -69,7 +66,8 @@ public class FeedbackService {
         return FeedbackMapper.toPageDto(feedbackPage);
     }
 
-    public FeedbackPageResponseDto getAllFeedbackByUserId(Long userId, Double minRating, Double maxRating, Pageable pageable) {
+    public FeedbackPageResponseDto getAllFeedbackByUserId(Long userId, Double minRating, Double maxRating,
+            Pageable pageable) {
         log.info("Fetching feedback for user ID: {}", userId);
 
         // Validate user exists
@@ -81,7 +79,8 @@ public class FeedbackService {
         return FeedbackMapper.toPageDto(feedbackPage);
     }
 
-    public FeedbackPageResponseDto getAllFeedbackByEventId(Long eventId, Double minRating, Double maxRating, Pageable pageable) {
+    public FeedbackPageResponseDto getAllFeedbackByEventId(Long eventId, Double minRating, Double maxRating,
+            Pageable pageable) {
         log.info("Fetching feedback for event ID: {}", eventId);
 
         // Validate event exists
@@ -96,32 +95,45 @@ public class FeedbackService {
     // ─── Private helpers ─────────────────────────────────────────────────────
 
     /**
-     * ✅ Fixed: partial rating filters (only min or only max) were silently ignored before
+     * ✅ Fixed: partial rating filters (only min or only max) were silently ignored
+     * before
      * Now handles all 4 combinations: both, minOnly, maxOnly, neither
      */
     private Page<Feedback> applyRatingFilter(Long entityId, Double minRating, Double maxRating,
-                                          Pageable pageable, String type) {
-    return switch (type) {
-        case "user" -> {
-            if (minRating != null && maxRating != null)   yield feedbackRepository.findByUser_IdAndRatingBetween(entityId, minRating, maxRating, pageable);
-            else if (minRating != null)                   yield feedbackRepository.findByUser_IdAndRatingGreaterThanEqual(entityId, minRating, pageable);
-            else if (maxRating != null)                   yield feedbackRepository.findByUser_IdAndRatingLessThanEqual(entityId, maxRating, pageable);
-            else                                          yield feedbackRepository.findByUser_Id(entityId, pageable);
-        }
-        case "event" -> {
-            if (minRating != null && maxRating != null)   yield feedbackRepository.findByEvent_IdAndRatingBetween(entityId, minRating, maxRating, pageable);
-            else if (minRating != null)                   yield feedbackRepository.findByEvent_IdAndRatingGreaterThanEqual(entityId, minRating, pageable);
-            else if (maxRating != null)                   yield feedbackRepository.findByEvent_IdAndRatingLessThanEqual(entityId, maxRating, pageable);
-            else                                          yield feedbackRepository.findByEvent_Id(entityId, pageable);
-        }
-        default -> {
-            if (minRating != null && maxRating != null)   yield feedbackRepository.findByRatingBetween(minRating, maxRating, pageable);
-            else if (minRating != null)                   yield feedbackRepository.findByRatingGreaterThanEqual(minRating, pageable);
-            else if (maxRating != null)                   yield feedbackRepository.findByRatingLessThanEqual(maxRating, pageable);
-            else                                          yield feedbackRepository.findAll(pageable);
-        }
-    };
-}
+            Pageable pageable, String type) {
+        return switch (type) {
+            case "user" -> {
+                if (minRating != null && maxRating != null)
+                    yield feedbackRepository.findByUser_IdAndRatingBetween(entityId, minRating, maxRating, pageable);
+                else if (minRating != null)
+                    yield feedbackRepository.findByUser_IdAndRatingGreaterThanEqual(entityId, minRating, pageable);
+                else if (maxRating != null)
+                    yield feedbackRepository.findByUser_IdAndRatingLessThanEqual(entityId, maxRating, pageable);
+                else
+                    yield feedbackRepository.findByUser_Id(entityId, pageable);
+            }
+            case "event" -> {
+                if (minRating != null && maxRating != null)
+                    yield feedbackRepository.findByEvent_IdAndRatingBetween(entityId, minRating, maxRating, pageable);
+                else if (minRating != null)
+                    yield feedbackRepository.findByEvent_IdAndRatingGreaterThanEqual(entityId, minRating, pageable);
+                else if (maxRating != null)
+                    yield feedbackRepository.findByEvent_IdAndRatingLessThanEqual(entityId, maxRating, pageable);
+                else
+                    yield feedbackRepository.findByEvent_Id(entityId, pageable);
+            }
+            default -> {
+                if (minRating != null && maxRating != null)
+                    yield feedbackRepository.findByRatingBetween(minRating, maxRating, pageable);
+                else if (minRating != null)
+                    yield feedbackRepository.findByRatingGreaterThanEqual(minRating, pageable);
+                else if (maxRating != null)
+                    yield feedbackRepository.findByRatingLessThanEqual(maxRating, pageable);
+                else
+                    yield feedbackRepository.findAll(pageable);
+            }
+        };
+    }
 
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

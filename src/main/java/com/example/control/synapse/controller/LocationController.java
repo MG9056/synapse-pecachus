@@ -4,22 +4,27 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
 import com.example.control.synapse.dto.request.LocationData;
-import com.example.control.synapse.service.LocationService;
+import com.example.control.synapse.service.interfaces.ILocationService;
 
 @Controller
 public class LocationController {
 
-    private final LocationService locationService;
+    private final ILocationService locationService;
 
-    public LocationController(LocationService locationService) {
+    public LocationController(ILocationService locationService) {
         this.locationService = locationService;
     }
 
-    // @MessageMapping("/location/update") means this method listens on the WebSocket destination
-    // "/app/location/update" (Spring automatically prepends "/app" based on your WebSocket config)
-    // When any user's app publishes to "/app/location/update", this method is triggered
-    // Spring automatically deserializes the incoming JSON body into a LocationData object
-    // e.g., { "userId": 1001, "latitude": 28.613, "longitude": 77.209 } becomes a LocationData
+    // @MessageMapping("/location/update") means this method listens on the
+    // WebSocket destination
+    // "/app/location/update" (Spring automatically prepends "/app" based on your
+    // WebSocket config)
+    // When any user's app publishes to "/app/location/update", this method is
+    // triggered
+    // Spring automatically deserializes the incoming JSON body into a LocationData
+    // object
+    // e.g., { "userId": 1001, "latitude": 28.613, "longitude": 77.209 } becomes a
+    // LocationData
     @MessageMapping("/location/update")
     public void receiveLocation(LocationData data) {
 

@@ -35,9 +35,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import com.example.control.synapse.service.interfaces.IBookingService;
 
 @Service
-public class BookingService {
+public class BookingService implements IBookingService {
 
     private final EventSeatRepository eventSeatRepository;
     private final BookingRepository bookingRepository;
@@ -59,16 +62,21 @@ public class BookingService {
         this.stadiumRepository = stadiumRepository;
     }
 
-    // Method for websocket, broadcastSeatUpdate is called in all
-    // 3->reserve,confirm,release and a msg of the class messageTemplate whatever is
-    // seat at the provided API
+    private BookingResponseDto convertToDto(Booking booking) {
+        BookingResponseDto dto = new BookingResponseDto();
+        dto.setId(booking.getId());
+        dto.setUserId(booking.getUser().getId());
+        dto.setEventId(booking.getEvent().getId());
+        dto.setStadiumId(booking.getStadium() != null ? booking.getStadium().getId() : null);
+        dto.setBookingTime(booking.getBookingTime());
+        return dto;
+    }
 
     private void broadcastSeatUpdate(EventSeat seat, String status) {
 
         SeatUpdateMessage msg = new SeatUpdateMessage(
                 seat.getId(), // eventSeatId
                 seat.getEvent().getId(), // eventId
-                // seat.getSeatId().getId(), // physical seatId
                 seat.getAvailability(), // availability
                 status,
                 seat.getPrice());
@@ -118,7 +126,6 @@ public class BookingService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                             "Seat not found with id " + seatId));
 
-            // Verify the seat belongs to the correct event and stadium
             if (!eventSeat.getEvent().getId().equals(eventId)) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                         "Seat " + seatId + " does not belong to event " + eventId);
@@ -128,19 +135,16 @@ public class BookingService {
                         "Seat " + seatId + " does not belong to stadium " + stadiumId);
             }
 
-            // Check if seat is already booked
             if (eventSeat.getBooking() != null) {
                 Map<String, String> response = new HashMap<>();
                 response.put("message", "Seat " + seatId + " is already booked!");
                 return response;
             }
 
-            // If availability is true, it means it wasn't reserved
             if (eventSeat.getAvailability()) {
                 eventSeat.setAvailability(false);
             }
 
-            // timer cancel logic
             ScheduledFuture<?> timer = reservationTimers.remove(seatId);
             if (timer != null) {
                 timer.cancel(false);
@@ -212,69 +216,31 @@ public class BookingService {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found with id " + id));
-
-        BookingResponseDto bookingResponseDto = new BookingResponseDto();
-        bookingResponseDto.setId(booking.getId());
-        bookingResponseDto.setUserId(booking.getUser().getId());
-        bookingResponseDto.setEventId(booking.getEvent().getId());
-        bookingResponseDto.setBookingTime(booking.getBookingTime());
-
-        return bookingResponseDto;
-
+        return convertToDto(booking);
     }
 
     public List<BookingResponseDto> getBookingByUserId(Long userId) {
-        List<Booking> bookings = bookingRepository.findByUser_Id(userId);
-        List<BookingResponseDto> dtoList = new ArrayList<>();
-
-        for (Booking booking : bookings) {
-            BookingResponseDto bookingResponseDto = new BookingResponseDto();
-            bookingResponseDto.setId(booking.getId());
-            bookingResponseDto.setUserId(booking.getUser().getId());
-            bookingResponseDto.setEventId(booking.getEvent().getId());
-            bookingResponseDto.setBookingTime(booking.getBookingTime());
-
-            dtoList.add(bookingResponseDto);
-        }
-
-        return dtoList;
-
+        return bookingRepository.findByUser_Id(userId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public List<BookingResponseDto> getAllBookings() {
-        List<Booking> bookings = bookingRepository.findAll();
-        List<BookingResponseDto> dtoList = new ArrayList<>();
-
-        for (Booking booking : bookings) {
-            BookingResponseDto bookingResponseDto = new BookingResponseDto();
-            bookingResponseDto.setId(booking.getId());
-            bookingResponseDto.setUserId(booking.getUser().getId());
-            bookingResponseDto.setEventId(booking.getEvent().getId());
-            bookingResponseDto.setBookingTime(booking.getBookingTime());
-
-            dtoList.add(bookingResponseDto);
-        }
-
-        return dtoList;
-
+        return bookingRepository.findAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public List<BookingResponseDto> getBookingByEventId(Long eventId) {
-        List<Booking> bookings = bookingRepository.findByEvent_Id(eventId);
-        List<BookingResponseDto> dtoList = new ArrayList<>();
+        return bookingRepository.findByEvent_Id(eventId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
-        for (Booking booking : bookings) {
-            BookingResponseDto bookingResponseDto = new BookingResponseDto();
-            bookingResponseDto.setId(booking.getId());
-            bookingResponseDto.setUserId(booking.getUser().getId());
-            bookingResponseDto.setEventId(booking.getEvent().getId());
-            bookingResponseDto.setBookingTime(booking.getBookingTime());
-
-            dtoList.add(bookingResponseDto);
-        }
-
-        return dtoList;
-
+    public List<BookingResponseDto> getBookingByStadiumId(Long stadiumId) {
+        return bookingRepository.findByStadium_Id(stadiumId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
 }

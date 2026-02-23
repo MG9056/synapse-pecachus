@@ -17,10 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import com.example.control.synapse.service.interfaces.ISeatService;
 
 @Service
 @Slf4j
-public class SeatService {
+public class SeatService implements ISeatService {
 
     private final SeatRepository seatRepository;
     private final StadiumRepository stadiumRepository;

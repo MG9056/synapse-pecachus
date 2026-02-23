@@ -16,9 +16,10 @@ import com.example.control.synapse.models.Stadium;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.StadiumRepository;
 import com.example.control.synapse.repository.UserRepository;
+import com.example.control.synapse.service.interfaces.IStadiumService;
 
 @Service
-public class StadiumService {
+public class StadiumService implements IStadiumService {
 
     private final StadiumRepository stadiumRepository;
     private final UserRepository userRepository;

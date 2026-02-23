@@ -1,6 +1,5 @@
 package com.example.control.synapse.service;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +18,8 @@ import com.example.control.synapse.helper.JwtUtils;
 import com.example.control.synapse.models.User;
 import com.example.control.synapse.repository.UserRepository;
 
+import com.example.control.synapse.service.interfaces.IAuthService;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AuthService {
+public class AuthService implements IAuthService {
 
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
@@ -43,9 +44,7 @@ public class AuthService {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+                        loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -64,8 +63,7 @@ public class AuthService {
                 userDetails.getUsername(),
                 userDetails.getEmail(),
                 roles,
-                userDetails.getFirstName()
-        );
+                userDetails.getFirstName());
     }
 
     /**

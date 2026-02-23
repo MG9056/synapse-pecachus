@@ -1,107 +1,70 @@
 package com.example.control.synapse.controller;
 
-
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.*;
 
 import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.request.RestaurantRequest;
 import com.example.control.synapse.dto.request.RestaurantUpdateDto;
-import com.example.control.synapse.models.Food;
-import com.example.control.synapse.models.Restaurant;
-import com.example.control.synapse.repository.FoodRepository;
-import com.example.control.synapse.repository.RestaurantRepository;
+import com.example.control.synapse.dto.response.FoodResponseDto;
+import com.example.control.synapse.dto.response.RestaurantResponseDto;
+import com.example.control.synapse.service.interfaces.IFoodService;
+import com.example.control.synapse.service.interfaces.IRestaurantService;
 
-import com.example.control.synapse.service.RestaurantService;
-
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/restaurant")
+@RequiredArgsConstructor
 public class RestaurantController {
 
-    private final FoodRepository foodRepository;
-    private final RestaurantRepository restaurantRepository;
-
-    private final RestaurantService restaurantService;
-   
-
-    public RestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantService, FoodRepository foodRepository)
-    {this.restaurantRepository= restaurantRepository;
-       
-        this.restaurantService= restaurantService;
-        
-        this.foodRepository = foodRepository;
-    }
+    private final IRestaurantService restaurantService;
+    private final IFoodService foodService;
 
     @GetMapping("/allRestaurants")
-    public List<Restaurant> getAllRestaurants()
-        {
-            return restaurantRepository.findAll();
-        }
+    public List<RestaurantResponseDto> getAllRestaurants() {
+        return restaurantService.getAllRestaurants();
+    }
 
     @GetMapping("/{id}")
-    public Restaurant getRestaurantById(@PathVariable Long id)
-
-    {
-        return restaurantRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found"));
-    }    
+    public RestaurantResponseDto getRestaurantById(@PathVariable Long id) {
+        return restaurantService.getRestaurantById(id);
+    }
 
     @GetMapping("/{id}/menu")
-    public List<Food> getFoodByRestaurantId(@PathVariable Long id)
-    { return foodRepository.findByRestaurant_Id(id);
-        
+    public List<FoodResponseDto> getFoodByRestaurantId(@PathVariable Long id) {
+        return foodService.getFoodByRestaurantId(id);
     }
 
     @GetMapping("/stadium/{stadiumId}")
-    public List<Restaurant> getRestaurantByStadiumId(@PathVariable Long stadiumId)
-    {
-        return restaurantRepository.findByStadium_Id(stadiumId);
-
+    public List<RestaurantResponseDto> getRestaurantByStadiumId(@PathVariable Long stadiumId) {
+        return restaurantService.getRestaurantByStadiumId(stadiumId);
     }
 
     @PostMapping("/upload")
-    public Map<String,String> uploadRestaurant(@RequestBody RestaurantRequest restaurantRequest)
-    { return restaurantService.uploadRestaurant(
-        restaurantRequest.getName(),
-        restaurantRequest.getRating(),
-        restaurantRequest.getStadiumId()
-
-    );
-
+    public Map<String, String> uploadRestaurant(@RequestBody RestaurantRequest restaurantRequest) {
+        return restaurantService.uploadRestaurant(
+                restaurantRequest.getName(),
+                restaurantRequest.getRating(),
+                restaurantRequest.getStadiumId());
     }
 
     @PatchMapping("/{id}")
-    public Map<String,String> updateRestaurant(@PathVariable Long id, @RequestBody RestaurantUpdateDto restaurantUpdateDto)
-    {  return restaurantService.updateRestaurant(
-        id,
-        restaurantUpdateDto.getName(),
-        restaurantUpdateDto.getRating(),
-        restaurantUpdateDto.getStadiumId()
-
-
-
-
-    );
-
-
+    public Map<String, String> updateRestaurant(@PathVariable Long id,
+            @RequestBody RestaurantUpdateDto restaurantUpdateDto) {
+        return restaurantService.updateRestaurant(
+                id,
+                restaurantUpdateDto.getName(),
+                restaurantUpdateDto.getRating(),
+                restaurantUpdateDto.getStadiumId());
     }
 
-     @DeleteMapping("/{id}")
-    public Map<String,String> deleteRestaurant(@PathVariable Long id, @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
-        return restaurantService.deleteRestaurant(id,deleteCredentialsDto);
+    @DeleteMapping("/{id}")
+    public Map<String, String> deleteRestaurant(@PathVariable Long id,
+            @RequestBody DeleteCredentialsDto deleteCredentialsDto) {
+        return restaurantService.deleteRestaurant(id, deleteCredentialsDto);
     }
 
-
-
-        
-    
-
-
-    
-    
 }

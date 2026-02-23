@@ -27,8 +27,6 @@ public class Sos {
     @ManyToOne
     private Stadium stadium;
 
-   
-
     public Stadium getStadium() {
         return stadium;
     }
@@ -37,17 +35,18 @@ public class Sos {
         this.stadium = stadium;
     }
 
-    public Sos(){}
+    public Sos() {
+    }
 
-    Sos(String alertType, String message, Boolean isActive, LocalDateTime timeStamp, User user, Event event, Stadium stadium)
-    {
-        this.alertType=alertType;
-        this.message=message;
-        this.isActive= isActive;
-        this.timeStamp=timeStamp;
-        this.user=user;
-        this.event=event;
-        this.stadium=stadium;
+    public Sos(String alertType, String message, Boolean isActive, LocalDateTime timeStamp, User user, Event event,
+            Stadium stadium) {
+        this.alertType = alertType;
+        this.message = message;
+        this.isActive = isActive;
+        this.timeStamp = timeStamp;
+        this.user = user;
+        this.event = event;
+        this.stadium = stadium;
     }
 
     public Long getId() {
@@ -98,17 +97,12 @@ public class Sos {
         this.user = userId;
     }
 
-     public Event getEvent() {
+    public Event getEvent() {
         return event;
     }
 
     public void setEvent(Event event) {
         this.event = event;
     }
-    
 
-
-    
-    
-    
 }

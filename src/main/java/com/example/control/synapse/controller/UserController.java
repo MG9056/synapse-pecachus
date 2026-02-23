@@ -1,6 +1,5 @@
 package com.example.control.synapse.controller;
 
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import com.example.control.synapse.dto.request.PasswordChangeDto;
 import com.example.control.synapse.dto.request.UserUpdateDto;
 import com.example.control.synapse.dto.response.MessageResponse;
 import com.example.control.synapse.dto.response.UserResponseDto;
-import com.example.control.synapse.service.UserService;
+import com.example.control.synapse.service.interfaces.IUserService;
 
 import java.util.Map;
 
@@ -20,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final IUserService userService;
 
     /**
      * PUT /users/{id}

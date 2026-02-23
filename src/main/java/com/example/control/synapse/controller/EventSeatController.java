@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.control.synapse.dto.request.EventSeatCreateDto;
 import com.example.control.synapse.dto.response.EventSeatResponseDto;
-import com.example.control.synapse.service.EventSeatService;
+import com.example.control.synapse.service.interfaces.IEventSeatService;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EventSeatController {
 
-    private final EventSeatService eventSeatService;
+    private final IEventSeatService eventSeatService;
 
     /**
      * Create event seats for all seats in stadium when event is created
@@ -29,7 +29,7 @@ public class EventSeatController {
     public ResponseEntity<List<EventSeatResponseDto>> createEventSeatsForEvent(
             @PathVariable Long eventId,
             @RequestBody Map<String, Double> categoryPriceMap) {
-        
+
         List<EventSeatResponseDto> eventSeats = eventSeatService.createEventSeatsForEvent(eventId, categoryPriceMap);
         return new ResponseEntity<>(eventSeats, HttpStatus.CREATED);
     }
@@ -92,7 +92,7 @@ public class EventSeatController {
     public ResponseEntity<EventSeatResponseDto> updateEventSeat(
             @PathVariable Long id,
             @Valid @RequestBody EventSeatCreateDto updateDto) {
-        
+
         EventSeatResponseDto eventSeat = eventSeatService.updateEventSeat(id, updateDto);
         return ResponseEntity.ok(eventSeat);
     }
@@ -105,7 +105,7 @@ public class EventSeatController {
     public ResponseEntity<EventSeatResponseDto> updateEventSeatAvailability(
             @PathVariable Long id,
             @RequestParam Boolean availability) {
-        
+
         EventSeatResponseDto eventSeat = eventSeatService.updateEventSeatAvailability(id, availability);
         return ResponseEntity.ok(eventSeat);
     }

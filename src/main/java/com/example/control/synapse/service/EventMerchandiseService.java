@@ -1,7 +1,7 @@
 package com.example.control.synapse.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -10,128 +10,59 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.control.synapse.dto.response.EventMerchandiseResponseDto;
 import com.example.control.synapse.models.EventMerchandise;
 import com.example.control.synapse.repository.EventMerchandiseRepository;
-
+import com.example.control.synapse.service.interfaces.IEventMerchandiseService;
 
 @Service
-public class EventMerchandiseService {
+public class EventMerchandiseService implements IEventMerchandiseService {
 
     private final EventMerchandiseRepository eventMerchandiseRepository;
 
-    public EventMerchandiseService(EventMerchandiseRepository eventMerchandiseRepository)
-    {
-        this.eventMerchandiseRepository= eventMerchandiseRepository;
+    public EventMerchandiseService(EventMerchandiseRepository eventMerchandiseRepository) {
+        this.eventMerchandiseRepository = eventMerchandiseRepository;
     }
 
-    public EventMerchandiseResponseDto getEventMerchandiseById(Long merchandiseId)
-    {EventMerchandise eventMerchandise = eventMerchandiseRepository.findById(merchandiseId)
-    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "EventMerchandise not found with id " + merchandiseId));
-
-        EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
-
-        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
-        eventMerchandiseResponseDto.setName(eventMerchandise.getName());
-        eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
-        eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
-        eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
-
-        return eventMerchandiseResponseDto;
-    
-    
-    
-    
+    private EventMerchandiseResponseDto convertToDto(EventMerchandise em) {
+        EventMerchandiseResponseDto dto = new EventMerchandiseResponseDto();
+        dto.setId(em.getId());
+        dto.setName(em.getName());
+        dto.setDescription(em.getDescription());
+        dto.setPrice(em.getPrice());
+        dto.setRating(em.getRating());
+        dto.setStadiumId(em.getStadium() != null ? em.getStadium().getId() : null);
+        dto.setMerchandiseOrderId(em.getMerchandiseOrder() != null ? em.getMerchandiseOrder().getId() : null);
+        dto.setEventId(em.getEvent() != null ? em.getEvent().getId() : null);
+        return dto;
     }
 
-
-    public List<EventMerchandiseResponseDto> getEventMerchandiseByMerchandiseOrderId(Long merchandiseOrderId)
-    {
-        List<EventMerchandise> eventMerchandises= eventMerchandiseRepository.findByMerchandiseOrder_Id(merchandiseOrderId);
-
-        List<EventMerchandiseResponseDto> dtoList=new ArrayList<>();
-
-        for(EventMerchandise eventMerchandise: eventMerchandises)
-        {
-
-        EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
-
-        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
-        eventMerchandiseResponseDto.setName(eventMerchandise.getName());
-        eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
-        eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
-        eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
-
-        dtoList.add(eventMerchandiseResponseDto);
-        }
-
-        return dtoList;
-    
-    
-    
-    
+    public EventMerchandiseResponseDto getEventMerchandiseById(Long merchandiseId) {
+        EventMerchandise em = eventMerchandiseRepository.findById(merchandiseId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "EventMerchandise not found with id " + merchandiseId));
+        return convertToDto(em);
     }
 
-    public List<EventMerchandiseResponseDto> getEventMerchandiseByStadiumId(Long stadiumId)
-    {
-        List<EventMerchandise> eventMerchandises= eventMerchandiseRepository.findByStadium_Id(stadiumId);
-
-        List<EventMerchandiseResponseDto> dtoList=new ArrayList<>();
-
-        for(EventMerchandise eventMerchandise: eventMerchandises)
-        {
-
-        EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
-
-        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
-        eventMerchandiseResponseDto.setName(eventMerchandise.getName());
-        eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
-        eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
-        eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
-
-        dtoList.add(eventMerchandiseResponseDto);
-        }
-
-        return dtoList;
-    
-    
-    
-    
+    public List<EventMerchandiseResponseDto> getEventMerchandiseByMerchandiseOrderId(Long merchandiseOrderId) {
+        return eventMerchandiseRepository.findByMerchandiseOrder_Id(merchandiseOrderId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
-    public List<EventMerchandiseResponseDto> getAllEventMerchandise()
-    {
-        List<EventMerchandise> eventMerchandises= eventMerchandiseRepository.findAll();
-
-        List<EventMerchandiseResponseDto> dtoList=new ArrayList<>();
-
-        for(EventMerchandise eventMerchandise: eventMerchandises)
-        {
-
-        EventMerchandiseResponseDto  eventMerchandiseResponseDto= new EventMerchandiseResponseDto();
-       
-
-        eventMerchandiseResponseDto.setId(eventMerchandise.getId());
-        eventMerchandiseResponseDto.setName(eventMerchandise.getName());
-        eventMerchandiseResponseDto.setDescription(eventMerchandise.getDescription());
-        eventMerchandiseResponseDto.setPrice(eventMerchandise.getPrice());
-        eventMerchandiseResponseDto.setRating(eventMerchandise.getRating());
-        eventMerchandiseResponseDto.setStadiumId(eventMerchandise.getStadium().getId());
-        eventMerchandiseResponseDto.setMerchandiseOrderId(eventMerchandise.getMerchandiseOrder().getId());
-
-        dtoList.add(eventMerchandiseResponseDto);
-        }
-
-        return dtoList;
-    
-    
-    
-    
+    public List<EventMerchandiseResponseDto> getEventMerchandiseByStadiumId(Long stadiumId) {
+        return eventMerchandiseRepository.findByStadium_Id(stadiumId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
-    
-    
+    public List<EventMerchandiseResponseDto> getAllEventMerchandise() {
+        return eventMerchandiseRepository.findAll().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<EventMerchandiseResponseDto> getEventMerchandiseByEventId(Long eventId) {
+        return eventMerchandiseRepository.findByEvent_Id(eventId).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
 }

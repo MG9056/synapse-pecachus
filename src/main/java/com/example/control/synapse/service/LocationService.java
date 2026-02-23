@@ -1,9 +1,8 @@
 package com.example.control.synapse.service;
 
 // It does two things:
+
 // 1. Stores the latest location of every user in memory
-
-
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,11 +13,10 @@ import com.example.control.synapse.dto.response.ClusteredPoint;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import com.example.control.synapse.service.interfaces.ILocationService;
 
 @Service
-public class LocationService {
-
-  
+public class LocationService implements ILocationService {
 
     // ConcurrentHashMap is used instead of a regular HashMap because multiple users
     // are sending location updates simultaneously from different threads
@@ -38,34 +36,40 @@ public class LocationService {
 
     // Called every time a user sends a location update via WebSocket
     // Simply puts their latest location into the map, overwriting the previous one
-    // If userId 1001 sends a location, it replaces their old location — no duplicates
+    // If userId 1001 sends a location, it replaces their old location — no
+    // duplicates
     public void updateLocation(LocationData data) {
         userLocations.put(data.getUserId(), data);
 
+        // if locationData's user is in the sos list then broadcast their location
+        // immediately
 
-        // if locationData's user is in the sos list then broadcast their location immediately
-      
     }
 
-    // @Scheduled means Spring automatically calls this method every 2000ms (2 seconds)
+    // @Scheduled means Spring automatically calls this method every 2000ms (2
+    // seconds)
     // No one has to trigger it — it runs on its own in the background continuously
-    // This is what pushes live updates to the admin without the admin requesting them
+    // This is what pushes live updates to the admin without the admin requesting
+    // them
     @Scheduled(fixedRate = 2000)
     public void broadcastHeatmap() {
 
         // If no users have sent their location yet, skip the broadcast
         // No point sending an empty list to the admin
-        if (userLocations.isEmpty()) return;
+        if (userLocations.isEmpty())
+            return;
 
         // Take all the raw locations in the map and cluster them
         List<ClusteredPoint> clustered = clusterLocations();
 
         // Push the clustered points to the admin's WebSocket topic
-        // Anyone subscribed to this topic (i.e., the admin screen) receives this instantly
+        // Anyone subscribed to this topic (i.e., the admin screen) receives this
+        // instantly
         messagingTemplate.convertAndSend("/topic/admin/heatmap", clustered);
     }
 
-    // This method reduces thousands of raw GPS points into a smaller set of weighted clusters
+    // This method reduces thousands of raw GPS points into a smaller set of
+    // weighted clusters
     // Think of the stadium floor as a grid of tiny squares (buckets)
     // Every person gets assigned to their nearest square
     // The weight of each square = number of people standing in it
@@ -79,7 +83,8 @@ public class LocationService {
         // gridSize controls the size of each bucket
         // 0.0001 degrees is roughly 10 meters
         // So people within 10 meters of each other get grouped into the same cluster
-        // You can make this larger (0.001 = ~100m) for coarser clustering or smaller for finer
+        // You can make this larger (0.001 = ~100m) for coarser clustering or smaller
+        // for finer
         double gridSize = 0.0001;
 
         // Loop through every user's current location
@@ -96,11 +101,13 @@ public class LocationService {
             String key = bucketLat + ":" + bucketLng;
 
             // compute() atomically checks if this bucket already exists
-            // If it doesn't exist yet (existing == null): create a new ClusteredPoint with weight 1
+            // If it doesn't exist yet (existing == null): create a new ClusteredPoint with
+            // weight 1
             // If it already exists: just increment its weight by 1
             // This is how we count how many people are in each grid cell
             grid.compute(key, (k, existing) -> {
-                if (existing == null) return new ClusteredPoint(bucketLat, bucketLng, 1);
+                if (existing == null)
+                    return new ClusteredPoint(bucketLat, bucketLng, 1);
                 existing.setWeight(existing.getWeight() + 1);
                 return existing;
             });
@@ -111,7 +118,5 @@ public class LocationService {
         // This is what gets serialized to JSON and sent to the admin
         return new ArrayList<>(grid.values());
     }
-
-
 
 }

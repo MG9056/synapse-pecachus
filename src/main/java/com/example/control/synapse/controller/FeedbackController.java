@@ -1,6 +1,5 @@
 package com.example.control.synapse.controller;
 
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +14,17 @@ import com.example.control.synapse.dto.request.FeedbackRequestDto;
 import com.example.control.synapse.dto.response.FeedbackPageResponseDto;
 import com.example.control.synapse.dto.response.FeedbackResponseDto;
 import com.example.control.synapse.dto.response.MessageResponse;
-import com.example.control.synapse.service.FeedbackService;
+import com.example.control.synapse.service.interfaces.IFeedbackService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/feedback")
 @RequiredArgsConstructor
 public class FeedbackController {
 
-    private final FeedbackService feedbackService;
+    private final IFeedbackService feedbackService;
 
     /**
      * POST /feedback
@@ -34,7 +34,8 @@ public class FeedbackController {
     @PostMapping
 
     public ResponseEntity<MessageResponse> createFeedback(@Valid @RequestBody FeedbackRequestDto request) {
-        // ✅ Fixed: no longer passing userId from body — service gets it from SecurityContext
+        // ✅ Fixed: no longer passing userId from body — service gets it from
+        // SecurityContext
         feedbackService.createFeedback(request);
         return ResponseEntity.ok(new MessageResponse("Feedback submitted successfully!"));
     }
