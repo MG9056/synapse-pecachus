@@ -7,15 +7,15 @@ import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.RestaurantResponseDto;
 
 public interface IRestaurantService {
-    List<RestaurantResponseDto> getAllRestaurants();
+    Map<String, String> uploadRestaurant(String name, double rating, Long stadiumId);
 
     RestaurantResponseDto getRestaurantById(Long id);
 
     List<RestaurantResponseDto> getRestaurantByStadiumId(Long stadiumId);
 
-    Map<String, String> uploadRestaurant(String name, Double rating, Long stadiumId);
+    List<RestaurantResponseDto> getAllRestaurants();
 
-    Map<String, String> updateRestaurant(Long id, String name, Double rating, Long stadiumId);
+    Map<String, String> updateRestaurant(Long restaurantId, String name, Double rating, Long stadiumId);
 
-    Map<String, String> deleteRestaurant(Long id, DeleteCredentialsDto deleteCredentialsDto);
+    Map<String, String> deleteRestaurant(Long restaurantId, DeleteCredentialsDto deleteCredentialsDto);
 }

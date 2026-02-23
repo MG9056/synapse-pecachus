@@ -7,21 +7,21 @@ import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.FoodResponseDto;
 
 public interface IFoodService {
-    List<FoodResponseDto> getAllFoods();
+        Map<String, String> uploadFood(String name, Long restaurantId, float price, float rating, String type,
+                        String diet, Integer stock);
 
-    FoodResponseDto getFoodById(Long id);
+        Map<String, String> updateFood(Long foodId, String name, Long restaurantId, Float price, Float rating,
+                        String type, String diet, Integer stock);
 
-    List<FoodResponseDto> getFoodByRestaurantId(Long restaurantId);
+        List<FoodResponseDto> getFoodByRestaurantId(Long restaurantId);
 
-    List<FoodResponseDto> getFoodByDiet(String diet);
+        List<FoodResponseDto> getAllFoods();
 
-    List<FoodResponseDto> getFoodByType(String type);
+        FoodResponseDto getFoodById(Long foodId);
 
-    Map<String, String> uploadFood(String name, String description, Double price, Double rating,
-            Long restaurantId, String type, String diet, Integer stock);
+        List<FoodResponseDto> getFoodByDiet(String diet);
 
-    Map<String, String> updateFood(Long id, String name, String description, Double price, Double rating,
-            Long restaurantId, String type, String diet, Integer stock);
+        List<FoodResponseDto> getFoodByType(String type);
 
-    Map<String, String> deleteFood(Long id, DeleteCredentialsDto deleteCredentialsDto);
+        Map<String, String> deleteFood(Long foodId, DeleteCredentialsDto deleteCredentialsDto);
 }

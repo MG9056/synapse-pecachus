@@ -7,17 +7,17 @@ import com.example.control.synapse.dto.request.DeleteCredentialsDto;
 import com.example.control.synapse.dto.response.MerchandiseResponseDto;
 
 public interface IMerchandiseService {
-    List<MerchandiseResponseDto> getAllMerchandise();
+        MerchandiseResponseDto getMerchandiseById(Long id);
 
-    MerchandiseResponseDto getMerchandiseById(Long id);
+        List<MerchandiseResponseDto> getAllMerchandise();
 
-    List<MerchandiseResponseDto> getMerchandiseByStadiumId(Long stadiumId);
+        List<MerchandiseResponseDto> getMerchandiseByStadiumId(Long stadiumId);
 
-    Map<String, String> uploadMerchandise(String name, String description, Double price, Double rating,
-            Long stadiumId, String size, String type, Integer stock);
+        Map<String, String> uploadMerchandise(String name, String description, double price, double rating,
+                        Long stadiumId, String size, String type, Integer stock);
 
-    Map<String, String> updateMerchandise(Long id, String name, String description, Double price, Double rating,
-            Long stadiumId, String type, String size, Integer stock);
+        Map<String, String> updateMerchandise(Long merchandiseId, String name, String description, Double price,
+                        Double rating, Long stadiumId, String type, String size, Integer stock);
 
-    Map<String, String> deleteMerchandise(Long id, DeleteCredentialsDto deleteCredentialsDto);
+        Map<String, String> deleteMerchandise(Long merchandiseId, DeleteCredentialsDto deleteCredentialsDto);
 }
