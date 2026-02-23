@@ -10,8 +10,6 @@ public interface IBookingService {
 
     Map<String, String> confirmBooking(List<Long> seatIdlist, Long userId, Long eventId, Long stadiumId);
 
-    void shutdownScheduler();
-
     BookingResponseDto getBookingById(Long id);
 
     List<BookingResponseDto> getBookingByUserId(Long userId);
