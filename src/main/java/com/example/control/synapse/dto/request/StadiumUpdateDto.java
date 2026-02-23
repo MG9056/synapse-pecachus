@@ -1,30 +1,25 @@
 package com.example.control.synapse.dto.request;
 
 public class StadiumUpdateDto {
-
-   
-
-  
-
     private String city;
     private String state;
     private String country;
     private Integer capacity;
     private String name;
+    private String adminEmail;
 
-    public StadiumUpdateDto(){}
-
-    public StadiumUpdateDto(String city, String state, String country, Integer capacity, String name)
-    {
-        this.city=city;
-        this.state=state;
-        this.country=country;
-        this.capacity=capacity;
-        this.name=name;
+    public StadiumUpdateDto() {
     }
 
-
-   
+    public StadiumUpdateDto(String city, String state, String country, Integer capacity, String name,
+            String adminEmail) {
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.capacity = capacity;
+        this.name = name;
+        this.adminEmail = adminEmail;
+    }
 
     public String getCity() {
         return city;
@@ -66,8 +61,11 @@ public class StadiumUpdateDto {
         this.name = name;
     }
 
-    
+    public String getAdminEmail() {
+        return adminEmail;
+    }
 
-
-    
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
+    }
 }

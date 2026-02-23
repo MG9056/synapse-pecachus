@@ -14,18 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CsvHelper {
-    
+
     public static String TYPE = "text/csv";
-    
+
     /**
      * Check if file is CSV
      */
     public static boolean hasCSVFormat(MultipartFile file) {
-        return TYPE.equals(file.getContentType()) || 
-               file.getOriginalFilename() != null && 
-               file.getOriginalFilename().endsWith(".csv");
+        String contentType = file.getContentType();
+        return TYPE.equals(contentType) ||
+                "application/vnd.ms-excel".equals(contentType) ||
+                (file.getOriginalFilename() != null && file.getOriginalFilename().endsWith(".csv"));
     }
-    
+
     /**
      * Parse CSV file to list of SeatDTO
      * Expected CSV format:
@@ -34,51 +35,66 @@ public class CsvHelper {
     public static List<SeatDTO> csvToSeats(MultipartFile file, Long defaultStadiumId) {
         try (BufferedReader fileReader = new BufferedReader(
                 new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8));
-             CSVParser csvParser = new CSVParser(fileReader,
-                     CSVFormat.DEFAULT.builder()
-                             .setHeader()
-                             .setSkipHeaderRecord(true)
-                             .setIgnoreHeaderCase(true)
-                             .setTrim(true)
-                             .build())) {
-            
+                CSVParser csvParser = new CSVParser(fileReader,
+                        CSVFormat.DEFAULT.builder()
+                                .setHeader()
+                                .setIgnoreHeaderCase(true)
+                                .setTrim(true)
+                                .build())) {
+
             List<SeatDTO> seats = new ArrayList<>();
-            
+
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-            
+
+            int rowNumber = 1;
             for (CSVRecord csvRecord : csvRecords) {
-                SeatDTO seat = new SeatDTO();
-                
-                seat.setRow(csvRecord.get("row"));
-                seat.setSeatNo(Integer.parseInt(csvRecord.get("seatNo")));
-                
-                // Parse boolean fields with null safety
-                seat.setCloseToWc(parseBoolean(csvRecord.get("closeToWc")));
-                seat.setCloseToFoodStall(parseBoolean(csvRecord.get("closeToFoodStall")));
-                seat.setCloseToExit(parseBoolean(csvRecord.get("closeToExit")));
-                seat.setIsWomen(parseBoolean(csvRecord.get("isWomen")));
-                seat.setIsAccessible(parseBoolean(csvRecord.get("isAccessible")));
-                
-                seat.setCategory(csvRecord.get("category"));
-                
-                // Use stadiumId from CSV if present, otherwise use default
-                String stadiumIdStr = csvRecord.get("stadiumId");
-                if (stadiumIdStr != null && !stadiumIdStr.isEmpty()) {
-                    seat.setStadiumId(Long.parseLong(stadiumIdStr));
-                } else {
-                    seat.setStadiumId(defaultStadiumId);
+                rowNumber++;
+                try {
+                    SeatDTO seat = new SeatDTO();
+
+                    seat.setRow(csvRecord.get("row"));
+
+                    String seatNoStr = csvRecord.get("seatNo");
+                    if (seatNoStr != null && !seatNoStr.trim().isEmpty()) {
+                        seat.setSeatNo(Integer.parseInt(seatNoStr.trim()));
+                    }
+
+                    // Parse boolean fields with null safety
+                    seat.setCloseToWc(parseBoolean(csvRecord.get("closeToWc")));
+                    seat.setCloseToFoodStall(parseBoolean(csvRecord.get("closeToFoodStall")));
+                    seat.setCloseToExit(parseBoolean(csvRecord.get("closeToExit")));
+                    seat.setIsWomen(parseBoolean(csvRecord.get("isWomen")));
+                    seat.setIsAccessible(parseBoolean(csvRecord.get("isAccessible")));
+
+                    seat.setCategory(csvRecord.get("category"));
+
+                    // Use stadiumId from CSV if present, otherwise use default
+                    String stadiumIdStr = null;
+                    try {
+                        stadiumIdStr = csvRecord.get("stadiumId");
+                    } catch (IllegalArgumentException e) {
+                        // ignore if column doesn't exist
+                    }
+
+                    if (stadiumIdStr != null && !stadiumIdStr.isEmpty()) {
+                        seat.setStadiumId(Long.parseLong(stadiumIdStr.trim()));
+                    } else {
+                        seat.setStadiumId(defaultStadiumId);
+                    }
+
+                    seats.add(seat);
+                } catch (Exception e) {
+                    throw new RuntimeException("Error at CSV row " + rowNumber + ": " + e.getMessage());
                 }
-                
-                seats.add(seat);
             }
-            
+
             return seats;
-            
+
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse CSV file: " + e.getMessage(), e);
         }
     }
-    
+
     /**
      * Parse boolean from string with null safety
      */

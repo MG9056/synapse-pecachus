@@ -1,14 +1,9 @@
 package com.example.control.synapse.models;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-
-
-
 
 @Entity
 public class Stadium {
@@ -21,18 +16,20 @@ public class Stadium {
     private String country;
     private int capacity;
     private String name;
+    private String adminEmail;
 
-    public Stadium(){}
-
-    public Stadium(String name,String city, String state, String country, int capacity)
-    {
-        this.city= city;
-        this.state=state;
-        this.country=country;
-        this.capacity=capacity;
-        this.name=name;
+    public Stadium() {
     }
-    
+
+    public Stadium(String name, String city, String state, String country, int capacity, String adminEmail) {
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.capacity = capacity;
+        this.name = name;
+        this.adminEmail = adminEmail;
+    }
+
     public Long getId() {
         return id;
     }
@@ -81,13 +78,11 @@ public class Stadium {
         this.name = name;
     }
 
-    
+    public String getAdminEmail() {
+        return adminEmail;
+    }
 
-
-
-
-
-
-    
-    
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
+    }
 }
