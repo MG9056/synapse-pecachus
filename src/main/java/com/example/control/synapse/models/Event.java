@@ -19,14 +19,16 @@ public class Event {
     private String description;
     private Double minPrice;
     private String category;
+    private Boolean live;
     public Event() {}
-    public Event(Stadium stadiumId, String name, LocalDateTime dateTime, String description,Double minPrice,String category) {
+    public Event(Stadium stadiumId, String name, LocalDateTime dateTime, String description,Double minPrice,String category,Boolean live) {
         this.stadium = stadiumId;
         this.name = name;
         this.dateTime = dateTime;
         this.description = description;
         this.minPrice=minPrice;
         this.category=category;
+        this.live=live;
     
     }
     
@@ -72,5 +74,12 @@ public class Event {
     public void setCategory(String category) {
         this.category = category;
     }
+    public Boolean getLive() {
+        return live;
+    }
+    public void setLive(Boolean live) {
+        this.live = live;
+    }
+    
     
 }

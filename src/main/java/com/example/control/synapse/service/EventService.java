@@ -2,14 +2,14 @@ package com.example.control.synapse.service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.example.control.synapse.dto.response.EventPageResponseDto;
+
 import com.example.control.synapse.dto.response.EventResponseDto;
 import com.example.control.synapse.mapper.EventMapper;
 import com.example.control.synapse.models.Event;
@@ -26,16 +26,16 @@ public class EventService {
         this.eventRepository=eventRepository;
         this.stadiumRepository=stadiumRepository;
     }
-    public EventPageResponseDto getAllEvents(Pageable pageable,String category,String city,Double minPrice,Double maxPrice) {
+    public List<Event> getAllEvents(String category,String city,Double minPrice,Double maxPrice) {
         Specification<Event> spec = EventSpecification.getEventsByFilters(category, city, minPrice, maxPrice);
-        Page<Event> eventPage = eventRepository.findAll(spec, pageable);
-        return EventMapper.toPageResponseDto(eventPage);
+        List<Event> events = eventRepository.findAll(spec);
+        return events;
     }
     public Map<String,String> createEvent(String name, LocalDateTime dateTime, String category, Long stadiumId, String description,
-            Double minPrice) {
+            Double minPrice,Boolean live) {
         Stadium stadium = stadiumRepository.findById(stadiumId)
                 .orElseThrow(() -> new RuntimeException("Stadium not found"));
-        Event event = new Event(stadium,name,dateTime,description,minPrice,category);
+        Event event = new Event(stadium,name,dateTime,description,minPrice,category,live);
         eventRepository.save(event);
         Map<String,String> response = new HashMap<>();
         response.put("message", "Event created successfully");
@@ -44,6 +44,14 @@ public class EventService {
     public EventResponseDto getEvent(Long id) {
         Event event = eventRepository.findById(id).orElseThrow(()-> new RuntimeException("No such event found"));
         return EventMapper.toDto(event);
+    }
+    public Map<String,String> goEventLive(Long id) {
+        Event event = eventRepository.findById(id).orElseThrow(()-> new RuntimeException("No such event found"));
+        event.setLive(true);
+        eventRepository.save(event);
+        Map<String,String> a = new HashMap<>();
+        a.put("message", "Event has gone live");
+        return a;
     }
 
 }

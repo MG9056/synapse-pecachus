@@ -9,17 +9,19 @@ public class EventRequestDto {
     private Long stadiumId;
     private String description;
     private Double minPrice;
+    private Boolean live;
 
     public EventRequestDto() {}
 
     public EventRequestDto(String name, LocalDateTime dateTime, String category, Long stadiumId, String description,
-            Double minPrice) {
+            Double minPrice,Boolean live) {
         this.name = name;
         this.dateTime = dateTime;
         this.category = category;
         this.stadiumId = stadiumId;
         this.description = description;
         this.minPrice = minPrice;
+        this.live=live;
     }
 
     public String getName() {
@@ -68,6 +70,14 @@ public class EventRequestDto {
 
     public void setMinPrice(Double minPrice) {
         this.minPrice = minPrice;
+    }
+
+    public Boolean getLive() {
+        return live;
+    }
+
+    public void setLive(Boolean live) {
+        this.live = live;
     }
     
 }
