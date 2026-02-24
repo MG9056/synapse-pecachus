@@ -1,43 +1,40 @@
 package com.example.control.synapse.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
-import com.example.control.synapse.dto.response.BookingResponseDto;
-
-import com.example.control.synapse.dto.websocket.SeatUpdateMessage;
-import com.example.control.synapse.models.Booking;
-import org.springframework.transaction.annotation.Transactional;
-import com.example.control.synapse.models.EventSeat;
-import com.example.control.synapse.models.Stadium;
-import com.example.control.synapse.models.User;
-import com.example.control.synapse.models.Event;
-import com.example.control.synapse.repository.BookingRepository;
-import com.example.control.synapse.repository.EventSeatRepository;
-import com.example.control.synapse.repository.StadiumRepository;
-import com.example.control.synapse.repository.UserRepository;
-
-import jakarta.annotation.PreDestroy;
-
-import com.example.control.synapse.repository.EventRepository;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import java.util.Map;
-import java.util.stream.Collectors;
-
+import com.example.control.synapse.dto.response.BookingResponseDto;
+import com.example.control.synapse.dto.response.EventSeatResponseDto;
+import com.example.control.synapse.dto.websocket.SeatUpdateMessage;
+import com.example.control.synapse.mapper.EventMapper;
+import com.example.control.synapse.models.Booking;
+import com.example.control.synapse.models.Event;
+import com.example.control.synapse.models.EventSeat;
+import com.example.control.synapse.models.Stadium;
+import com.example.control.synapse.models.User;
+import com.example.control.synapse.repository.BookingRepository;
+import com.example.control.synapse.repository.EventRepository;
+import com.example.control.synapse.repository.EventSeatRepository;
+import com.example.control.synapse.repository.StadiumRepository;
+import com.example.control.synapse.repository.UserRepository;
 import com.example.control.synapse.service.interfaces.IBookingService;
+
+import jakarta.annotation.PreDestroy;
 
 @Service
 public class BookingService implements IBookingService {
@@ -69,6 +66,27 @@ public class BookingService implements IBookingService {
         dto.setEventId(booking.getEvent().getId());
         dto.setStadiumId(booking.getStadium() != null ? booking.getStadium().getId() : null);
         dto.setBookingTime(booking.getBookingTime());
+
+        // Populate Event info using mapper
+        dto.setEvent(EventMapper.toDto(booking.getEvent()));
+
+        // Fetch and populate seats
+        List<EventSeatResponseDto> seats = eventSeatRepository.findByBookingId(booking.getId()).stream()
+                .map(es -> EventSeatResponseDto.builder()
+                        .id(es.getId())
+                        .seatId(es.getSeat().getId())
+                        .seatNumber(es.getSeat().getSeatNo())
+                        .row(es.getSeat().getRow())
+                        .seatCategory(es.getSeat().getCategory())
+                        .eventId(es.getEvent().getId())
+                        .eventName(es.getEvent().getName())
+                        .availability(es.getAvailability())
+                        .bookingId(booking.getId())
+                        .price(es.getPrice())
+                        .build())
+                .collect(Collectors.toList());
+        dto.setSeats(seats);
+
         return dto;
     }
 

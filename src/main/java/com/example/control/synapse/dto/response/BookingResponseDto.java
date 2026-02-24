@@ -17,4 +17,6 @@ public class BookingResponseDto {
     private Long eventId;
     private Long stadiumId;
     private LocalDateTime bookingTime;
+    private EventResponseDto event;
+    private List<EventSeatResponseDto> seats;
 }
