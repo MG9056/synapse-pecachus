@@ -1,6 +1,5 @@
 package com.example.control.synapse.dto.response;
 
-
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -13,11 +12,13 @@ public class EventResponseDto {
     private LocalDateTime datetime;
     private String category;
     private String description;
-    
+
     // Flattened Stadium Data (Easier for Frontend)
     private String stadiumName;
     private String city;
-    
-    private Double minPrice; // The starting price we discussed
-}
 
+    private Double minPrice; // The starting price we discussed
+    private Long stadiumId;
+    private Integer capacity;
+    private Long totalTicketsSold;
+}

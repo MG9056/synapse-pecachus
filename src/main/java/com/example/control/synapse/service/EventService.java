@@ -21,10 +21,13 @@ import com.example.control.synapse.service.interfaces.IEventService;
 public class EventService implements IEventService {
     private final EventRepository eventRepository;
     private final StadiumRepository stadiumRepository;
+    private final com.example.control.synapse.repository.BookingRepository bookingRepository;
 
-    public EventService(EventRepository eventRepository, StadiumRepository stadiumRepository) {
+    public EventService(EventRepository eventRepository, StadiumRepository stadiumRepository,
+            com.example.control.synapse.repository.BookingRepository bookingRepository) {
         this.eventRepository = eventRepository;
         this.stadiumRepository = stadiumRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     public List<Event> getAllEvents(String category, String city, Double minPrice, Double maxPrice) {
@@ -47,7 +50,9 @@ public class EventService implements IEventService {
 
     public EventResponseDto getEvent(Long id) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new RuntimeException("No such event found"));
-        return EventMapper.toDto(event);
+        EventResponseDto dto = EventMapper.toDto(event);
+        dto.setTotalTicketsSold((long) bookingRepository.findByEvent_Id(id).size());
+        return dto;
     }
 
     public Map<String, String> goEventLive(Long id) {

@@ -31,10 +31,11 @@ public class EventController {
     }
 
     @GetMapping
-    public List<Event> getAllEvents(@RequestParam(required = false) String category,
+    public List<EventResponseDto> getAllEvents(@RequestParam(required = false) String category,
             @RequestParam(required = false) String city, @RequestParam(required = false) Double minPrice,
             @RequestParam(required = false) Double maxPrice) {
-        return eventService.getAllEvents(category, city, minPrice, maxPrice);
+        List<Event> events = eventService.getAllEvents(category, city, minPrice, maxPrice);
+        return events.stream().map(com.example.control.synapse.mapper.EventMapper::toDto).toList();
     }
 
     @PostMapping("/create")

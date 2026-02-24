@@ -229,6 +229,7 @@ public class EventSeatService implements IEventSeatService {
                 .seatCategory(eventSeat.getSeat().getCategory())
                 .eventId(eventSeat.getEvent().getId())
                 .eventName(eventSeat.getEvent().getName())
+                .stadiumId(eventSeat.getEvent().getStadium() != null ? eventSeat.getEvent().getStadium().getId() : null)
                 .availability(eventSeat.getAvailability())
                 .bookingId(eventSeat.getBooking() != null ? eventSeat.getBooking().getId() : null)
                 .price(eventSeat.getPrice())

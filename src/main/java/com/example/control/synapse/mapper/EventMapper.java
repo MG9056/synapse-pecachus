@@ -18,10 +18,12 @@ public class EventMapper {
                 .category(event.getCategory())
                 .description(event.getDescription())
                 .minPrice(event.getMinPrice()) // Ensure Event entity has this field!
-                
+
                 // Handle Null Safety for Stadium
                 .stadiumName(event.getStadium() != null ? event.getStadium().getName() : "Unknown Stadium")
+                .stadiumId(event.getStadium() != null ? event.getStadium().getId() : null)
                 .city(event.getStadium() != null ? event.getStadium().getCity() : "Unknown City")
+                .capacity(event.getStadium() != null ? event.getStadium().getCapacity() : 0)
                 .build();
     }
 

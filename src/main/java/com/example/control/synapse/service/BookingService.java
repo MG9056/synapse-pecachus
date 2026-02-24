@@ -80,6 +80,7 @@ public class BookingService implements IBookingService {
                         .seatCategory(es.getSeat().getCategory())
                         .eventId(es.getEvent().getId())
                         .eventName(es.getEvent().getName())
+                        .stadiumId(es.getEvent().getStadium() != null ? es.getEvent().getStadium().getId() : null)
                         .availability(es.getAvailability())
                         .bookingId(booking.getId())
                         .price(es.getPrice())
